@@ -35,9 +35,9 @@ export default function CausesSection() {
               title={cause.title}
               description={cause.description}
               image={cause.image}
-              goal={cause.goal}
-              raised={cause.raised}
-              donations={Math.floor(cause.raised / 100)} // Mock donation count
+              goal={cause.goal ?? 0}
+              raised={cause.raised ?? 0}
+              donations={Math.floor((cause.raised ?? 0) / 100)} // Mock donation count
               daysLeft={30} // Mock days left
               slug={cause.slug}
               organization="Jaasiel Foundation"
