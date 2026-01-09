@@ -6,6 +6,7 @@ import Footer from "@/components/layout/Footer";
 import Providers from "./providers";
 import ErrorBoundaryWrapper from "@/components/layout/ErrorBoundaryWrapper";
 import SkipToContent from "@/components/layout/SkipToContent";
+import LoadingScreenWrapper from "@/components/layout/LoadingScreenWrapper";
 import { getOrganizationSchema } from "@/lib/structured-data";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -83,7 +84,8 @@ export default function RootLayout({
           </>
         )}
       </head>
-      <body className={`${inter.variable} font-sans antialiased`}>
+      <body className={`${inter.variable} font-sans antialiased`} style={{ backgroundColor: '#000' }}>
+        <LoadingScreenWrapper />
         <Providers>
           <ErrorBoundaryWrapper>
             <SkipToContent />

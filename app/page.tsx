@@ -6,12 +6,14 @@ import BrailleOverlay from "@/components/shared/BrailleOverlay";
 import BrailleTooltip from "@/components/shared/BrailleTooltip";
 import { SmoothCursor } from "@/components/shared/SmoothCursor";
 import { useBrailleMode } from "@/components/shared/BrailleModeProvider";
+import LoadingScreen from "@/components/shared/LoadingScreen";
 
 export default function HomePage() {
   const { isBrailleMode } = useBrailleMode();
 
   return (
     <>
+      <LoadingScreen />
       <BlindnessAwarenessIntro />
       
       <BrailleOverlay>
