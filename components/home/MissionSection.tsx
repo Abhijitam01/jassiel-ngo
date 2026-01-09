@@ -35,7 +35,7 @@ export default function MissionSection() {
   const [activeTab, setActiveTab] = useState("mission");
 
   return (
-    <section className="relative py-32 md:py-40 overflow-hidden">
+    <section className="relative py-16 sm:py-24 md:py-32 lg:py-40 overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -47,10 +47,10 @@ export default function MissionSection() {
         <div className="absolute inset-0 bg-gradient-to-r from-secondary/95 via-secondary/90 to-secondary/95" />
       </div>
       
-      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 min-h-[600px]">
-        <div className="relative h-96 lg:h-full min-h-[500px] order-2 lg:order-1">
-          <div className="absolute inset-0 p-8">
-            <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl">
+      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 min-h-[400px] sm:min-h-[500px] md:min-h-[600px]">
+        <div className="relative h-64 sm:h-80 md:h-96 lg:h-full min-h-[400px] sm:min-h-[500px] order-2 lg:order-1">
+          <div className="absolute inset-0 p-4 sm:p-6 md:p-8">
+            <div className="relative w-full h-full rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl">
               <Image
                 src="/assets/img/mission.png"
                 alt="Our Mission"
@@ -60,23 +60,23 @@ export default function MissionSection() {
             </div>
           </div>
         </div>
-        <div className="bg-white/95 backdrop-blur-sm p-8 md:p-12 flex flex-col justify-center order-1 lg:order-2">
-          <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-primary/10 rounded-full w-fit">
-            <Target className="text-primary" size={24} />
-            <span className="text-primary font-semibold text-sm uppercase tracking-wide">Our Mission</span>
+        <div className="bg-white/95 backdrop-blur-sm p-6 sm:p-8 md:p-12 flex flex-col justify-center order-1 lg:order-2">
+          <div className="inline-flex items-center gap-1.5 sm:gap-2 mb-4 sm:mb-5 md:mb-6 px-3 sm:px-4 py-1.5 sm:py-2 bg-primary/10 rounded-full w-fit">
+            <Target className="text-primary" size={18} />
+            <span className="text-primary font-semibold text-xs sm:text-sm uppercase tracking-wide">Our Mission</span>
           </div>
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-10 text-secondary">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-extrabold mb-6 sm:mb-8 md:mb-10 text-secondary">
             Health, Education & Community Development
           </h2>
 
           {/* Tabs */}
-          <div className="mb-8">
-            <div className="flex gap-6 border-b-2 border-gray-200">
+          <div className="mb-6 sm:mb-8">
+            <div className="flex gap-3 sm:gap-4 md:gap-6 border-b-2 border-gray-200">
               {tabs.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`pb-4 px-2 font-semibold text-lg transition-all relative ${
+                  className={`pb-3 sm:pb-4 px-1 sm:px-2 font-semibold text-sm sm:text-base md:text-lg transition-all relative ${
                     activeTab === tab.id
                       ? "text-primary"
                       : "text-gray-600 hover:text-primary"
@@ -84,7 +84,7 @@ export default function MissionSection() {
                 >
                   {tab.label}
                   {activeTab === tab.id && (
-                    <span className="absolute bottom-0 left-0 right-0 h-1 bg-primary rounded-t-full" />
+                    <span className="absolute bottom-0 left-0 right-0 h-0.5 sm:h-1 bg-primary rounded-t-full" />
                   )}
                 </button>
               ))}
@@ -92,7 +92,7 @@ export default function MissionSection() {
           </div>
 
           {/* Tab Content */}
-          <div className="mb-8 min-h-[200px]">
+          <div className="mb-6 sm:mb-8 min-h-[180px] sm:min-h-[200px]">
             {tabs.map((tab) => (
               <div
                 key={tab.id}
@@ -132,7 +132,7 @@ export default function MissionSection() {
                   if (remainingText) parts.push(remainingText);
                   
                   return (
-                    <p key={index} className="text-gray-700 mb-6 leading-relaxed text-xl md:text-2xl">
+                    <p key={index} className="text-gray-700 mb-4 sm:mb-5 md:mb-6 leading-relaxed text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl">
                       {parts.length > 0 ? parts : paragraph}
                     </p>
                   );
@@ -141,7 +141,7 @@ export default function MissionSection() {
             ))}
           </div>
 
-          <Button variant="primary" size="lg" href="/about" className="bg-[#DC2626] hover:bg-[#B91C1C] text-white border-0 shadow-lg hover:shadow-xl transition-shadow w-fit font-bold text-lg px-8 py-4">
+          <Button variant="primary" size="lg" href="/about" className="bg-[#DC2626] hover:bg-[#B91C1C] text-white border-0 shadow-lg hover:shadow-xl transition-shadow w-full sm:w-fit font-bold text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4">
             Know More
           </Button>
         </div>

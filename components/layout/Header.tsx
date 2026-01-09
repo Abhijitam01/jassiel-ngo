@@ -28,12 +28,12 @@ export default function Header() {
 
   return (
     <>
-      {/* Main Navigation - give.do style: clean and simple, absolutely positioned over hero */}
-      <nav className="absolute top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-white/20">
+      {/* Main Navigation - give.do style: clean and simple, sticky at top */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-white/20 shadow-sm">
         <div className="container mx-auto px-1 max-w-[95rem]">
           <div className="flex items-center justify-between h-[72px]">
             <Link href="/" className="flex items-center" aria-label="Jaasiel Foundation Home">
-              <span className="text-[#DC2626] font-extrabold text-2xl md:text-[28px] tracking-tight hover:text-[#B91C1C] transition-colors">
+              <span className="text-[#DC2626] font-extrabold text-lg md:text-xl tracking-tight hover:text-[#B91C1C] transition-colors">
                 JAASIEL FOUNDATION
               </span>
             </Link>
@@ -271,103 +271,140 @@ export default function Header() {
             </div>
 
           </div>
+        </div>
+      </nav>
 
-          {/* Mobile Navigation */}
-          {isMenuOpen && (
-            <div className="lg:hidden py-4 border-t">
-              <Navigation mobile />
-              <div className="mt-4 pt-4 border-t">
-                {/* Mobile Language & Braille Controls */}
-                <div className="px-4 mb-4 flex items-center gap-2">
-                  <span className="text-sm font-medium text-gray-700">Language:</span>
+      {/* Mobile Sidebar Overlay */}
+      {isMenuOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-50 lg:hidden transition-opacity"
+          onClick={() => setIsMenuOpen(false)}
+        />
+      )}
+
+      {/* Mobile Sidebar */}
+      <div
+        className={`fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-white z-50 lg:hidden transform transition-transform duration-300 ease-in-out shadow-xl ${
+          isMenuOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <div className="flex flex-col h-full">
+          {/* Sidebar Header */}
+          <div className="flex items-center justify-between p-4 border-b h-[72px]">
+            <Link href="/" className="flex items-center" onClick={() => setIsMenuOpen(false)}>
+              <span className="text-[#DC2626] font-extrabold text-xl tracking-tight">
+                JAASIEL FOUNDATION
+              </span>
+            </Link>
+            <button
+              onClick={() => setIsMenuOpen(false)}
+              className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              aria-label="Close menu"
+            >
+              <X size={24} />
+            </button>
+          </div>
+
+          {/* Sidebar Content - Scrollable */}
+          <div className="flex-1 overflow-y-auto">
+            <div className="p-4">
+              <Navigation mobile onLinkClick={() => setIsMenuOpen(false)} />
+            </div>
+
+            <div className="px-4 pb-4 border-t pt-4 space-y-4">
+              {/* Language & Braille Controls */}
+              <div>
+                <span className="text-sm font-medium text-gray-700 block mb-2">Language:</span>
+                <div className="flex items-center gap-2">
                   <button
                     onClick={() => handleLanguageChange("en")}
-                    className={`px-3 py-1 rounded text-sm ${
+                    className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                       language === "en"
-                        ? "bg-primary text-white"
-                        : "bg-gray-100 text-gray-700"
+                        ? "bg-[#DC2626] text-white"
+                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                     }`}
                   >
                     English
                   </button>
                   <button
                     onClick={() => handleLanguageChange("hi")}
-                    className={`px-3 py-1 rounded text-sm ${
+                    className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                       language === "hi"
-                        ? "bg-primary text-white"
-                        : "bg-gray-100 text-gray-700"
+                        ? "bg-[#DC2626] text-white"
+                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                     }`}
                   >
                     हिंदी
                   </button>
                 </div>
-                <div className="px-4 mb-4">
-                  <button
-                    onClick={toggleBrailleMode}
-                    className={`w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg ${
-                      isBrailleMode
-                        ? "bg-primary text-white"
-                        : "bg-gray-100 text-gray-700"
-                    }`}
+              </div>
+
+              <div>
+                <button
+                  onClick={toggleBrailleMode}
+                  className={`w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
+                    isBrailleMode
+                      ? "bg-[#DC2626] text-white"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  }`}
+                >
+                  {isBrailleMode ? <EyeOff size={18} /> : <Eye size={18} />}
+                  <span>{isBrailleMode ? t("braille.disable", language) : t("braille.enable", language)}</span>
+                </button>
+              </div>
+
+              {/* User Section */}
+              {session ? (
+                <div className="space-y-2 pt-4 border-t">
+                  <Link
+                    href="/dashboard"
+                    className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
                   >
-                    {isBrailleMode ? <EyeOff size={18} /> : <Eye size={18} />}
-                    <span>{isBrailleMode ? t("braille.disable", language) : t("braille.enable", language)}</span>
+                    <LayoutDashboard size={18} />
+                    Dashboard
+                  </Link>
+                  <Link
+                    href="/dashboard/profile"
+                    className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <User size={18} />
+                    Profile
+                  </Link>
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      setIsMenuOpen(false);
+                    }}
+                    className="w-full flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors text-left"
+                  >
+                    <LogOut size={18} />
+                    Logout
                   </button>
                 </div>
-                {session ? (
-                  <div className="space-y-2">
-                    <Link
-                      href="/dashboard"
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      Dashboard
-                    </Link>
-                    <button
-                      onClick={handleLogout}
-                      className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg"
-                    >
-                      Logout
-                    </button>
-                  </div>
-                ) : (
-                  <div className="px-4">
-                    <div className="relative">
-                      <button
-                        onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                        className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-[#DC2626] hover:bg-[#B91C1C] text-white font-semibold transition-colors"
-                        aria-label="Login menu"
-                      >
-                        Login
-                        <ChevronDown size={16} className="text-white" />
-                      </button>
-                      
-                      {isUserMenuOpen && (
-                        <div className="mt-2 w-full bg-white rounded-lg shadow-lg border border-gray-200 py-2">
-                          <Link
-                            href="/login"
-                            className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                            onClick={() => setIsUserMenuOpen(false)}
-                          >
-                            Login
-                          </Link>
-                          <Link
-                            href="/signup"
-                            className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                            onClick={() => setIsUserMenuOpen(false)}
-                          >
-                            Signup
-                          </Link>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-              </div>
+              ) : (
+                <div className="space-y-2 pt-4 border-t">
+                  <Link
+                    href="/login"
+                    className="block w-full text-center px-4 py-2 rounded-lg bg-[#DC2626] hover:bg-[#B91C1C] text-white font-semibold transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    href="/signup"
+                    className="block w-full text-center px-4 py-2 rounded-lg border-2 border-[#DC2626] text-[#DC2626] hover:bg-[#DC2626] hover:text-white font-semibold transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Signup
+                  </Link>
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
-      </nav>
+      </div>
 
     </>
   );

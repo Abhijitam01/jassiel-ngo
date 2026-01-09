@@ -98,7 +98,7 @@ function AnimatedCounter({ value, suffix, prefix }: { value: number; suffix?: st
   };
 
   return (
-    <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#DC2626]">
+    <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold text-[#DC2626]">
       {prefix}
       {formatNumber(count)}
       {suffix}
@@ -139,49 +139,50 @@ export default function ImpactStats() {
   return (
     <section
       ref={sectionRef}
-      className="relative py-32 md:py-40 bg-white overflow-hidden"
+      className="relative py-16 sm:py-24 md:py-32 lg:py-40 bg-white overflow-hidden"
     >
-      <div className="container mx-auto px-1 max-w-[95rem]">
+      <div className="container mx-auto px-4 sm:px-6 max-w-[95rem]">
         {/* Header */}
-        <div className="text-center mb-20">
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-8 text-secondary">
+        <div className="text-center mb-12 sm:mb-16 md:mb-20">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold mb-4 sm:mb-6 md:mb-8 text-secondary px-2">
             India&apos;s Most Trusted Online Donation Platform
           </h2>
-          <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto font-semibold">
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-700 max-w-3xl mx-auto font-semibold px-4">
             <span className="underline-important">Witness the positive change we&apos;ve made!</span>
           </p>
         </div>
 
         {/* Stats Grid */}
         {isLoading ? (
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 lg:gap-8">
             {[...Array(4)].map((_, i) => (
               <div key={i} className="text-center">
-                <Skeleton variant="rectangular" height={60} className="w-full mb-4 md:hidden" />
+                <Skeleton variant="rectangular" height={50} className="w-full mb-3 sm:hidden" />
+                <Skeleton variant="rectangular" height={60} className="w-full mb-3 hidden sm:block md:hidden" />
                 <Skeleton variant="rectangular" height={80} className="w-full mb-4 hidden md:block" />
-                <Skeleton variant="text" width="60%" height={20} className="mx-auto md:h-6" />
+                <Skeleton variant="text" width="70%" height={16} className="mx-auto sm:w-60% md:h-6" />
               </div>
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 lg:gap-8">
             {stats.map((stat, index) => {
               const IconComponent = stat.icon;
               return (
                 <div
                   key={stat.id}
-                  className="text-center animate-fade-in-up"
+                  className="text-center animate-fade-in-up px-2"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <div className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-primary/10 rounded-full mb-4 md:mb-6 hover:bg-primary/20 transition-colors">
-                    <IconComponent className="text-primary" size={32} />
+                  <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 bg-primary/10 rounded-full mb-3 sm:mb-4 md:mb-6 hover:bg-primary/20 transition-colors">
+                    <IconComponent className="text-primary" size={24} />
                   </div>
                   {isVisible && (
-                    <div className="mb-2 md:mb-4">
+                    <div className="mb-2 sm:mb-3 md:mb-4">
                       <AnimatedCounter value={stat.value} suffix={stat.suffix} prefix={stat.prefix} />
                     </div>
                   )}
-                  <p className="text-lg md:text-xl lg:text-2xl font-bold text-secondary">
+                  <p className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-bold text-secondary">
                     <span className="underline-important">{stat.label}</span>
                   </p>
                 </div>
@@ -191,10 +192,10 @@ export default function ImpactStats() {
         )}
 
         {/* CTA */}
-        <div className="text-center mt-16">
+        <div className="text-center mt-10 sm:mt-12 md:mt-16">
           <a
             href="/impact-stories"
-            className="inline-flex items-center gap-2 text-primary font-semibold hover:text-primary-dark transition-colors underline-important text-lg md:text-xl"
+            className="inline-flex items-center gap-1.5 sm:gap-2 text-primary font-semibold hover:text-primary-dark transition-colors underline-important text-sm sm:text-base md:text-lg lg:text-xl"
           >
             Read about our Impact
             <span>→</span>

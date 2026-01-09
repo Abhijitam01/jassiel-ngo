@@ -139,51 +139,51 @@ export default function SupportersSection() {
               Our Supporters
             </span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-extrabold mb-4 text-secondary">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold mb-4 text-secondary">
             Join Our Community of Changemakers
           </h2>
-          <p className="text-gray-700 max-w-3xl mx-auto text-lg leading-relaxed">
+          <p className="text-gray-700 max-w-3xl mx-auto text-sm md:text-base leading-relaxed">
             Meet the dedicated individuals and organizations making a lasting impact through monthly support
           </p>
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-12">
-          <Card className="p-4 md:p-6 text-center">
-            <div className="flex items-center justify-center mb-3">
-              <div className="p-3 bg-primary/10 rounded-full">
-                <Users className="text-primary" size={24} />
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mb-8 sm:mb-10 md:mb-12">
+          <Card className="p-3 sm:p-4 md:p-6 text-center">
+            <div className="flex items-center justify-center mb-2 sm:mb-3">
+              <div className="p-2 sm:p-2.5 md:p-3 bg-primary/10 rounded-full">
+                <Users className="text-primary" size={18} />
               </div>
             </div>
-            <div className="text-2xl md:text-3xl font-bold text-secondary mb-1">2,500+</div>
-            <div className="text-sm text-gray-600">Active Supporters</div>
+            <div className="text-xl sm:text-2xl md:text-3xl font-bold text-secondary mb-1">2,500+</div>
+            <div className="text-xs sm:text-sm text-gray-600">Active Supporters</div>
           </Card>
-          <Card className="p-4 md:p-6 text-center">
-            <div className="flex items-center justify-center mb-3">
-              <div className="p-3 bg-primary/10 rounded-full">
-                <Heart className="text-primary" size={24} />
+          <Card className="p-3 sm:p-4 md:p-6 text-center">
+            <div className="flex items-center justify-center mb-2 sm:mb-3">
+              <div className="p-2 sm:p-2.5 md:p-3 bg-primary/10 rounded-full">
+                <Heart className="text-primary" size={18} />
               </div>
             </div>
-            <div className="text-2xl md:text-3xl font-bold text-secondary mb-1">₹15L+</div>
-            <div className="text-sm text-gray-600">Monthly Impact</div>
+            <div className="text-xl sm:text-2xl md:text-3xl font-bold text-secondary mb-1">₹15L+</div>
+            <div className="text-xs sm:text-sm text-gray-600">Monthly Impact</div>
           </Card>
-          <Card className="p-4 md:p-6 text-center">
-            <div className="flex items-center justify-center mb-3">
-              <div className="p-3 bg-primary/10 rounded-full">
-                <Award className="text-primary" size={24} />
+          <Card className="p-3 sm:p-4 md:p-6 text-center">
+            <div className="flex items-center justify-center mb-2 sm:mb-3">
+              <div className="p-2 sm:p-2.5 md:p-3 bg-primary/10 rounded-full">
+                <Award className="text-primary" size={18} />
               </div>
             </div>
-            <div className="text-2xl md:text-3xl font-bold text-secondary mb-1">150+</div>
-            <div className="text-sm text-gray-600">Champion Supporters</div>
+            <div className="text-xl sm:text-2xl md:text-3xl font-bold text-secondary mb-1">150+</div>
+            <div className="text-xs sm:text-sm text-gray-600">Champion Supporters</div>
           </Card>
-          <Card className="p-4 md:p-6 text-center">
-            <div className="flex items-center justify-center mb-3">
-              <div className="p-3 bg-primary/10 rounded-full">
-                <TrendingUp className="text-primary" size={24} />
+          <Card className="p-3 sm:p-4 md:p-6 text-center">
+            <div className="flex items-center justify-center mb-2 sm:mb-3">
+              <div className="p-2 sm:p-2.5 md:p-3 bg-primary/10 rounded-full">
+                <TrendingUp className="text-primary" size={18} />
               </div>
             </div>
-            <div className="text-2xl md:text-3xl font-bold text-secondary mb-1">95%</div>
-            <div className="text-sm text-gray-600">Retention Rate</div>
+            <div className="text-xl sm:text-2xl md:text-3xl font-bold text-secondary mb-1">95%</div>
+            <div className="text-xs sm:text-sm text-gray-600">Retention Rate</div>
           </Card>
         </div>
 
@@ -210,16 +210,16 @@ export default function SupportersSection() {
                 ))}
               </div>
             ) : (
-              <div className="flex gap-4 md:gap-6 min-w-max px-2">
+              <div className="flex gap-3 sm:gap-4 md:gap-6 min-w-max px-2">
                 {displayedSupporters.map((supporter, index) => (
                   <Card
                     key={`${supporter.id}-${index}`}
                     hover
                     variant="elevated"
-                    className="group text-center p-5 md:p-6 border border-gray-100 flex-shrink-0 w-64 md:w-72"
+                    className="group text-center p-4 sm:p-5 md:p-6 border border-gray-100 flex-shrink-0 w-56 sm:w-64 md:w-72"
                   >
-                    <div className="relative mb-4">
-                      <div className="relative w-20 h-20 md:w-24 md:h-24 mx-auto rounded-full overflow-hidden border-4 border-primary/10 group-hover:border-primary/30 transition-colors">
+                    <div className="relative mb-3 sm:mb-4">
+                      <div className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mx-auto rounded-full overflow-hidden border-4 border-primary/10 group-hover:border-primary/30 transition-colors">
                         <Image
                           src={supporter.image}
                           alt={supporter.name}
@@ -228,16 +228,16 @@ export default function SupportersSection() {
                         />
                       </div>
                       {supporter.verified && (
-                        <div className="absolute bottom-0 right-1/4 bg-primary text-white rounded-full p-1">
-                          <Award size={16} />
+                        <div className="absolute bottom-0 right-1/4 bg-primary text-white rounded-full p-0.5 sm:p-1">
+                          <Award size={12} />
                         </div>
                       )}
                     </div>
-                    <h3 className="text-base md:text-lg font-bold text-secondary mb-1 group-hover:text-primary transition-colors">
+                    <h3 className="text-sm sm:text-base md:text-lg font-bold text-secondary mb-1 group-hover:text-primary transition-colors">
                       {supporter.name}
                     </h3>
-                    <p className="text-xs md:text-sm text-gray-600 mb-2">{supporter.role}</p>
-                    <p className="text-sm md:text-base font-semibold text-primary">
+                    <p className="text-[10px] sm:text-xs md:text-sm text-gray-600 mb-2">{supporter.role}</p>
+                    <p className="text-xs sm:text-sm md:text-base font-semibold text-primary">
                       {supporter.contribution}
                     </p>
                   </Card>
@@ -258,20 +258,20 @@ export default function SupportersSection() {
         `}</style>
 
         {/* Call to Action */}
-        <div className="mt-12 text-center">
-          <p className="text-gray-700 mb-6 text-lg">
+        <div className="mt-8 sm:mt-10 md:mt-12 text-center">
+          <p className="text-gray-700 mb-4 sm:mb-5 md:mb-6 text-sm sm:text-base md:text-lg px-4">
             Become a monthly supporter and join thousands making a difference
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
             <a
               href="/donate"
-              className="inline-flex items-center justify-center px-6 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary-dark transition-colors shadow-lg hover:shadow-xl"
+              className="inline-flex items-center justify-center px-5 sm:px-6 py-2.5 sm:py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary-dark transition-colors shadow-lg hover:shadow-xl text-sm sm:text-base w-full sm:w-auto"
             >
               Start Supporting Monthly
             </a>
             <a
               href="/volunteer"
-              className="inline-flex items-center justify-center px-6 py-3 bg-white text-primary border-2 border-primary rounded-lg font-semibold hover:bg-primary/5 transition-colors"
+              className="inline-flex items-center justify-center px-5 sm:px-6 py-2.5 sm:py-3 bg-white text-primary border-2 border-primary rounded-lg font-semibold hover:bg-primary/5 transition-colors text-sm sm:text-base w-full sm:w-auto"
             >
               Learn More
             </a>

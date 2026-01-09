@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 
 interface NavigationProps {
   mobile?: boolean;
+  onLinkClick?: () => void;
 }
 
 interface NavItem {
@@ -16,7 +17,7 @@ interface NavItem {
   submenu?: NavItem[];
 }
 
-export default function Navigation({ mobile = false }: NavigationProps) {
+export default function Navigation({ mobile = false, onLinkClick }: NavigationProps) {
   const pathname = usePathname();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
@@ -117,15 +118,16 @@ export default function Navigation({ mobile = false }: NavigationProps) {
                               {subItem.submenu?.map((nestedItem, nestedIndex) => (
                                 nestedItem.href ? (
                                   <li key={nestedIndex}>
-                                    <Link
-                                      href={nestedItem.href}
-                                      className={cn(
-                                        "block px-4 py-2 hover:bg-gray-100",
-                                        isActive(nestedItem.href) && "text-primary font-semibold"
-                                      )}
-                                    >
-                                      {nestedItem.label}
-                                    </Link>
+                            <Link
+                              href={nestedItem.href}
+                              className={cn(
+                                "block px-4 py-2 hover:bg-gray-100",
+                                isActive(nestedItem.href) && "text-primary font-semibold"
+                              )}
+                              onClick={mobile ? onLinkClick : undefined}
+                            >
+                              {nestedItem.label}
+                            </Link>
                                   </li>
                                 ) : null
                               ))}
@@ -141,6 +143,7 @@ export default function Navigation({ mobile = false }: NavigationProps) {
                                 isActive(subItem.href) && "text-primary font-semibold"
                               )}
                               tabIndex={openDropdown === item.label ? 0 : -1}
+                              onClick={mobile ? onLinkClick : undefined}
                             >
                               {subItem.label}
                             </Link>
@@ -160,6 +163,7 @@ export default function Navigation({ mobile = false }: NavigationProps) {
                   : "hover:text-primary"
               )}
               aria-current={isActive(item.href) ? "page" : undefined}
+              onClick={mobile ? onLinkClick : undefined}
             >
               {item.label}
             </Link>

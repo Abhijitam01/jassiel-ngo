@@ -65,7 +65,7 @@ export default function FeedbackPage() {
             <MessageSquare className="text-white" size={32} />
             <span className="text-lg font-semibold">Feedback</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Share Your Feedback</h1>
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4">Share Your Feedback</h1>
           <p className="text-xl max-w-2xl mx-auto">
             Your feedback helps us improve and serve better
           </p>
@@ -77,7 +77,7 @@ export default function FeedbackPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto">
             <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-8 rounded-lg shadow-md">
-              <h2 className="text-2xl font-bold mb-6">Send Us Your Feedback</h2>
+              <h2 className="text-xl md:text-2xl font-bold mb-6">Send Us Your Feedback</h2>
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-semibold mb-2">Name</label>
@@ -141,7 +141,7 @@ export default function FeedbackPage() {
       {/* Testimonials */}
       <section className="py-16 md:py-24 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">What People Say</h2>
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">What People Say</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {testimonials.map((testimonial) => (
               <div key={testimonial.id} className="bg-white p-6 rounded-lg shadow-md">

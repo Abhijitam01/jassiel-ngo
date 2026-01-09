@@ -73,7 +73,7 @@ export default function ImpactStoriesPage() {
               <Heart className="text-white" size={32} />
               <span className="text-lg font-semibold">Impact Stories</span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Stories of Transformation</h1>
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4">Stories of Transformation</h1>
             <p className="text-xl max-w-2xl mx-auto">
               Real stories of hope, change, and positive impact from our programs
             </p>
@@ -105,7 +105,7 @@ export default function ImpactStoriesPage() {
                   <div className="p-6">
                     <div className="flex items-center gap-2 mb-4">
                       <Icon className="text-primary" size={24} />
-                      <h3 className="text-2xl font-bold">{story.title}</h3>
+                      <h3 className="text-lg md:text-xl font-bold">{story.title}</h3>
                     </div>
 
                     <div className="space-y-4 mb-6">
@@ -125,7 +125,7 @@ export default function ImpactStoriesPage() {
                       <div className="flex flex-wrap gap-4">
                         {Object.entries(story.stats).map(([key, value]) => (
                           <div key={key} className="text-center">
-                            <div className="text-2xl font-bold text-primary">{value}</div>
+                            <div className="text-xl md:text-2xl font-bold text-primary">{value}</div>
                             <div className="text-xs text-gray-600 capitalize">{key}</div>
                           </div>
                         ))}
@@ -142,7 +142,7 @@ export default function ImpactStoriesPage() {
       {/* CTA Section */}
       <section className="py-16 md:py-24 bg-gray-50">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Be Part of the Change</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-4">Be Part of the Change</h2>
           <p className="text-gray-700 max-w-2xl mx-auto mb-8">
             Join us in creating more success stories. Your support can transform lives.
           </p>

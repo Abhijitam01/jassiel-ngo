@@ -19,7 +19,7 @@ export default function TeamPage() {
             <Users className="text-white" size={32} />
             <span className="text-lg font-semibold">Our Team</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Meet Our Team</h1>
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4">Meet Our Team</h1>
           <p className="text-xl max-w-2xl mx-auto">
             Dedicated individuals working together to create positive change
           </p>

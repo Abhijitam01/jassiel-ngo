@@ -54,8 +54,8 @@ export default function Footer() {
   return (
     <>
       {/* Pre-Footer CTA Section */}
-      <section className="bg-gradient-to-r from-[#DC2626] to-[#B91C1C] text-white py-16">
-        <div className="container mx-auto px-4 max-w-[95rem]">
+      <section className="bg-gradient-to-r from-[#DC2626] to-[#B91C1C] text-white py-16 w-full">
+        <div className="px-4 mx-auto max-w-[95rem]">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div className="flex flex-col items-center">
               <div className="bg-white/20 backdrop-blur-sm rounded-full p-4 mb-4">
@@ -101,13 +101,13 @@ export default function Footer() {
       </section>
 
       {/* Main Footer */}
-      <footer className="relative bg-gray-900 text-gray-300">
-        <div className="container mx-auto px-4 max-w-[95rem] pt-16 pb-8">
+      <footer className="relative bg-gray-900 text-gray-300 w-full">
+        <div className="px-4 mx-auto max-w-[95rem] pt-16 pb-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
             {/* About Section */}
             <div className="lg:col-span-1">
               <div className="mb-6">
-                <h2 className="text-2xl font-extrabold text-white mb-4">Jaasiel Foundation</h2>
+                <h2 className="text-xl md:text-2xl font-extrabold text-white mb-4">Jaasiel Foundation</h2>
                 <p className="text-gray-400 leading-relaxed mb-4">
                   A registered voluntary organisation working with the most vulnerable groups of children, especially street and working children since <span className="text-white font-semibold">2014</span>.
                 </p>
@@ -333,7 +333,7 @@ export default function Footer() {
           <div id="newsletter" className="border-t border-gray-800 pt-12 mb-12">
             <div className="max-w-2xl mx-auto">
               <div className="text-center mb-6">
-                <h3 className="text-2xl font-bold text-white mb-2">Stay Updated</h3>
+                <h3 className="text-xl md:text-2xl font-bold text-white mb-2">Stay Updated</h3>
                 <p className="text-gray-400">Subscribe to our newsletter and get the latest updates on our programs and impact</p>
               </div>
               <NewsletterForm variant="compact" />

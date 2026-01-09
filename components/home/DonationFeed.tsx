@@ -135,17 +135,17 @@ export default function DonationFeed() {
   };
 
   return (
-    <section className="relative py-20 md:py-32 bg-white">
-      <div className="container mx-auto px-1 max-w-[95rem]">
+    <section className="relative py-12 sm:py-16 md:py-24 lg:py-32 bg-white">
+      <div className="container mx-auto px-4 sm:px-6 max-w-[95rem]">
           {/* Header */}
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 bg-primary/10 rounded-full">
-              <Heart className="text-primary" size={20} />
-              <span className="text-primary font-semibold text-sm uppercase tracking-wide">
+          <div className="text-center mb-6 sm:mb-8">
+            <div className="inline-flex items-center gap-1.5 sm:gap-2 mb-3 sm:mb-4 px-3 sm:px-4 py-1.5 sm:py-2 bg-primary/10 rounded-full">
+              <Heart className="text-primary" size={16} />
+              <span className="text-primary font-semibold text-xs sm:text-sm uppercase tracking-wide">
                 Recent Donations
               </span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-secondary">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 text-secondary px-2">
               Making a Difference Together
             </h2>
           </div>
@@ -161,13 +161,13 @@ export default function DonationFeed() {
                 WebkitOverflowScrolling: "touch",
               }}
             >
-              <div className="flex gap-4 md:gap-6 min-w-max px-2">
+              <div className="flex gap-3 sm:gap-4 md:gap-6 min-w-max px-2">
                 {isLoading ? (
                   <>
                     {[...Array(8)].map((_, i) => (
                       <div
                         key={i}
-                        className="flex-shrink-0 w-72 md:w-80 bg-white rounded-lg border border-gray-200 p-4 md:p-5 shadow-sm"
+                        className="flex-shrink-0 w-64 sm:w-72 md:w-80 bg-white rounded-lg border border-gray-200 p-3 sm:p-4 md:p-5 shadow-sm"
                       >
                         <div className="flex items-center gap-3 mb-3">
                           <Skeleton variant="circular" width={40} height={40} />
@@ -185,25 +185,25 @@ export default function DonationFeed() {
                     {displayedDonations.map((donation, index) => (
                       <div
                         key={`${donation.id}-${index}`}
-                        className="flex-shrink-0 w-72 md:w-80 bg-white rounded-lg border border-gray-200 p-4 md:p-5 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] animate-slide-up"
+                        className="flex-shrink-0 w-64 sm:w-72 md:w-80 bg-white rounded-lg border border-gray-200 p-3 sm:p-4 md:p-5 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] animate-slide-up"
                         style={{ animationDelay: `${(index % 10) * 0.05}s` }}
                       >
-                        <div className="flex items-start gap-3 mb-3">
-                          <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                            <Heart className="text-primary" size={18} />
+                        <div className="flex items-start gap-2 sm:gap-3 mb-2 sm:mb-3">
+                          <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                            <Heart className="text-primary" size={14} />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm md:text-base text-gray-800 font-semibold mb-1 truncate">
+                            <p className="text-xs sm:text-sm md:text-base text-gray-800 font-semibold mb-1 truncate">
                               {donation.donorName}
                             </p>
-                            <p className="text-xs md:text-sm text-gray-500">
+                            <p className="text-[10px] sm:text-xs md:text-sm text-gray-500">
                               {formatTimeAgo(donation.timestamp)}
                             </p>
                           </div>
                         </div>
                         <div className="mt-2">
-                          <p className="text-xs text-gray-600 mb-1">just donated</p>
-                          <p className="text-xl md:text-2xl font-bold text-[#DC2626]">
+                          <p className="text-[10px] sm:text-xs text-gray-600 mb-1">just donated</p>
+                          <p className="text-lg sm:text-xl md:text-2xl font-bold text-[#DC2626]">
                             {formatAmount(donation.amount)}
                           </p>
                         </div>
@@ -222,7 +222,7 @@ export default function DonationFeed() {
           </div>
 
           {/* Footer Text */}
-          <p className="text-center text-gray-600 mt-8 text-sm">
+          <p className="text-center text-gray-600 mt-6 sm:mt-8 text-xs sm:text-sm px-4">
             Join thousands of donors making a difference every day
           </p>
         </div>

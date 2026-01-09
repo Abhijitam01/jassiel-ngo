@@ -83,23 +83,23 @@ export default function GiveMonthlySection() {
       cta: "View Impact",
       className: "col-span-1 md:col-span-2 lg:col-span-1",
       children: (
-        <div className="grid grid-cols-2 gap-4 w-full mt-4">
-          <div className="text-center">
-            <div className="text-3xl font-bold text-[#DC2626] mb-1">1.6M+</div>
-            <div className="text-xs text-gray-600">Lives Impacted</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-[#DC2626] mb-1">10+</div>
-            <div className="text-xs text-gray-600">Years Service</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-[#DC2626] mb-1">4K+</div>
-            <div className="text-xs text-gray-600">Verified NGOs</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-[#DC2626] mb-1">50K+</div>
-            <div className="text-xs text-gray-600">Donors</div>
-          </div>
+        <div className="grid grid-cols-2 gap-2 sm:gap-3 md:gap-4 w-full mt-3 sm:mt-4">
+            <div className="text-center">
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-[#DC2626] mb-1">1.6M+</div>
+              <div className="text-[10px] sm:text-xs text-gray-600">Lives Impacted</div>
+            </div>
+            <div className="text-center">
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-[#DC2626] mb-1">10+</div>
+              <div className="text-[10px] sm:text-xs text-gray-600">Years Service</div>
+            </div>
+            <div className="text-center">
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-[#DC2626] mb-1">4K+</div>
+              <div className="text-[10px] sm:text-xs text-gray-600">Verified NGOs</div>
+            </div>
+            <div className="text-center">
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-[#DC2626] mb-1">50K+</div>
+              <div className="text-[10px] sm:text-xs text-gray-600">Donors</div>
+            </div>
         </div>
       ),
     },
@@ -130,23 +130,23 @@ export default function GiveMonthlySection() {
               Give Monthly
             </span>
           </div>
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 text-secondary">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-6 text-secondary">
             Create Sustained Impact
           </h2>
-          <p className="text-gray-700 max-w-3xl mx-auto text-xl md:text-2xl leading-relaxed font-semibold">
+          <p className="text-gray-700 max-w-3xl mx-auto text-base md:text-lg leading-relaxed font-semibold">
             <span className="underline-important">Support verified projects. Get regular updates. Save tax. Cancel anytime.</span>
           </p>
         </div>
 
         {/* Bento Grid */}
         {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 mb-8 sm:mb-10 md:mb-12">
             {[...Array(6)].map((_, i) => (
               <SkeletonCard key={i} />
             ))}
           </div>
         ) : (
-          <BentoGrid className="mb-12">
+          <BentoGrid className="mb-8 sm:mb-10 md:mb-12">
             {bentoFeatures.map((feature, idx) => (
               <BentoCard key={idx} {...feature} />
             ))}
@@ -154,8 +154,8 @@ export default function GiveMonthlySection() {
         )}
 
         {/* View More Button */}
-        <div className="text-center mt-8">
-          <Button variant="primary" size="lg" href="/donate" className="bg-[#DC2626] hover:bg-[#B91C1C] text-white border-0 shadow-lg hover:shadow-xl font-bold text-lg px-8 py-4">
+        <div className="text-center mt-6 sm:mt-8">
+          <Button variant="primary" size="lg" href="/donate" className="bg-[#DC2626] hover:bg-[#B91C1C] text-white border-0 shadow-lg hover:shadow-xl font-bold text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 w-full sm:w-auto">
             View More Missions
           </Button>
         </div>

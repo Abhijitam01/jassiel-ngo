@@ -93,7 +93,7 @@ function SearchContent() {
               <Search className="text-white" size={32} />
               <span className="text-lg font-semibold">Search</span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-center">Search Our Website</h1>
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 text-center">Search Our Website</h1>
             <form onSubmit={handleSearch} className="relative">
               <input
                 type="text"
@@ -129,7 +129,7 @@ function SearchContent() {
                 <div className="mb-12">
                   <div className="flex items-center gap-2 mb-6">
                     <FileText className="text-primary" size={24} />
-                    <h2 className="text-2xl font-bold">
+                    <h2 className="text-xl md:text-2xl font-bold">
                       Blog Posts ({results.blog.length})
                     </h2>
                   </div>
@@ -168,7 +168,7 @@ function SearchContent() {
                 <div className="mb-12">
                   <div className="flex items-center gap-2 mb-6">
                     <Calendar className="text-primary" size={24} />
-                    <h2 className="text-2xl font-bold">
+                    <h2 className="text-xl md:text-2xl font-bold">
                       Events ({results.events.length})
                     </h2>
                   </div>
@@ -207,7 +207,7 @@ function SearchContent() {
                 <div className="mb-12">
                   <div className="flex items-center gap-2 mb-6">
                     <Heart className="text-primary" size={24} />
-                    <h2 className="text-2xl font-bold">
+                    <h2 className="text-xl md:text-2xl font-bold">
                       Causes ({results.causes.length})
                     </h2>
                   </div>
