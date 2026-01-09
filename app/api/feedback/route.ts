@@ -50,7 +50,9 @@ export async function POST(request: NextRequest) {
     // 2. Send email notification
     // 3. Track feedback analytics
 
-    console.log("Feedback submission:", validatedData);
+    if (process.env.NODE_ENV === "development") {
+      console.warn("Feedback submission:", validatedData);
+    }
 
     return NextResponse.json(
       { message: "Thank you for your feedback! We appreciate your input." },

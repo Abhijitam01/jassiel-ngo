@@ -219,7 +219,7 @@ export default function ReportsPage() {
               <div className="mt-8 p-6 bg-primary/5 rounded-lg">
                 <h3 className="font-semibold mb-2">Questions About Our Finances?</h3>
                 <p className="text-gray-700 text-sm mb-4">
-                  If you have any questions about our financial reports or transparency practices, please don't hesitate to contact us.
+                  If you have any questions about our financial reports or transparency practices, please don&apos;t hesitate to contact us.
                 </p>
                 <Button variant="primary" size="md" href="/contact">
                   Contact Us

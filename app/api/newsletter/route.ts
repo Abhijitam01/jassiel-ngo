@@ -49,7 +49,9 @@ export async function POST(request: NextRequest) {
     // 2. Add to email marketing service
     // 3. Send confirmation email
 
-    console.log("Newsletter subscription:", validatedData);
+    if (process.env.NODE_ENV === "development") {
+      console.warn("Newsletter subscription:", validatedData);
+    }
 
     return NextResponse.json(
       { message: "Thank you for subscribing to our newsletter!" },

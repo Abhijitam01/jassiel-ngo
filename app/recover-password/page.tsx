@@ -56,7 +56,7 @@ export default function RecoverPasswordPage() {
             </div>
             <h2 className="text-2xl font-bold mb-4">Check Your Email</h2>
             <p className="text-gray-600 mb-6">
-              We've sent you a password reset link. Please check your email inbox.
+              We&apos;ve sent you a password reset link. Please check your email inbox.
             </p>
             <Link href="/login" className="text-primary font-semibold hover:underline">
               Back to Login

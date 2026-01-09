@@ -34,7 +34,7 @@ export default function AboutPage() {
                 Our journey began in March 2014 when a group of youngsters volunteered their time to ignite the minds of those underprivileged poor kids, who were struggling hard every day for their living and could not afford their education fees.
               </p>
               <p className="text-gray-700 mb-6 leading-relaxed">
-                This world that we call home is not a home for every soul, the sun doesn't shines bright in everyone's life. For those below the poverty line life is a struggle, full of challenges. Keeping in mind these challenges our venture grew up into a full-fledged non profitable organisation.
+                This world that we call home is not a home for every soul, the sun doesn&apos;t shines bright in everyone&apos;s life. For those below the poverty line life is a struggle, full of challenges. Keeping in mind these challenges our venture grew up into a full-fledged non profitable organisation.
               </p>
               <Button variant="primary" size="lg" href="/contact">
                 Get Involved
@@ -70,7 +70,7 @@ export default function AboutPage() {
               <Target className="text-primary mb-4" size={40} />
               <h3 className="text-2xl font-bold mb-4">Our Mission</h3>
               <p className="text-gray-700 leading-relaxed">
-                Our mission is to empower needy children and communities to break the Vicious Cycle of Poverty where poverty spawns problems of malnourishment and mortality while lack of education ensures children follow in their parents' footsteps scraping a daily existence as manual labor or ragpickers.
+                Our mission is to empower needy children and communities to break the Vicious Cycle of Poverty where poverty spawns problems of malnourishment and mortality while lack of education ensures children follow in their parents&apos; footsteps scraping a daily existence as manual labor or ragpickers.
               </p>
             </div>
             <div className="bg-white p-8 rounded-lg shadow-md">
@@ -90,7 +90,7 @@ export default function AboutPage() {
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Impact</h2>
             <p className="text-gray-700 max-w-2xl mx-auto">
-              Since 2014, we've been making a difference in the lives of thousands of children and families
+              Since 2014, we&apos;ve been making a difference in the lives of thousands of children and families
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">

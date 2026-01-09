@@ -195,13 +195,6 @@ export default function DonationFeed() {
             Join thousands of donors making a difference every day
           </p>
         </div>
-      </div>
-
-      <style jsx>{`
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
     </section>
   );
 }

@@ -61,6 +61,7 @@ export default function ImageWithFallback({
         ) : (
           <Image
             {...imageProps}
+            alt={alt}
             fill
             style={{ objectFit }}
           />
@@ -85,6 +86,7 @@ export default function ImageWithFallback({
         ) : (
           <Image
             {...imageProps}
+            alt={alt}
             width={width}
             height={height}
             style={{ objectFit }}

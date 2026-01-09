@@ -150,7 +150,7 @@ export default function FeedbackPage() {
                     <Star key={i} className="text-yellow-400 fill-yellow-400" size={20} />
                   ))}
                 </div>
-                <p className="text-gray-700 mb-4 italic">"{testimonial.comment}"</p>
+                <p className="text-gray-700 mb-4 italic">&quot;{testimonial.comment}&quot;</p>
                 <div className="flex items-center gap-3">
                   <div className="relative w-12 h-12 rounded-full overflow-hidden">
                     <Image

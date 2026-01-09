@@ -58,7 +58,7 @@ export default function ContactForm() {
               <span className="text-white font-semibold text-sm uppercase tracking-wide">Kindness Towards Humanity</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white drop-shadow-lg">
-              Help Change a Child's Life
+              Help Change a Child&apos;s Life
             </h2>
             <p className="text-white/90 text-lg max-w-2xl mx-auto">
               Get in touch with us and be part of the change

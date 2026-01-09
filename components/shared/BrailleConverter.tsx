@@ -173,8 +173,11 @@ export default function BrailleConverter() {
     }
 
     // Cleanup function
+    const originalTextsMap = originalTextsRef.current;
+    const observer = observerRef.current;
+    
     return () => {
-      originalTextsRef.current.forEach((originalText, node) => {
+      originalTextsMap.forEach((originalText, node) => {
         if (node.nodeType === Node.TEXT_NODE) {
           node.textContent = originalText;
         }
@@ -185,10 +188,10 @@ export default function BrailleConverter() {
           parent.classList.remove("braille-text-element");
         }
       });
-      originalTextsRef.current.clear();
+      originalTextsMap.clear();
       
-      if (observerRef.current) {
-        observerRef.current.disconnect();
+      if (observer) {
+        observer.disconnect();
         observerRef.current = null;
       }
     };

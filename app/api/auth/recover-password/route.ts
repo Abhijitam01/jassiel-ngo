@@ -12,7 +12,9 @@ export async function POST(request: NextRequest) {
     // 3. Save token to database with expiration
     // 4. Send password reset email
 
-    console.log("Password recovery request:", validatedData);
+    if (process.env.NODE_ENV === "development") {
+      console.warn("Password recovery request:", validatedData);
+    }
 
     // Always return success for security (don't reveal if email exists)
     return NextResponse.json(

@@ -112,7 +112,7 @@ export default function SearchPage() {
             </form>
             {query && (
               <p className="text-center mt-4 text-white/80">
-                Found {totalResults} result{totalResults !== 1 ? "s" : ""} for "{query}"
+                Found {totalResults} result{totalResults !== 1 ? "s" : ""} for &quot;{query}&quot;
               </p>
             )}
           </div>

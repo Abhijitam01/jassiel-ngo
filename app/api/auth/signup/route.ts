@@ -12,7 +12,9 @@ export async function POST(request: NextRequest) {
     // 3. Save to database
     // 4. Send verification email
 
-    console.log("Signup request:", { ...validatedData, password: "***" });
+    if (process.env.NODE_ENV === "development") {
+      console.warn("Signup request:", { ...validatedData, password: "***" });
+    }
 
     // Mock: Check if user exists (in production, query database)
     // For now, we'll just return success

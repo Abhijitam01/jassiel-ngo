@@ -58,7 +58,7 @@ export default function BlindnessAwarenessIntro() {
                 This is what blind people experience every day.
               </p>
               <p className="text-lg md:text-2xl font-medium text-white/90 mt-4">
-                Click 'View in Braille' to experience our website as they do.
+                Click &apos;View in Braille&apos; to experience our website as they do.
               </p>
             </div>
           </motion.div>

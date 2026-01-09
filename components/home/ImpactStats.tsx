@@ -124,13 +124,14 @@ export default function ImpactStats() {
       { threshold: 0.2 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    const currentSection = sectionRef.current;
+    if (currentSection) {
+      observer.observe(currentSection);
     }
 
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+      if (currentSection) {
+        observer.unobserve(currentSection);
       }
     };
   }, []);
@@ -144,10 +145,10 @@ export default function ImpactStats() {
         {/* Header */}
         <div className="text-center mb-20">
           <h2 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-8 text-secondary">
-            India's Most Trusted Online Donation Platform
+            India&apos;s Most Trusted Online Donation Platform
           </h2>
           <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto font-semibold">
-            <span className="underline-important">Witness the positive change we've made!</span>
+            <span className="underline-important">Witness the positive change we&apos;ve made!</span>
           </p>
         </div>
 

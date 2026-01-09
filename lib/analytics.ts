@@ -22,7 +22,7 @@ export function trackEvent(
   }
   // Fallback: log to console in development
   if (process.env.NODE_ENV === "development") {
-    console.log("Analytics Event:", eventName, eventParams);
+    console.warn("Analytics Event:", eventName, eventParams);
   }
 }
 

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Card from "@/components/shared/Card";
+import Button from "@/components/shared/Button";
 import { Heart, Users, BookOpen, TrendingUp } from "lucide-react";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 

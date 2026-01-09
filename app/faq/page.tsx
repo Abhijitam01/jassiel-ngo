@@ -112,7 +112,7 @@ export default function FAQPage() {
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-4">Still have questions?</h2>
           <p className="text-gray-700 max-w-2xl mx-auto mb-8">
-            If you couldn't find the answer you're looking for, feel free to contact us.
+            If you couldn&apos;t find the answer you&apos;re looking for, feel free to contact us.
           </p>
           <a
             href="/contact"

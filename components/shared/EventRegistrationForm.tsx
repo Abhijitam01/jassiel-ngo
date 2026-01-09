@@ -52,12 +52,14 @@ export default function EventRegistrationForm({
       // For now, we'll simulate an API call
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      console.log("Event registration:", {
-        eventId,
-        eventTitle,
-        eventDate,
-        ...data,
-      });
+      if (process.env.NODE_ENV === "development") {
+        console.warn("Event registration:", {
+          eventId,
+          eventTitle,
+          eventDate,
+          ...data,
+        });
+      }
 
       toast.success("Registration successful! We'll send you a confirmation email shortly.");
       setIsSubmitted(true);
@@ -81,7 +83,7 @@ export default function EventRegistrationForm({
             Thank you for registering for <strong>{eventTitle}</strong>
           </p>
           <p className="text-sm text-gray-600">
-            We've sent a confirmation email with event details. See you on {new Date(eventDate).toLocaleDateString()}!
+            We&apos;ve sent a confirmation email with event details. See you on {new Date(eventDate).toLocaleDateString()}!
           </p>
         </div>
         <Button

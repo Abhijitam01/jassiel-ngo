@@ -61,7 +61,7 @@ export default function DashboardPage() {
             Welcome back, {session.user?.name || "User"}!
           </h1>
           <p className="text-gray-600">
-            Here's an overview of your activities and contributions
+            Here&apos;s an overview of your activities and contributions
           </p>
         </div>
 
