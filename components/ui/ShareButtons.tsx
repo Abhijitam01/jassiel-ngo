@@ -64,7 +64,7 @@ export default function ShareButtons({
         href={shareLinks.facebook}
         target="_blank"
         rel="noopener noreferrer"
-        className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-colors"
+        className="p-2 text-gray-600 hover:text-[#DC2626] hover:bg-red-50 rounded-full transition-colors"
         aria-label="Share on Facebook"
       >
         <Facebook size={20} />
@@ -73,7 +73,7 @@ export default function ShareButtons({
         href={shareLinks.twitter}
         target="_blank"
         rel="noopener noreferrer"
-        className="p-2 text-gray-600 hover:text-blue-400 hover:bg-blue-50 rounded-full transition-colors"
+        className="p-2 text-gray-600 hover:text-[#DC2626] hover:bg-red-50 rounded-full transition-colors"
         aria-label="Share on Twitter"
       >
         <Twitter size={20} />
@@ -82,7 +82,7 @@ export default function ShareButtons({
         href={shareLinks.linkedin}
         target="_blank"
         rel="noopener noreferrer"
-        className="p-2 text-gray-600 hover:text-blue-700 hover:bg-blue-50 rounded-full transition-colors"
+        className="p-2 text-gray-600 hover:text-[#DC2626] hover:bg-red-50 rounded-full transition-colors"
         aria-label="Share on LinkedIn"
       >
         <Linkedin size={20} />

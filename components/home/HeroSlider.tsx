@@ -74,8 +74,8 @@ export default function HeroSlider() {
             />
             <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/50 to-black/60" />
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="container text-center text-white z-20">
-                <div className="max-w-4xl mx-auto">
+              <div className="container mx-auto px-1 max-w-[95rem] text-center text-white z-20">
+                <div className="max-w-full mx-auto">
                   <h1 className="text-5xl md:text-7xl font-extrabold mb-6 animate-fade-in leading-tight text-white drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
                     {slide.title}
                     <span className="text-[#DC2626]">.</span>

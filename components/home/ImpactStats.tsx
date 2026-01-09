@@ -141,7 +141,7 @@ export default function ImpactStats() {
       ref={sectionRef}
       className="relative py-32 md:py-40 bg-white overflow-hidden"
     >
-      <div className="container mx-auto px-6 max-w-7xl">
+      <div className="container mx-auto px-1 max-w-[95rem]">
         {/* Header */}
         <div className="text-center mb-20">
           <h2 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-8 text-secondary">

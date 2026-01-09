@@ -54,7 +54,7 @@ export default function RootLayout({
       <head>
         <link rel="manifest" href="/manifest.json" />
         <link rel="alternate" type="application/rss+xml" title="Jaasiel Foundation Blog RSS" href="/feed.xml" />
-        <meta name="theme-color" content="#2563eb" />
+        <meta name="theme-color" content="#DC2626" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Jaasiel Foundation" />

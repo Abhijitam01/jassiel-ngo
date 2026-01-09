@@ -19,7 +19,7 @@ export default function Footer() {
     <>
       {/* Sidebar Content - Before Footer */}
       <section className="bg-gray-50 border-t border-gray-200 py-12">
-        <div className="container mx-auto px-6 max-w-7xl">
+        <div className="container mx-auto px-1 max-w-[95rem]">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-2xl font-extrabold text-secondary mb-4">Jaasiel Foundation</h2>
             <p className="text-gray-600 mb-6 leading-relaxed">
@@ -36,7 +36,7 @@ export default function Footer() {
       </section>
 
       <footer className="relative bg-white border-t border-gray-200 pt-16 pb-16">
-      <div className="container mx-auto px-6 max-w-7xl">
+      <div className="container mx-auto px-4 max-w-[95rem]">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Contact Info */}
           <div>

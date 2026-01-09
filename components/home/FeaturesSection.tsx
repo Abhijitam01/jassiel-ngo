@@ -45,8 +45,8 @@ const features = [
 
 export default function FeaturesSection() {
   return (
-    <section className="relative py-32 md:py-40 bg-[#1e40af] overflow-hidden">
-      <div className="container">
+    <section className="relative py-32 md:py-40 bg-[#DC2626] overflow-hidden">
+      <div className="container mx-auto px-1 max-w-[95rem]">
         {/* Header */}
         <div className="text-center mb-20">
           <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6">

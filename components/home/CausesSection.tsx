@@ -13,7 +13,7 @@ export default function CausesSection() {
         <div className="absolute inset-0 bg-pattern opacity-5" />
       </div>
       
-      <div className="relative z-10 container mx-auto px-6 max-w-7xl">
+      <div className="relative z-10 container mx-auto px-1 max-w-[95rem]">
         <div className="text-center mb-20">
           <div className="inline-flex items-center gap-2 mb-8 px-5 py-2.5 bg-primary/10 rounded-full">
             <Ribbon className="text-primary" size={28} />

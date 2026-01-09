@@ -6,8 +6,8 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
-  --color-primary: #2563eb; /* Blue - give.do style */
-  --color-secondary: #1e293b; /* Dark blue-gray */
+  --color-primary: #DC2626; /* Red - primary brand color */
+  --color-secondary: #1f2937; /* Dark gray */
   --color-accent: #f97316; /* Orange - give.do style */
 }
 
@@ -466,19 +466,19 @@ img {
   background: #555;
 }
 
-/* Enhanced gradient backgrounds - give.do style */
+/* Enhanced gradient backgrounds - red and white style */
 .bg-gradient-primary {
-  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%);
 }
 
 .bg-gradient-secondary {
-  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
 }
 
 .bg-pattern {
   background-image: 
-    radial-gradient(circle at 20% 50%, rgba(37, 99, 235, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(249, 115, 22, 0.08) 0%, transparent 50%);
+    radial-gradient(circle at 20% 50%, rgba(220, 38, 38, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(220, 38, 38, 0.08) 0%, transparent 50%);
 }
 
 .text-shadow {
@@ -502,7 +502,7 @@ img {
 }
 
 .braille-text-element:hover {
-  background-color: rgba(37, 99, 235, 0.08);
+  background-color: rgba(220, 38, 38, 0.08);
   border-radius: 4px;
 }
 

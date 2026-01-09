@@ -77,6 +77,37 @@ export default function DonationFeed() {
     };
   }, [isLoading, loadMore]);
 
+  // Auto-scroll animation (right to left)
+  useEffect(() => {
+    if (isLoading || !scrollContainerRef.current) return;
+
+    const container = scrollContainerRef.current;
+    let animationId: number;
+    let scrollPosition = 0;
+    const scrollSpeed = 0.5; // pixels per frame
+
+    const animate = () => {
+      scrollPosition += scrollSpeed;
+      
+      // Reset scroll position when reaching the end for seamless loop
+      const maxScroll = container.scrollWidth - container.clientWidth;
+      if (scrollPosition >= maxScroll) {
+        scrollPosition = 0;
+      }
+      
+      container.scrollLeft = scrollPosition;
+      animationId = requestAnimationFrame(animate);
+    };
+
+    animationId = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+      }
+    };
+  }, [isLoading, displayedDonations.length]);
+
   // Auto-refresh donations every 30 seconds
   useEffect(() => {
     if (!isLoading) {
@@ -105,7 +136,7 @@ export default function DonationFeed() {
 
   return (
     <section className="relative py-20 md:py-32 bg-white">
-      <div className="container">
+      <div className="container mx-auto px-1 max-w-[95rem]">
           {/* Header */}
           <div className="text-center mb-8">
             <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 bg-primary/10 rounded-full">

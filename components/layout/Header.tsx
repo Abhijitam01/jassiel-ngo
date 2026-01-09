@@ -30,7 +30,7 @@ export default function Header() {
     <>
       {/* Main Navigation - give.do style: clean and simple, absolutely positioned over hero */}
       <nav className="absolute top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-white/20">
-        <div className="container mx-auto px-6 max-w-7xl">
+        <div className="container mx-auto px-1 max-w-[95rem]">
           <div className="flex items-center justify-between h-[72px]">
             <Link href="/" className="flex items-center" aria-label="Jaasiel Foundation Home">
               <span className="text-[#DC2626] font-extrabold text-2xl md:text-[28px] tracking-tight hover:text-[#B91C1C] transition-colors">

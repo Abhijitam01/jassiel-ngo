@@ -18,7 +18,7 @@ export default function AboutSection() {
         <div className="absolute inset-0 bg-gradient-to-br from-white/95 via-white/90 to-white/95" />
       </div>
       
-      <div className="relative z-10 container mx-auto px-6 max-w-7xl">
+      <div className="relative z-10 container mx-auto px-1 max-w-[95rem]">
         <div className="max-w-5xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Image Side */}

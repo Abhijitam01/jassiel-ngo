@@ -38,7 +38,7 @@ export default function GiveMonthlySection() {
 
   return (
     <section className="relative py-32 md:py-48 bg-white overflow-hidden">
-      <div className="container">
+      <div className="container mx-auto px-1 max-w-[95rem]">
         {/* Header */}
         <div className="text-center mb-16 md:mb-20">
           <div className="inline-flex items-center gap-2 mb-6 px-5 py-2.5 bg-[#f97316]/10 rounded-full">
