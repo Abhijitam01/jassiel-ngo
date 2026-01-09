@@ -8,6 +8,7 @@ import ErrorBoundaryWrapper from "@/components/layout/ErrorBoundaryWrapper";
 import SkipToContent from "@/components/layout/SkipToContent";
 import LoadingScreenWrapper from "@/components/layout/LoadingScreenWrapper";
 import { getOrganizationSchema } from "@/lib/structured-data";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -94,6 +95,7 @@ export default function RootLayout({
             <Footer />
           </ErrorBoundaryWrapper>
         </Providers>
+        <Analytics />
       </body>
     </html>
   );
