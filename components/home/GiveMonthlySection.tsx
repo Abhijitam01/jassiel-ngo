@@ -3,9 +3,9 @@
 import { useState } from "react";
 import Image from "next/image";
 import { monthlyMissions } from "@/data/monthlyMissions";
-import Card from "@/components/shared/Card";
 import Button from "@/components/shared/Button";
 import Skeleton, { SkeletonCard } from "@/components/ui/Skeleton";
+import { BentoCard, BentoGrid } from "@/components/ui/bento-grid";
 import { 
   Heart, 
   Shield, 
@@ -17,9 +17,11 @@ import {
   Recycle, 
   GraduationCap,
   Calendar,
-  ArrowRight,
+  Users,
+  TrendingUp,
   type LucideIcon
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const iconMap: Record<string, LucideIcon> = {
   heart: Heart,
@@ -37,9 +39,89 @@ export default function GiveMonthlySection() {
   const [isLoading, setIsLoading] = useState(false);
   const featuredMissions = monthlyMissions.filter(m => m.featured);
 
+  // Create bento grid features with different layouts
+  const bentoFeatures = [
+    // Large featured card with image
+    {
+      Icon: Heart,
+      name: featuredMissions[0]?.title || "No Child Orphaned",
+      description: featuredMissions[0]?.description || "Support orphaned children with education, healthcare, and a loving home environment.",
+      href: `/donate?mission=${featuredMissions[0]?.slug || "no-child-orphaned"}`,
+      cta: "Support Monthly",
+      className: "col-span-1 md:col-span-2 lg:col-span-2",
+      image: featuredMissions[0]?.image,
+      title: featuredMissions[0]?.title,
+    },
+    // Medium card with icon
+    {
+      Icon: Shield,
+      name: featuredMissions[1]?.title || "Protect Abandoned Elders",
+      description: featuredMissions[1]?.description || "Provide care, shelter, and dignity to abandoned elderly individuals.",
+      href: `/donate?mission=${featuredMissions[1]?.slug || "protect-abandoned-elders"}`,
+      cta: "Support Monthly",
+      className: "col-span-1",
+      image: featuredMissions[1]?.image,
+      title: featuredMissions[1]?.title,
+    },
+    // Medium card with icon
+    {
+      Icon: Droplet,
+      name: featuredMissions[2]?.title || "Safe Water for All",
+      description: featuredMissions[2]?.description || "Ensure access to clean, safe drinking water for underprivileged communities.",
+      href: `/donate?mission=${featuredMissions[2]?.slug || "safe-water-for-all"}`,
+      cta: "Support Monthly",
+      className: "col-span-1",
+      image: featuredMissions[2]?.image,
+      title: featuredMissions[2]?.title,
+    },
+    // Stats card
+    {
+      Icon: TrendingUp,
+      name: "Impact Metrics",
+      description: "Track the real-time impact of your monthly support across all our programs.",
+      href: "/impact-stories",
+      cta: "View Impact",
+      className: "col-span-1 md:col-span-2 lg:col-span-1",
+      children: (
+        <div className="grid grid-cols-2 gap-4 w-full mt-4">
+          <div className="text-center">
+            <div className="text-3xl font-bold text-[#DC2626] mb-1">1.6M+</div>
+            <div className="text-xs text-gray-600">Lives Impacted</div>
+          </div>
+          <div className="text-center">
+            <div className="text-3xl font-bold text-[#DC2626] mb-1">10+</div>
+            <div className="text-xs text-gray-600">Years Service</div>
+          </div>
+          <div className="text-center">
+            <div className="text-3xl font-bold text-[#DC2626] mb-1">4K+</div>
+            <div className="text-xs text-gray-600">Verified NGOs</div>
+          </div>
+          <div className="text-center">
+            <div className="text-3xl font-bold text-[#DC2626] mb-1">50K+</div>
+            <div className="text-xs text-gray-600">Donors</div>
+          </div>
+        </div>
+      ),
+    },
+    // Additional mission cards
+    ...featuredMissions.slice(3, 5).map((mission) => {
+      const IconComponent = iconMap[mission.icon] || Heart;
+      return {
+        Icon: IconComponent,
+        name: mission.title,
+        description: mission.description,
+        href: `/donate?mission=${mission.slug}`,
+        cta: "Support Monthly",
+        className: "col-span-1",
+        image: mission.image,
+        title: mission.title,
+      };
+    }),
+  ];
+
   return (
     <section className="relative py-32 md:py-48 bg-white overflow-hidden">
-      <div className="container mx-auto px-1 max-w-[95rem]">
+      <div className="container mx-auto px-4 max-w-[95rem]">
         {/* Header */}
         <div className="text-center mb-16 md:mb-20">
           <div className="inline-flex items-center gap-2 mb-6 px-5 py-2.5 bg-[#f97316]/10 rounded-full">
@@ -56,71 +138,19 @@ export default function GiveMonthlySection() {
           </p>
         </div>
 
-        {/* Mission Cards Grid */}
+        {/* Bento Grid */}
         {isLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {[...Array(6)].map((_, i) => (
               <SkeletonCard key={i} />
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-12">
-            {featuredMissions.map((mission) => {
-              const IconComponent = iconMap[mission.icon] || Heart;
-              return (
-                <Card
-                  key={mission.id}
-                  hover
-                  variant="elevated"
-                  className="group relative overflow-hidden border border-gray-100"
-                >
-                  {/* Mission Image */}
-                  {mission.image && (
-                    <div className="relative h-64 md:h-72 w-full overflow-hidden">
-                      <Image
-                        src={mission.image}
-                        alt={mission.title}
-                        fill
-                        className="object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-                      {/* Icon overlay */}
-                      <div className="absolute top-5 left-5 p-3.5 bg-white/20 backdrop-blur-sm rounded-lg group-hover:bg-primary/30 transition-colors">
-                        <IconComponent className="text-white" size={28} />
-                      </div>
-                    </div>
-                  )}
-                  
-                  <div className="p-7 md:p-8">
-                    <div className="mb-5">
-                      {!mission.image && (
-                        <div className="flex items-center gap-4 mb-5">
-                          <div className="p-4 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
-                            <IconComponent className="text-primary" size={32} />
-                          </div>
-                        </div>
-                      )}
-                      <h3 className="text-2xl md:text-3xl font-extrabold text-secondary mb-3 group-hover:text-primary transition-colors">
-                        {mission.title}
-                      </h3>
-                      <p className="text-gray-600 text-base md:text-lg leading-relaxed">
-                        {mission.description}
-                      </p>
-                    </div>
-                    <Button
-                      variant="outline"
-                      size="md"
-                      href={`/donate?mission=${mission.slug}`}
-                      className="w-full group-hover:bg-primary group-hover:text-white transition-colors border-primary text-primary text-base py-3"
-                    >
-                      Support Monthly
-                      <ArrowRight className="ml-2 h-5 w-5" />
-                    </Button>
-                  </div>
-                </Card>
-              );
-            })}
-          </div>
+          <BentoGrid className="mb-12">
+            {bentoFeatures.map((feature, idx) => (
+              <BentoCard key={idx} {...feature} />
+            ))}
+          </BentoGrid>
         )}
 
         {/* View More Button */}
