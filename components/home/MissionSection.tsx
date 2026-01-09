@@ -35,7 +35,7 @@ export default function MissionSection() {
   const [activeTab, setActiveTab] = useState("mission");
 
   return (
-    <section className="relative py-20 md:py-32 overflow-hidden">
+    <section className="relative py-32 md:py-40 overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -65,7 +65,7 @@ export default function MissionSection() {
             <Target className="text-primary" size={24} />
             <span className="text-primary font-semibold text-sm uppercase tracking-wide">Our Mission</span>
           </div>
-          <h2 className="text-3xl md:text-4xl font-extrabold mb-8 text-secondary">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-10 text-secondary">
             Health, Education & Community Development
           </h2>
 
@@ -132,7 +132,7 @@ export default function MissionSection() {
                   if (remainingText) parts.push(remainingText);
                   
                   return (
-                    <p key={index} className="text-gray-700 mb-4 leading-relaxed text-lg">
+                    <p key={index} className="text-gray-700 mb-6 leading-relaxed text-xl md:text-2xl">
                       {parts.length > 0 ? parts : paragraph}
                     </p>
                   );
@@ -141,7 +141,7 @@ export default function MissionSection() {
             ))}
           </div>
 
-          <Button variant="primary" size="lg" href="/about" className="bg-[#DC2626] hover:bg-[#B91C1C] text-white border-0 shadow-lg hover:shadow-xl transition-shadow w-fit font-bold">
+          <Button variant="primary" size="lg" href="/about" className="bg-[#DC2626] hover:bg-[#B91C1C] text-white border-0 shadow-lg hover:shadow-xl transition-shadow w-fit font-bold text-lg px-8 py-4">
             Know More
           </Button>
         </div>

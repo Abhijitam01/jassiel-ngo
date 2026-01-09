@@ -138,15 +138,15 @@ export default function ImpactStats() {
   return (
     <section
       ref={sectionRef}
-      className="relative py-20 md:py-32 bg-white overflow-hidden"
+      className="relative py-32 md:py-40 bg-white overflow-hidden"
     >
       <div className="container mx-auto px-6 max-w-7xl">
         {/* Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-extrabold mb-4 text-secondary">
+        <div className="text-center mb-20">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-8 text-secondary">
             India's Most Trusted Online Donation Platform
           </h2>
-          <p className="text-xl text-gray-700 max-w-3xl mx-auto font-semibold">
+          <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto font-semibold">
             <span className="underline-important">Witness the positive change we've made!</span>
           </p>
         </div>
@@ -180,7 +180,7 @@ export default function ImpactStats() {
                       <AnimatedCounter value={stat.value} suffix={stat.suffix} prefix={stat.prefix} />
                     </div>
                   )}
-                  <p className="text-base md:text-lg lg:text-xl font-bold text-secondary">
+                  <p className="text-lg md:text-xl lg:text-2xl font-bold text-secondary">
                     <span className="underline-important">{stat.label}</span>
                   </p>
                 </div>
@@ -190,10 +190,10 @@ export default function ImpactStats() {
         )}
 
         {/* CTA */}
-        <div className="text-center mt-12">
+        <div className="text-center mt-16">
           <a
             href="/impact-stories"
-            className="inline-flex items-center gap-2 text-primary font-semibold hover:text-primary-dark transition-colors underline-important"
+            className="inline-flex items-center gap-2 text-primary font-semibold hover:text-primary-dark transition-colors underline-important text-lg md:text-xl"
           >
             Read about our Impact
             <span>→</span>

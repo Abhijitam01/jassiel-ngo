@@ -12,7 +12,7 @@ export default function TrustedPartners() {
 
   return (
     <section className="relative py-20 md:py-32 bg-white overflow-hidden">
-      <div className="container mx-auto px-6 max-w-7xl">
+      <div className="container">
         {/* Header */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 bg-primary/10 rounded-full">

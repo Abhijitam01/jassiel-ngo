@@ -47,16 +47,16 @@ export default function AboutSection() {
                 <Heart className="text-primary" size={24} />
                 <span className="text-primary font-semibold text-sm uppercase tracking-wide">About Jaasiel foundation</span>
               </div>
-              <h2 className="text-4xl md:text-5xl font-extrabold mb-6 text-secondary">
+              <h2 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-8 text-secondary">
             An registered voluntary organisation
           </h2>
-              <p className="text-primary text-xl font-bold mb-6 underline-important">
+              <p className="text-primary text-2xl md:text-3xl font-bold mb-8 underline-important">
             Your support will help us to make life better living for poor vulnerable children.
           </p>
-              <p className="text-gray-700 mb-8 leading-relaxed text-lg">
+              <p className="text-gray-700 mb-10 leading-relaxed text-xl md:text-2xl">
             <strong className="text-secondary underline-important">Jaasiel Foundation</strong> is a registered voluntary organisation working with the most vulnerable groups of children, especially street and working children <span className="underline-important font-semibold">since 2014</span>. With a rights based, non-institutional approach the organisation endeavours to educate and impart life skills to vulnerable children so that they become self reliant. Over the years jaasiel has initiated a number of innovative interventions in the field and partnered with various government and non-government agencies to garner support for children.
           </p>
-              <Button variant="primary" size="lg" href="/about" className="bg-[#DC2626] hover:bg-[#B91C1C] text-white border-0 shadow-lg hover:shadow-xl transition-shadow font-bold">
+              <Button variant="primary" size="lg" href="/about" className="bg-[#DC2626] hover:bg-[#B91C1C] text-white border-0 shadow-lg hover:shadow-xl transition-shadow font-bold text-lg px-8 py-4">
             More about us
           </Button>
             </div>

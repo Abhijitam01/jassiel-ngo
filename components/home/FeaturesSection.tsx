@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Users, DollarSign, Heart, UserPlus } from "lucide-react";
+import { Users, DollarSign, Heart, UserPlus, ArrowRight } from "lucide-react";
 
 const features = [
   {
@@ -11,7 +11,6 @@ const features = [
     link: "/volunteer",
     buttonText: "Join now +",
     image: "/assets/img/icon/1.png",
-    whiteImage: "/assets/img/icon/white-1.png",
   },
   {
     id: 2,
@@ -21,7 +20,6 @@ const features = [
     link: "/donate",
     buttonText: "Give now +",
     image: "/assets/img/icon/2.png",
-    whiteImage: "/assets/img/icon/white-2.png",
   },
   {
     id: 3,
@@ -31,7 +29,7 @@ const features = [
     link: "/donate",
     buttonText: "Donate now +",
     image: "/assets/img/icon/3.png",
-    whiteImage: "/assets/img/icon/white-3.png",
+    showArrow: true,
   },
   {
     id: 4,
@@ -41,62 +39,66 @@ const features = [
     link: "/signup",
     buttonText: "Be Member +",
     image: "/assets/img/icon/4.png",
-    whiteImage: "/assets/img/icon/white-4.png",
+    showArrow: true,
   },
 ];
 
 export default function FeaturesSection() {
   return (
-    <section className="relative py-20 md:py-28 bg-gradient-primary overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-0 left-0 w-full h-full bg-pattern" />
-      </div>
-      
-      <div className="relative z-10 container mx-auto px-6 max-w-7xl">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-4">How You Can Help</h2>
-          <p className="text-white/80 text-lg max-w-2xl mx-auto font-semibold">
-            <span className="underline-important">Join us in making a difference through various ways</span>
+    <section className="relative py-32 md:py-40 bg-[#1e40af] overflow-hidden">
+      <div className="container">
+        {/* Header */}
+        <div className="text-center mb-20">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6">
+            How You Can Help
+          </h2>
+          <p className="text-white text-xl md:text-2xl max-w-3xl mx-auto font-normal">
+            Join us in making a difference through various ways
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature) => (
             <div
               key={feature.id}
-              className="relative group bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 hover:bg-white/20 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl"
+              className="bg-white rounded-lg shadow-lg p-8 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
             >
-              <div className="mb-6">
-                <div className="relative w-20 h-20 mb-6 mx-auto">
-                  <div className="absolute inset-0 bg-white/20 rounded-full blur-xl group-hover:bg-white/30 transition-all" />
-                  <div className="relative w-full h-full flex items-center justify-center">
-                    <Image
-                      src={feature.image}
-                      alt={feature.title}
-                      width={64}
-                      height={64}
-                      className="object-contain opacity-100 group-hover:opacity-0 transition-opacity"
-                    />
-                    <Image
-                      src={feature.whiteImage}
-                      alt={feature.title}
-                      width={64}
-                      height={64}
-                      className="object-contain opacity-0 group-hover:opacity-100 transition-opacity absolute inset-0"
-                    />
-                  </div>
+              {/* Icon */}
+              <div className="mb-6 flex justify-center">
+                <div className="relative w-24 h-24">
+                  <Image
+                    src={feature.image}
+                    alt={feature.title}
+                    width={96}
+                    height={96}
+                    className="object-contain"
+                  />
                 </div>
-                <h3 className="text-xl font-extrabold mb-3 text-white text-center">{feature.title}</h3>
-                <p className="text-white/90 mb-6 text-center text-sm leading-relaxed">{feature.description}</p>
-                <Link
-                  href={feature.link}
-                  className="block text-center text-white font-semibold hover:text-primary-light group-hover:translate-x-1 transition-transform inline-flex items-center justify-center gap-2 w-full"
-                >
-                  {feature.buttonText}
-                  <span className="group-hover:translate-x-1 transition-transform">→</span>
-                </Link>
               </div>
+              
+              {/* Title */}
+              <h3 className="text-2xl font-bold text-gray-800 mb-4 text-center">
+                {feature.title}
+              </h3>
+              
+              {/* Description */}
+              <p className="text-gray-600 mb-8 text-center leading-relaxed text-base">
+                {feature.description}
+              </p>
+              
+              {/* Action Button */}
+              <Link
+                href={feature.link}
+                className="block text-center text-gray-800 font-semibold hover:text-[#DC2626] transition-colors group"
+              >
+                <span className="inline-flex items-center gap-2">
+                  {feature.buttonText}
+                  {feature.showArrow && (
+                    <ArrowRight size={18} className="text-[#DC2626] group-hover:translate-x-1 transition-transform" />
+                  )}
+                </span>
+              </Link>
             </div>
           ))}
         </div>

@@ -55,7 +55,7 @@ export default function Navigation({ mobile = false }: NavigationProps) {
 
   const baseClasses = mobile
     ? "flex flex-col space-y-2"
-    : "flex items-center space-x-6";
+    : "flex items-center space-x-3";
 
   return (
     <nav role="navigation" aria-label="Main navigation">

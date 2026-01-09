@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { Users, Heart, Award, TrendingUp } from "lucide-react";
 import Card from "@/components/shared/Card";
@@ -85,10 +85,52 @@ const supporters: Supporter[] = [
 
 export default function SupportersSection() {
   const [isLoading, setIsLoading] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [displayedSupporters, setDisplayedSupporters] = useState<Supporter[]>([]);
+
+  // Initialize displayed supporters - duplicate for seamless infinite scroll
+  useEffect(() => {
+    if (!isLoading && supporters.length > 0) {
+      // Duplicate supporters array multiple times for seamless infinite scroll
+      const duplicated = [...supporters, ...supporters, ...supporters];
+      setDisplayedSupporters(duplicated);
+    }
+  }, [isLoading]);
+
+  // Auto-scroll animation (right to left)
+  useEffect(() => {
+    if (isLoading || !scrollContainerRef.current) return;
+
+    const container = scrollContainerRef.current;
+    let animationId: number;
+    let scrollPosition = 0;
+    const scrollSpeed = 0.5; // pixels per frame
+
+    const animate = () => {
+      scrollPosition += scrollSpeed;
+      
+      // Reset scroll position when reaching the end for seamless loop
+      const maxScroll = container.scrollWidth - container.clientWidth;
+      if (scrollPosition >= maxScroll) {
+        scrollPosition = 0;
+      }
+      
+      container.scrollLeft = scrollPosition;
+      animationId = requestAnimationFrame(animate);
+    };
+
+    animationId = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+      }
+    };
+  }, [isLoading, displayedSupporters.length]);
 
   return (
     <section className="relative py-20 md:py-32 bg-gray-50 overflow-hidden">
-      <div className="container mx-auto px-6 max-w-7xl">
+      <div className="container">
         {/* Header */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 bg-primary/10 rounded-full">
@@ -145,53 +187,75 @@ export default function SupportersSection() {
           </Card>
         </div>
 
-        {/* Supporters Grid */}
-        {isLoading ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4 md:gap-6">
-            {[...Array(8)].map((_, i) => (
-              <Card key={i} className="p-4">
-                <Skeleton variant="circular" width={80} height={80} className="mx-auto mb-3" />
-                <Skeleton variant="text" width="80%" height={20} className="mx-auto mb-2" />
-                <Skeleton variant="text" width="60%" height={16} className="mx-auto mb-2" />
-                <Skeleton variant="text" width="70%" height={16} className="mx-auto" />
-              </Card>
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4 md:gap-6">
-            {supporters.map((supporter) => (
-              <Card
-                key={supporter.id}
-                hover
-                variant="elevated"
-                className="group text-center p-4 md:p-6 border border-gray-100"
-              >
-                <div className="relative mb-4">
-                  <div className="relative w-20 h-20 md:w-24 md:h-24 mx-auto rounded-full overflow-hidden border-4 border-primary/10 group-hover:border-primary/30 transition-colors">
-                    <Image
-                      src={supporter.image}
-                      alt={supporter.name}
-                      fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-300"
-                    />
-                  </div>
-                  {supporter.verified && (
-                    <div className="absolute bottom-0 right-1/4 bg-primary text-white rounded-full p-1">
-                      <Award size={16} />
+        {/* Supporters Horizontal Scroll */}
+        <div className="relative">
+          <div
+            ref={scrollContainerRef}
+            className="overflow-x-auto overflow-y-hidden scrollbar-hide pb-4"
+            style={{
+              scrollbarWidth: "none",
+              msOverflowStyle: "none",
+              WebkitOverflowScrolling: "touch",
+            }}
+          >
+            {isLoading ? (
+              <div className="flex gap-4 md:gap-6 min-w-max px-2">
+                {[...Array(8)].map((_, i) => (
+                  <Card key={i} className="flex-shrink-0 w-64 p-4">
+                    <Skeleton variant="circular" width={80} height={80} className="mx-auto mb-3" />
+                    <Skeleton variant="text" width="80%" height={20} className="mx-auto mb-2" />
+                    <Skeleton variant="text" width="60%" height={16} className="mx-auto mb-2" />
+                    <Skeleton variant="text" width="70%" height={16} className="mx-auto" />
+                  </Card>
+                ))}
+              </div>
+            ) : (
+              <div className="flex gap-4 md:gap-6 min-w-max px-2">
+                {displayedSupporters.map((supporter, index) => (
+                  <Card
+                    key={`${supporter.id}-${index}`}
+                    hover
+                    variant="elevated"
+                    className="group text-center p-5 md:p-6 border border-gray-100 flex-shrink-0 w-64 md:w-72"
+                  >
+                    <div className="relative mb-4">
+                      <div className="relative w-20 h-20 md:w-24 md:h-24 mx-auto rounded-full overflow-hidden border-4 border-primary/10 group-hover:border-primary/30 transition-colors">
+                        <Image
+                          src={supporter.image}
+                          alt={supporter.name}
+                          fill
+                          className="object-cover group-hover:scale-110 transition-transform duration-300"
+                        />
+                      </div>
+                      {supporter.verified && (
+                        <div className="absolute bottom-0 right-1/4 bg-primary text-white rounded-full p-1">
+                          <Award size={16} />
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-                <h3 className="text-base md:text-lg font-bold text-secondary mb-1 group-hover:text-primary transition-colors">
-                  {supporter.name}
-                </h3>
-                <p className="text-xs md:text-sm text-gray-600 mb-2">{supporter.role}</p>
-                <p className="text-sm md:text-base font-semibold text-primary">
-                  {supporter.contribution}
-                </p>
-              </Card>
-            ))}
+                    <h3 className="text-base md:text-lg font-bold text-secondary mb-1 group-hover:text-primary transition-colors">
+                      {supporter.name}
+                    </h3>
+                    <p className="text-xs md:text-sm text-gray-600 mb-2">{supporter.role}</p>
+                    <p className="text-sm md:text-base font-semibold text-primary">
+                      {supporter.contribution}
+                    </p>
+                  </Card>
+                ))}
+              </div>
+            )}
           </div>
-        )}
+
+          {/* Scroll gradient indicators */}
+          <div className="absolute left-0 top-0 bottom-4 w-20 bg-gradient-to-r from-gray-50 to-transparent pointer-events-none z-10" />
+          <div className="absolute right-0 top-0 bottom-4 w-20 bg-gradient-to-l from-gray-50 to-transparent pointer-events-none z-10" />
+        </div>
+
+        <style jsx>{`
+          .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+          }
+        `}</style>
 
         {/* Call to Action */}
         <div className="mt-12 text-center">

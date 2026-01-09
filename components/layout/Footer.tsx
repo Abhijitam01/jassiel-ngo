@@ -16,7 +16,26 @@ export default function Footer() {
   }
 
   return (
-    <footer className="relative bg-white border-t border-gray-200 pt-16 pb-16">
+    <>
+      {/* Sidebar Content - Before Footer */}
+      <section className="bg-gray-50 border-t border-gray-200 py-12">
+        <div className="container mx-auto px-6 max-w-7xl">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-2xl font-extrabold text-secondary mb-4">Jaasiel Foundation</h2>
+            <p className="text-gray-600 mb-6 leading-relaxed">
+              Our journey began in <span className="underline-important font-semibold">March 2014</span> when a group of youngsters volunteered their time to ignite the minds of those underprivileged kids who were struggling hard every day for their living and could not afford their school fees.
+            </p>
+            <div className="border-t border-gray-200 pt-6">
+              <h3 className="font-bold mb-2 text-secondary">Email Us</h3>
+              <a href="mailto:info@jaasielfoundation.com" className="text-primary hover:underline font-semibold underline-important">
+                info@jaasielfoundation.com
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer className="relative bg-white border-t border-gray-200 pt-16 pb-16">
       <div className="container mx-auto px-6 max-w-7xl">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Contact Info */}
@@ -202,6 +221,7 @@ export default function Footer() {
         </div>
       </div>
     </footer>
+    </>
   );
 }
 

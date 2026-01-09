@@ -50,7 +50,7 @@ export default function ContactForm() {
         <div className="absolute inset-0 bg-gradient-to-br from-primary/90 via-primary/85 to-secondary/90" />
       </div>
       
-      <div className="relative z-10 container mx-auto px-6 max-w-7xl">
+      <div className="relative z-10 container">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full">
