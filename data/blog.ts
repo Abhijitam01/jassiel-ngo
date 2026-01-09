@@ -1,0 +1,53 @@
+import { BlogPost } from "@/types";
+
+export const blogPosts: BlogPost[] = [
+  {
+    id: "1",
+    slug: "support-about-poverty-to-poor-family",
+    title: "Support about poverty to poor family",
+    excerpt: "How our foundation is helping families break the cycle of poverty through education and support programs.",
+    content: "Our foundation has been working tirelessly to support families living in poverty. Through our comprehensive programs, we provide education, healthcare, and economic opportunities that help families build a better future. This article explores the impact of our work and the stories of families we've helped.",
+    image: "/assets/img/footer-news/1.jpg",
+    author: "Jaasiel Foundation",
+    date: "2024-01-22",
+    category: "Poverty",
+    tags: ["poverty", "support", "families"],
+  },
+  {
+    id: "2",
+    slug: "mostly-suffered-school-boys-care",
+    title: "Mostly suffered school Boys care",
+    excerpt: "Our program focuses on providing care and support for school-going boys from underprivileged backgrounds.",
+    content: "Many boys from underprivileged backgrounds face numerous challenges in their educational journey. Our program provides comprehensive support including educational materials, mentorship, and after-school programs. We believe every child deserves the opportunity to succeed.",
+    image: "/assets/img/footer-news/2.jpg",
+    author: "Jaasiel Foundation",
+    date: "2024-02-24",
+    category: "Health",
+    tags: ["education", "children", "care"],
+  },
+  {
+    id: "3",
+    slug: "impact-of-education-programs",
+    title: "The Impact of Our Education Programs",
+    excerpt: "A detailed look at how our education programs are transforming lives in underprivileged communities.",
+    content: "Education is the most powerful tool for change. Our education programs have reached thousands of children, providing them with the resources and support they need to succeed. This article highlights the success stories and the measurable impact of our work.",
+    image: "/assets/img/blog/1.jpg",
+    author: "Jaasiel Foundation",
+    date: "2024-03-15",
+    category: "Education",
+    tags: ["education", "impact", "success"],
+  },
+  {
+    id: "4",
+    slug: "women-empowerment-success-stories",
+    title: "Women Empowerment: Success Stories",
+    excerpt: "Inspiring stories of women who have transformed their lives through our empowerment programs.",
+    content: "Our women empowerment programs have helped hundreds of women become self-reliant and successful entrepreneurs. These inspiring stories showcase the power of education, training, and support in transforming lives.",
+    image: "/assets/img/blog/2.jpg",
+    author: "Jaasiel Foundation",
+    date: "2024-03-20",
+    category: "Empowerment",
+    tags: ["women", "empowerment", "success"],
+  },
+];
+
