@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { Search, FileText, Calendar, Heart } from "lucide-react";
@@ -13,7 +13,7 @@ import { EmptySearchResults } from "@/components/ui/EmptyState";
 import { formatDate } from "@/lib/utils";
 import { trackSearch } from "@/lib/analytics";
 
-export default function SearchPage() {
+function SearchContent() {
   const searchParams = useSearchParams();
   const query = searchParams.get("q") || "";
   const [searchQuery, setSearchQuery] = useState(query);
@@ -257,6 +257,25 @@ export default function SearchPage() {
         </section>
       )}
     </div>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense fallback={
+      <div className="py-16 md:py-24">
+        <div className="bg-primary text-white py-16">
+          <div className="container mx-auto px-4">
+            <div className="max-w-2xl mx-auto text-center">
+              <h1 className="text-4xl md:text-5xl font-bold mb-6">Search Our Website</h1>
+              <p className="text-white/80">Loading...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    }>
+      <SearchContent />
+    </Suspense>
   );
 }
 

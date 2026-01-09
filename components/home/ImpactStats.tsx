@@ -2,13 +2,13 @@
 
 import { useState, useEffect, useRef } from "react";
 import Skeleton from "@/components/ui/Skeleton";
-import { Users, Heart, Building2, TrendingUp } from "lucide-react";
+import { Users, Heart, Building2, TrendingUp, type LucideIcon } from "lucide-react";
 
 interface Stat {
   id: string;
   value: number;
   label: string;
-  icon: React.ComponentType<{ size?: number; className?: string }>;
+  icon: LucideIcon;
   suffix?: string;
   prefix?: string;
 }

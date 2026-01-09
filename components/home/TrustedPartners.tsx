@@ -49,11 +49,10 @@ export default function TrustedPartners() {
                 className="p-6 text-center group relative"
               >
                 {partner.verified && (
-                  <div className="absolute top-2 right-2">
+                  <div className="absolute top-2 right-2" title="Verified Partner">
                     <CheckCircle2
                       className="text-success"
                       size={20}
-                      title="Verified Partner"
                     />
                   </div>
                 )}

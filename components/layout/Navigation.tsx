@@ -10,6 +10,12 @@ interface NavigationProps {
   mobile?: boolean;
 }
 
+interface NavItem {
+  href?: string;
+  label: string;
+  submenu?: NavItem[];
+}
+
 export default function Navigation({ mobile = false }: NavigationProps) {
   const pathname = usePathname();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
@@ -21,16 +27,16 @@ export default function Navigation({ mobile = false }: NavigationProps) {
     return pathname.startsWith(path);
   };
 
-  const isParentActive = (submenu: any[]) => {
+  const isParentActive = (submenu: NavItem[]): boolean => {
     return submenu.some((item) => {
       if (item.submenu) {
         return isParentActive(item.submenu);
       }
-      return isActive(item.href);
+      return item.href ? isActive(item.href) : false;
     });
   };
 
-  const navItems = [
+  const navItems: NavItem[] = [
     { href: "/donate", label: "Donate" },
     { href: "/impact-stories", label: "Our Impact" },
     {
@@ -108,23 +114,25 @@ export default function Navigation({ mobile = false }: NavigationProps) {
                           </button>
                           {openDropdown === subItem.label && (
                             <ul className={cn(mobile ? "ml-4" : "absolute left-full top-0 ml-1 bg-white shadow-lg rounded-md py-2 min-w-[200px]")}>
-                              {subItem.submenu.map((nestedItem, nestedIndex) => (
-                                <li key={nestedIndex}>
-                                  <Link
-                                    href={nestedItem.href}
-                                    className={cn(
-                                      "block px-4 py-2 hover:bg-gray-100",
-                                      isActive(nestedItem.href) && "text-primary font-semibold"
-                                    )}
-                                  >
-                                    {nestedItem.label}
-                                  </Link>
-                                </li>
+                              {subItem.submenu?.map((nestedItem, nestedIndex) => (
+                                nestedItem.href ? (
+                                  <li key={nestedIndex}>
+                                    <Link
+                                      href={nestedItem.href}
+                                      className={cn(
+                                        "block px-4 py-2 hover:bg-gray-100",
+                                        isActive(nestedItem.href) && "text-primary font-semibold"
+                                      )}
+                                    >
+                                      {nestedItem.label}
+                                    </Link>
+                                  </li>
+                                ) : null
                               ))}
                             </ul>
                           )}
                         </div>
-                      ) : (
+                      ) : subItem.href ? (
                             <Link
                               href={subItem.href}
                               role="menuitem"
@@ -136,13 +144,13 @@ export default function Navigation({ mobile = false }: NavigationProps) {
                             >
                               {subItem.label}
                             </Link>
-                      )}
+                      ) : null}
                     </li>
                   ))}
                 </ul>
               )}
             </div>
-          ) : (
+          ) : item.href ? (
             <Link
               href={item.href}
               className={cn(
@@ -155,7 +163,7 @@ export default function Navigation({ mobile = false }: NavigationProps) {
             >
               {item.label}
             </Link>
-          )}
+          ) : null}
         </li>
       ))}
       </ul>

@@ -17,10 +17,11 @@ import {
   Recycle, 
   GraduationCap,
   Calendar,
-  ArrowRight
+  ArrowRight,
+  type LucideIcon
 } from "lucide-react";
 
-const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
+const iconMap: Record<string, LucideIcon> = {
   heart: Heart,
   shield: Shield,
   droplet: Droplet,
