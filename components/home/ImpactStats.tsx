@@ -174,9 +174,6 @@ export default function ImpactStats() {
                   className="text-center animate-fade-in-up px-2"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 bg-primary/10 rounded-full mb-3 sm:mb-4 md:mb-6 hover:bg-primary/20 transition-colors">
-                    <IconComponent className="text-primary" size={24} />
-                  </div>
                   {isVisible && (
                     <div className="mb-2 sm:mb-3 md:mb-4">
                       <AnimatedCounter value={stat.value} suffix={stat.suffix} prefix={stat.prefix} />

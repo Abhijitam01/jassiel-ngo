@@ -1,11 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
+import { newsletterSchema } from "@/lib/validations";
 import { rateLimit, getClientIdentifier } from "@/lib/rateLimit";
 import { sanitizeEmail } from "@/lib/sanitize";
-
-const newsletterSchema = z.object({
-  email: z.string().email("Invalid email address"),
-});
+import { prisma } from "@/lib/prisma";
 
 export async function POST(request: NextRequest) {
   try {
@@ -38,19 +35,52 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json();
 
-    // Sanitize email
-    const sanitizedEmail = sanitizeEmail(body.email);
+    // Get source from headers (referer or query param)
+    const referer = request.headers.get("referer") || "";
+    const source = body.source || referer || "website";
 
     // Validate with Zod schema
-    const validatedData = newsletterSchema.parse({ email: sanitizedEmail });
+    const validatedData = newsletterSchema.parse({
+      email: sanitizeEmail(body.email),
+      preferences: body.preferences || {},
+      source: source,
+    });
 
-    // In production, you would:
-    // 1. Save to newsletter database
-    // 2. Add to email marketing service
-    // 3. Send confirmation email
+    // Check if already subscribed
+    const existing = await prisma.newsletterSubscription.findUnique({
+      where: { email: validatedData.email },
+    });
+
+    if (existing && existing.status === "ACTIVE") {
+      return NextResponse.json(
+        { message: "You are already subscribed to our newsletter!" },
+        { status: 200 }
+      );
+    }
+
+    // Upsert subscription (handle resubscription)
+    const subscription = await prisma.newsletterSubscription.upsert({
+      where: { email: validatedData.email },
+      update: {
+        status: "ACTIVE",
+        preferences: validatedData.preferences || {},
+        source: validatedData.source || undefined,
+        subscribedAt: new Date(),
+        unsubscribedAt: null,
+      },
+      create: {
+        email: validatedData.email,
+        status: "ACTIVE",
+        preferences: validatedData.preferences || {},
+        source: validatedData.source || undefined,
+      },
+    });
+
+    // TODO: Send confirmation email
+    // TODO: Add to email marketing service (Mailchimp, ConvertKit, etc.)
 
     if (process.env.NODE_ENV === "development") {
-      console.warn("Newsletter subscription:", validatedData);
+      console.log("Newsletter subscription saved:", subscription.id);
     }
 
     return NextResponse.json(

@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Image from "next/image";
 import { monthlyMissions } from "@/data/monthlyMissions";
-import Button from "@/components/shared/Button";
 import Skeleton, { SkeletonCard } from "@/components/ui/Skeleton";
 import { BentoCard, BentoGrid } from "@/components/ui/bento-grid";
 import { 
@@ -130,11 +129,17 @@ export default function GiveMonthlySection() {
               Give Monthly
             </span>
           </div>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-6 text-secondary">
-            Create Sustained Impact
+          <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold mb-6 text-secondary">
+            Can they count on you every month?
           </h2>
-          <p className="text-gray-700 max-w-3xl mx-auto text-base md:text-lg leading-relaxed font-semibold">
-            <span className="underline-important">Support verified projects. Get regular updates. Save tax. Cancel anytime.</span>
+          <p className="text-gray-700 max-w-3xl mx-auto text-base md:text-lg lg:text-xl leading-relaxed font-semibold mb-4">
+            <span className="underline-important">Your monthly gift = a whole year of impact.</span>
+          </p>
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#DC2626] to-[#B91C1C] text-white rounded-full shadow-lg mb-4">
+            <span className="text-sm md:text-base font-bold">✨ Limited Time: First 3 months 2X matched!</span>
+          </div>
+          <p className="text-gray-600 max-w-3xl mx-auto text-sm md:text-base leading-relaxed">
+            Your gift provides families with essential resources year-round. Support verified projects. Get regular updates. Save tax. Cancel anytime.
           </p>
         </div>
 
@@ -153,12 +158,6 @@ export default function GiveMonthlySection() {
           </BentoGrid>
         )}
 
-        {/* View More Button */}
-        <div className="text-center mt-6 sm:mt-8">
-          <Button variant="primary" size="lg" href="/donate" className="bg-[#DC2626] hover:bg-[#B91C1C] text-white border-0 shadow-lg hover:shadow-xl font-bold text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 w-full sm:w-auto">
-            View More Missions
-          </Button>
-        </div>
       </div>
     </section>
   );

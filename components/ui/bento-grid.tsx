@@ -119,10 +119,10 @@ export function BentoCard({
             hasImage && "mt-3 sm:mt-4"
           )}>
             <div className={cn(
-              "inline-flex items-center gap-1.5 sm:gap-2 text-sm sm:text-base font-semibold transition-all",
+              "inline-flex items-center gap-1.5 sm:gap-2 text-sm sm:text-base font-semibold transition-all rounded-lg px-3 py-1.5 sm:px-4 sm:py-2",
               hasImage
-                ? "text-white hover:text-gray-200"
-                : "text-[#DC2626] group-hover:gap-2 sm:group-hover:gap-3"
+                ? "text-white hover:text-gray-200 hover:bg-white/10"
+                : "text-[#DC2626] group-hover:bg-[#DC2626] group-hover:text-white group-hover:gap-2 sm:group-hover:gap-3"
             )}>
               {cta}
               <ArrowRight size={14} />

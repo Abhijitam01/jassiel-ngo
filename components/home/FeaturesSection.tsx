@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Users, DollarSign, Heart, UserPlus, ArrowRight, Sparkles } from "lucide-react";
+import { Users, DollarSign, Heart, UserPlus, ArrowRight, Sparkles, Building2 } from "lucide-react";
 
 const features = [
   {
@@ -11,7 +11,7 @@ const features = [
     link: "/volunteer",
     buttonText: "Join now",
     image: "/assets/img/icon/1.png",
-    size: "large", // spans 2 columns
+    size: "wide", // spans 2 columns on top
     gradient: "from-red-500 to-red-700",
   },
   {
@@ -22,29 +22,29 @@ const features = [
     link: "/donate",
     buttonText: "Give now",
     image: "/assets/img/icon/2.png",
-    size: "medium",
+    size: "wide", // spans 2 columns on top
     gradient: "from-red-600 to-red-800",
   },
   {
     id: 3,
-    title: "Give Donation",
-    description: "Donate any amount as you wish to spent on the needy ones. Send a cheque/Draft in favour of Jaasiel foundation.",
-    icon: Heart,
-    link: "/donate",
-    buttonText: "Donate now",
-    image: "/assets/img/icon/3.png",
-    size: "tall", // spans 2 rows
-    gradient: "from-red-500 to-red-700",
-  },
-  {
-    id: 4,
     title: "Join as a member",
     description: "Suggest innovation and adoption of new helpful services to the poor women and childrens who need our help very badly.",
     icon: UserPlus,
     link: "/signup",
     buttonText: "Be Member",
     image: "/assets/img/icon/4.png",
-    size: "medium",
+    size: "tall", // spans 2 rows on left
+    gradient: "from-red-500 to-red-700",
+  },
+  {
+    id: 4,
+    title: "Jaasiel Foundation",
+    description: "We are a registered voluntary organisation working with the most vulnerable groups of children, especially street and working children. Join us in our mission to create lasting change.",
+    icon: Building2,
+    link: "/donate",
+    buttonText: "Donate now",
+    image: "/assets/img/icon/3.png",
+    size: "tall", // spans 2 rows on right
     gradient: "from-red-600 to-red-800",
   },
 ];
@@ -75,13 +75,28 @@ export default function FeaturesSection() {
           </p>
         </div>
         
-        {/* Modern Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
-          {features.map((feature) => {
+        {/* Modern Bento Grid - Restructured to fill all space */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
+          {features.map((feature, index) => {
             const IconComponent = feature.icon;
-            const isLarge = feature.size === "large";
+            const isWide = feature.size === "wide";
             const isTall = feature.size === "tall";
-            const isMedium = feature.size === "medium";
+            
+            // Explicit grid positioning for tall cards
+            let gridPosition = "";
+            if (isTall && index === 2) {
+              // First tall card - starts at row 2, column 1
+              gridPosition = "md:row-start-2 md:col-start-1 md:row-span-2";
+            } else if (isTall && index === 3) {
+              // Second tall card - starts at row 2, column 2
+              gridPosition = "md:row-start-2 md:col-start-2 md:row-span-2";
+            } else if (isWide && index === 0) {
+              // First wide card - row 1, column 1
+              gridPosition = "md:row-start-1 md:col-start-1";
+            } else if (isWide && index === 1) {
+              // Second wide card - row 1, column 2
+              gridPosition = "md:row-start-1 md:col-start-2";
+            }
 
             return (
               <Link
@@ -93,12 +108,10 @@ export default function FeaturesSection() {
                   shadow-xl hover:shadow-2xl
                   transition-all duration-500
                   hover:scale-[1.02]
-                  ${isLarge ? "md:col-span-2" : ""}
-                  ${isTall ? "md:row-span-2 md:col-span-1" : ""}
-                  ${isMedium ? "" : ""}
+                  ${gridPosition}
                   border border-white/20
-                  min-h-[240px] sm:min-h-[280px] md:min-h-[320px]
-                  ${isTall ? "md:min-h-[640px]" : ""}
+                  min-h-[240px] sm:min-h-[280px] md:min-h-[300px]
+                  ${isTall ? "md:min-h-[600px]" : ""}
                 `}
               >
                 {/* Gradient overlay on hover */}
@@ -115,7 +128,7 @@ export default function FeaturesSection() {
                       transition-all duration-300
                       group-hover:scale-110
                     `}>
-                      <IconComponent className="text-white" size={isLarge || isTall ? 24 : 20} />
+                      <IconComponent className="text-white" size={isTall ? 24 : 20} />
                     </div>
                     {feature.image && (
                       <div className="relative w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 opacity-20 group-hover:opacity-30 transition-opacity">
@@ -134,7 +147,7 @@ export default function FeaturesSection() {
                   <h3 className={`
                     font-extrabold text-gray-900 mb-2 sm:mb-3 md:mb-4
                     group-hover:text-[#DC2626] transition-colors duration-300
-                    ${isLarge ? "text-xl sm:text-2xl md:text-3xl lg:text-4xl" : isTall ? "text-lg sm:text-xl md:text-2xl lg:text-3xl" : "text-lg sm:text-xl md:text-2xl"}
+                    ${isWide ? "text-xl sm:text-2xl md:text-3xl" : isTall ? "text-lg sm:text-xl md:text-2xl lg:text-3xl" : "text-lg sm:text-xl md:text-2xl"}
                   `}>
                     {feature.title}
                   </h3>
@@ -142,7 +155,7 @@ export default function FeaturesSection() {
                   {/* Description */}
                   <p className={`
                     text-gray-600 leading-relaxed mb-4 sm:mb-5 md:mb-6 text-xs sm:text-sm
-                    ${isLarge ? "sm:text-base md:text-lg" : isTall ? "sm:text-base md:text-lg flex-grow" : "md:text-base"}
+                    ${isWide ? "sm:text-base md:text-lg" : isTall ? "sm:text-base md:text-lg flex-grow" : "md:text-base"}
                   `}>
                     {feature.description}
                   </p>
@@ -150,7 +163,7 @@ export default function FeaturesSection() {
                   {/* Action Button */}
                   <div className="mt-auto">
                     <div className="inline-flex items-center gap-1.5 sm:gap-2 text-[#DC2626] font-bold group-hover:gap-2 sm:group-hover:gap-3 transition-all duration-300">
-                      <span className={`text-sm sm:text-base ${isLarge || isTall ? "md:text-lg lg:text-xl" : "md:text-lg"}`}>
+                      <span className={`text-sm sm:text-base ${isTall ? "md:text-lg lg:text-xl" : "md:text-lg"}`}>
                         {feature.buttonText}
                       </span>
                       <ArrowRight 
@@ -171,19 +184,6 @@ export default function FeaturesSection() {
           })}
         </div>
 
-        {/* Bottom CTA */}
-        <div className="text-center mt-8 sm:mt-10 md:mt-12 lg:mt-16">
-          <p className="text-white/80 text-xs sm:text-sm md:text-base mb-3 sm:mb-4 px-4">
-            Every contribution makes a difference
-          </p>
-          <Link
-            href="/donate"
-            className="inline-flex items-center gap-1.5 sm:gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-white text-[#DC2626] rounded-full font-bold hover:bg-white/90 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl text-sm sm:text-base"
-          >
-            <span>Explore All Ways to Help</span>
-            <ArrowRight size={16} />
-          </Link>
-        </div>
       </div>
     </section>
   );

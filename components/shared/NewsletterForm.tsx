@@ -57,32 +57,34 @@ export default function NewsletterForm({
 
   if (variant === "compact") {
     return (
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className={`flex gap-2 ${className}`}
-      >
-        <div className="flex-1">
-          <input
-            type="email"
-            placeholder="Enter your email"
-            {...register("email")}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-          />
-          {errors.email && (
-            <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
-          )}
-        </div>
-        <Button
-          type="submit"
-          variant="primary"
-          size="md"
-          disabled={isSubmitting}
-          className="flex items-center gap-2"
+      <div>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className={`flex items-center gap-3 ${className}`}
         >
-          <Send size={16} />
-          Subscribe
-        </Button>
-      </form>
+          <div className="flex-1">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              {...register("email")}
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-base"
+            />
+          </div>
+          <Button
+            type="submit"
+            variant="primary"
+            size="md"
+            disabled={isSubmitting}
+            className="flex items-center gap-2 bg-[#DC2626] hover:bg-[#B91C1C] text-white border-0 px-5 py-2.5 h-auto whitespace-nowrap"
+          >
+            <Send size={16} />
+            Subscribe
+          </Button>
+        </form>
+        {errors.email && (
+          <p className="text-red-500 text-sm mt-2">{errors.email.message}</p>
+        )}
+      </div>
     );
   }
 

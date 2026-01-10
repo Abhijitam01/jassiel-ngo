@@ -1,0 +1,395 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// User model - Core authentication and user management
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  phone         String?   @unique
+  password      String    // Hashed password
+  name          String
+  avatar        String?
+  role          UserRole  @default(USER)
+  emailVerified Boolean   @default(false)
+  phoneVerified Boolean   @default(false)
+  lastLoginAt   DateTime?
+  preferences   Json?     // User preferences (notifications, language, etc.)
+  address       Json?     // Billing/shipping address
+  
+  // Relations
+  donations             Donation[]
+  volunteerRegistrations VolunteerRegistration[]
+  blogPosts             BlogPost[]
+  teamMember            TeamMember?
+  contactSubmissions    ContactSubmission[]
+  feedbackSubmissions   FeedbackSubmission[]
+  organizedEvents       Event[]              @relation("EventOrganizer")
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+  @@index([phone])
+}
+
+enum UserRole {
+  USER
+  ADMIN
+  VOLUNTEER
+  MODERATOR
+}
+
+// Cause model - Campaigns and causes
+model Cause {
+  id                 String    @id @default(cuid())
+  slug               String    @unique
+  title              String
+  description        String
+  fullDescription    String    @db.Text
+  image              String
+  category           String
+  status             CauseStatus @default(ACTIVE)
+  goal               Decimal?  @db.Decimal(10, 2)
+  raised             Decimal   @default(0) @db.Decimal(10, 2)
+  donorsCount        Int       @default(0)
+  startDate          DateTime?
+  endDate            DateTime?
+  targetBeneficiaries Int?
+  organizationDetails Json?
+  
+  // Relations
+  donations          Donation[]
+  updates            CauseUpdate[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+  @@index([category])
+  @@index([status])
+}
+
+enum CauseStatus {
+  ACTIVE
+  COMPLETED
+  ARCHIVED
+  DRAFT
+}
+
+// Cause Update model - Progress tracking
+model CauseUpdate {
+  id        String   @id @default(cuid())
+  causeId   String
+  cause     Cause    @relation(fields: [causeId], references: [id], onDelete: Cascade)
+  title     String
+  content   String   @db.Text
+  image     String?
+  published Boolean  @default(false)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([causeId])
+}
+
+// Donation model - All donations
+model Donation {
+  id              String          @id @default(cuid())
+  amount          Decimal         @db.Decimal(10, 2)
+  currency        String          @default("INR")
+  donorId         String
+  donor           User            @relation(fields: [donorId], references: [id])
+  causeId         String?
+  cause           Cause?          @relation(fields: [causeId], references: [id])
+  paymentMethod   PaymentMethod
+  transactionId   String?         @unique
+  paymentStatus   PaymentStatus   @default(PENDING)
+  receiptNumber   String?         @unique
+  taxExemptStatus Boolean         @default(false)
+  anonymous       Boolean         @default(false)
+  dedication      String?         @db.Text
+  metadata        Json?           // Additional metadata
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([donorId])
+  @@index([causeId])
+  @@index([transactionId])
+  @@index([paymentStatus])
+  @@index([createdAt])
+}
+
+enum PaymentMethod {
+  RAZORPAY
+  STRIPE
+  BANK_TRANSFER
+  CHEQUE
+  CASH
+  UPI
+}
+
+enum PaymentStatus {
+  PENDING
+  PROCESSING
+  SUCCESSFUL
+  FAILED
+  REFUNDED
+  CANCELLED
+}
+
+// Event model - Events and activities
+model Event {
+  id                   String    @id @default(cuid())
+  slug                 String    @unique
+  title                String
+  description          String
+  fullDescription      String    @db.Text
+  image                String
+  date                 DateTime
+  location             String
+  time                 String?
+  category             String
+  status               EventStatus @default(UPCOMING)
+  maxParticipants      Int?
+  registeredParticipants Int     @default(0)
+  organizerId          String?
+  organizer            User?     @relation("EventOrganizer", fields: [organizerId], references: [id])
+  requirements         String?   @db.Text
+  prerequisites        Json?
+  
+  // Relations
+  volunteerRegistrations VolunteerRegistration[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+  @@index([date])
+  @@index([status])
+  @@index([category])
+}
+
+enum EventStatus {
+  UPCOMING
+  ONGOING
+  COMPLETED
+  CANCELLED
+}
+
+// Volunteer Registration model
+model VolunteerRegistration {
+  id           String              @id @default(cuid())
+  userId       String
+  user         User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  eventId      String?
+  event        Event?              @relation(fields: [eventId], references: [id], onDelete: SetNull)
+  status       VolunteerStatus     @default(PENDING)
+  hoursLogged  Int                 @default(0)
+  tasksCompleted Json?
+  skills       String[]            @default([])
+  interests    String[]            @default([])
+  notes        String?             @db.Text
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([eventId])
+  @@index([status])
+}
+
+enum VolunteerStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  COMPLETED
+}
+
+// Blog Post model
+model BlogPost {
+  id           String      @id @default(cuid())
+  slug         String      @unique
+  title        String
+  excerpt      String      @db.Text
+  content      String      @db.Text
+  image        String
+  authorId     String
+  author       User        @relation(fields: [authorId], references: [id])
+  date         DateTime    @default(now())
+  publishedAt  DateTime?
+  status       PostStatus  @default(DRAFT)
+  category     String
+  tags         String[]    @default([])
+  viewCount    Int         @default(0)
+  likeCount    Int         @default(0)
+  featured     Boolean     @default(false)
+  relatedPostIds String[]  @default([])
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+  @@index([authorId])
+  @@index([category])
+  @@index([status])
+  @@index([publishedAt])
+  @@index([featured])
+}
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+// Team Member model
+model TeamMember {
+  id            String  @id @default(cuid())
+  userId        String? @unique
+  user          User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+  name          String
+  role          String
+  image         String
+  bio           String? @db.Text
+  department    String?
+  division      String?
+  contactEmail  String?
+  officeLocation String?
+  joinDate      DateTime?
+  roleStartDate DateTime?
+  socialLinks   Json?   // Facebook, Twitter, LinkedIn, Instagram
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([role])
+}
+
+// FAQ model
+model FAQ {
+  id           String   @id @default(cuid())
+  question     String   @db.Text
+  answer       String   @db.Text
+  category     String
+  order        Int      @default(0)
+  viewCount    Int      @default(0)
+  helpfulCount Int      @default(0)
+  notHelpfulCount Int   @default(0)
+  relatedQuestionIds String[] @default([])
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([category])
+  @@index([order])
+}
+
+// Newsletter Subscription model
+model NewsletterSubscription {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  status        SubscriptionStatus @default(ACTIVE)
+  preferences   Json?    // Categories, frequency, etc.
+  source        String?  // Where they subscribed from
+  subscribedAt  DateTime @default(now())
+  unsubscribedAt DateTime?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+  @@index([status])
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  UNSUBSCRIBED
+  BOUNCED
+}
+
+// Contact Submission model
+model ContactSubmission {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  name      String
+  email     String
+  phone     String?
+  message   String?  @db.Text
+  status    String   @default("NEW") // NEW, READ, REPLIED, ARCHIVED
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([email])
+  @@index([status])
+}
+
+// Feedback Submission model
+model FeedbackSubmission {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  name      String
+  email     String
+  phone     String?
+  subject   String?
+  message   String   @db.Text
+  rating    Int?     // 1-5 rating
+  category  String?
+  status    String   @default("NEW")
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([email])
+  @@index([status])
+}
+
+// Monthly Mission model
+model MonthlyMission {
+  id          String  @id @default(cuid())
+  title       String
+  description String  @db.Text
+  icon        String
+  slug        String  @unique
+  featured    Boolean @default(false)
+  image       String?
+  order       Int     @default(0)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+  @@index([featured])
+  @@index([order])
+}
+
+// Partner model
+model Partner {
+  id        String   @id @default(cuid())
+  name      String
+  logo      String
+  verified  Boolean  @default(false)
+  category  String?
+  website   String?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([verified])
+  @@index([category])
+}

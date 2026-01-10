@@ -3,29 +3,28 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Button from "@/components/shared/Button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const slides = [
   {
     id: 1,
-    title: "Help Raising Poor Childrens of India",
-    description: "Registered voluntary organisation working with the most vulnerable groups of children, especially street and working children since 2014",
+    title: "Can they count on you every month?",
+    description: "Your monthly gift = a whole year of impact. Help transform lives of vulnerable children and families across India. Registered NGO working since 2014.",
     image: "/assets/img/main-banner1.jpg",
-    buttonText: "Donate Now",
-    secondaryButtonText: "Become Member",
+    buttonText: "Give Monthly Now",
+    secondaryButtonText: "Learn More",
   },
   {
     id: 2,
     title: "They wait for your help & Support",
-    description: "Join hands to hands and contribute to their health, food and education",
+    description: "Join thousands of monthly supporters creating sustained change. Your recurring gift provides families with essential resources year-round.",
     image: "/assets/img/main-banner2.jpg",
-    buttonText: "Donate Now",
-    secondaryButtonText: "Become Member",
+    buttonText: "Start Monthly Giving",
+    secondaryButtonText: "Become Volunteer",
   },
   {
     id: 3,
-    title: "Save the Kindness",
-    description: "HELPING POORS BRINGS PEACE IN YOU AND PROVIDE SATISFACTION IN YOUR LIFETIME. LETS FEEL FREE TO HELP THE PEOPLE WHO ARE NOT HAVING ANYTHING EXCEPT YOUR HELP.",
+    title: "Can you help transform a life today?",
+    description: "Act now and your first three months of monthly giving can be 2X matched! Every rupee goes directly to programs serving India's most vulnerable communities.",
     image: "/assets/img/main-banner3.jpg",
     buttonText: "Donate Now",
     secondaryButtonText: "Become Member",
@@ -41,18 +40,6 @@ export default function HeroSlider() {
     }, 5000);
     return () => clearInterval(timer);
   }, []);
-
-  const goToSlide = (index: number) => {
-    setCurrentSlide(index);
-  };
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-  };
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
@@ -83,11 +70,18 @@ export default function HeroSlider() {
                   <p className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl mb-6 sm:mb-8 md:mb-10 max-w-3xl mx-auto animate-fade-in-delay text-white/95 leading-relaxed font-medium px-2">
                     {slide.description}
                   </p>
+                  {index === 2 && (
+                    <div className="mb-4 sm:mb-5 md:mb-6 animate-fade-in-delay-2">
+                      <div className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-[#DC2626] to-[#B91C1C] text-white rounded-full shadow-lg backdrop-blur-sm border border-white/20">
+                        <span className="text-sm sm:text-base font-bold">✨ First 3 months 2X matched!</span>
+                      </div>
+                    </div>
+                  )}
                   <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center animate-fade-in-delay-2 px-4">
                     <Button variant="primary" size="lg" href="/donate" className="bg-[#DC2626] hover:bg-[#B91C1C] text-white border-0 shadow-2xl hover:shadow-3xl transition-all px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-bold w-full sm:w-auto">
                       {slide.buttonText} →
                     </Button>
-                    <Button variant="outline" size="lg" href="/volunteer" className="bg-white/10 backdrop-blur-md border-2 border-white text-white hover:bg-white hover:text-[#DC2626] shadow-xl hover:shadow-2xl transition-all px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-bold w-full sm:w-auto">
+                    <Button variant="outline" size="lg" href={slide.secondaryButtonText === "Learn More" ? "/about" : slide.secondaryButtonText === "Become Volunteer" ? "/volunteer" : "/signup"} className="bg-white/10 backdrop-blur-md border-2 border-white text-white hover:bg-white hover:text-[#DC2626] shadow-xl hover:shadow-2xl transition-all px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-bold w-full sm:w-auto">
                       {slide.secondaryButtonText} →
                     </Button>
                   </div>
@@ -98,35 +92,6 @@ export default function HeroSlider() {
         </div>
       ))}
 
-      {/* Navigation Arrows */}
-      <button
-        onClick={prevSlide}
-        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-md hover:bg-white/40 text-white p-2 sm:p-3 md:p-4 rounded-full transition-all z-20 shadow-xl hover:scale-110"
-        aria-label="Previous slide"
-      >
-        <ChevronLeft size={20} />
-      </button>
-      <button
-        onClick={nextSlide}
-        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-md hover:bg-white/40 text-white p-2 sm:p-3 md:p-4 rounded-full transition-all z-20 shadow-xl hover:scale-110"
-        aria-label="Next slide"
-      >
-        <ChevronRight size={20} />
-      </button>
-
-      {/* Dots Indicator */}
-      <div className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 flex gap-2 sm:gap-3 z-20">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`rounded-full transition-all shadow-lg ${
-              index === currentSlide ? "bg-white w-8 sm:w-10 h-2 sm:h-3" : "bg-white/50 w-2 sm:w-3 h-2 sm:h-3 hover:bg-white/75"
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
-      </div>
     </div>
   );
 }

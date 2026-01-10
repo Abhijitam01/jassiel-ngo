@@ -32,14 +32,14 @@ export default function Header() {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-white/20 shadow-sm">
         <div className="container mx-auto px-1 max-w-[95rem]">
           <div className="flex items-center justify-between h-[72px]">
-            <Link href="/" className="flex items-center" aria-label="Jaasiel Foundation Home">
+            <Link href="/" className="flex items-center mr-8 lg:mr-12" aria-label="Jaasiel Foundation Home">
               <span className="text-[#DC2626] font-extrabold text-lg md:text-xl tracking-tight hover:text-[#B91C1C] transition-colors">
                 JAASIEL FOUNDATION
               </span>
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center gap-4 ml-auto">
+            <div className="hidden lg:flex items-center gap-6 ml-auto">
               <Navigation />
               
               {/* Combined Language & Braille Selector */}

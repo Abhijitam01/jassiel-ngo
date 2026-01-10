@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { contactFormSchema } from "@/lib/validations";
 import { rateLimit, getClientIdentifier } from "@/lib/rateLimit";
 import { sanitizeInput, sanitizeEmail, sanitizePhone } from "@/lib/sanitize";
+import { prisma } from "@/lib/prisma";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 export async function POST(request: NextRequest) {
   try {
@@ -45,13 +48,27 @@ export async function POST(request: NextRequest) {
     // Validate with Zod schema
     const validatedData = contactFormSchema.parse(sanitizedData);
 
-    // In production, you would:
-    // 1. Save to database
-    // 2. Send email notification
-    // 3. Add to CRM system
+    // Get session if user is logged in
+    const session = await getServerSession(authOptions);
+    const userId = session?.user?.id || null;
+
+    // Save to database
+    const contactSubmission = await prisma.contactSubmission.create({
+      data: {
+        userId: userId || undefined,
+        name: validatedData.name,
+        email: validatedData.email,
+        phone: validatedData.phone || undefined,
+        message: validatedData.message || undefined,
+        status: "NEW",
+      },
+    });
+
+    // TODO: Send email notification
+    // In production, send email to admin team
 
     if (process.env.NODE_ENV === "development") {
-      console.log("Contact form submission:", validatedData);
+      console.log("Contact form submission saved:", contactSubmission.id);
     }
 
     return NextResponse.json(

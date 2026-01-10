@@ -5,11 +5,19 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { donationFormSchema, type DonationFormData } from "@/lib/validations";
 import Button from "@/components/shared/Button";
 import FormField from "@/components/ui/FormField";
-import { Heart, DollarSign, User, Mail, Phone } from "lucide-react";
+import { Heart, DollarSign, User, Mail, Phone, Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
 import { cn } from "@/lib/utils";
 import { trackDonationAttempt, trackFormSubmission } from "@/lib/analytics";
 import { formatPhoneNumber } from "@/lib/mobile-utils";
+import { useEffect, useState } from "react";
+
+// Razorpay script loading
+declare global {
+  interface Window {
+    Razorpay: any;
+  }
+}
 
 interface DonationFormProps {
   causeId?: string;
@@ -17,6 +25,9 @@ interface DonationFormProps {
 }
 
 export default function DonationForm({ causeId, defaultAmount = 0 }: DonationFormProps) {
+  const [razorpayLoaded, setRazorpayLoaded] = useState(false);
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -31,20 +42,132 @@ export default function DonationForm({ causeId, defaultAmount = 0 }: DonationFor
     },
   });
 
+  // Load Razorpay script
+  useEffect(() => {
+    if (typeof window !== "undefined" && !window.Razorpay) {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.async = true;
+      script.onload = () => setRazorpayLoaded(true);
+      script.onerror = () => {
+        toast.error("Failed to load payment gateway. Please refresh the page.");
+      };
+      document.body.appendChild(script);
+
+      return () => {
+        document.body.removeChild(script);
+      };
+    } else if (window.Razorpay) {
+      setRazorpayLoaded(true);
+    }
+  }, []);
+
   const onSubmit = async (data: DonationFormData) => {
+    if (!razorpayLoaded) {
+      toast.error("Payment gateway is still loading. Please wait a moment.");
+      return;
+    }
+
     try {
+      setIsProcessingPayment(true);
+      
       // Track donation attempt
       trackDonationAttempt(data.amount, data.causeId);
       trackFormSubmission("donation", { amount: data.amount });
-      
-      // In production, this would integrate with a payment gateway
-      if (process.env.NODE_ENV === "development") {
-        console.log("Donation form submission:", data);
+
+      // Create order on server
+      const response = await fetch("/api/payment/create-order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          amount: data.amount,
+          currency: "INR",
+          causeId: data.causeId,
+          anonymous: data.anonymous,
+          dedication: data.dedication,
+          donorName: data.name,
+          donorEmail: data.email,
+          donorPhone: data.phone,
+        }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || "Failed to create order");
       }
-      toast.success("Thank you for your donation! Payment integration will be added soon.");
-      reset();
+
+      const orderData = await response.json();
+
+      // Initialize Razorpay checkout
+      const options = {
+        key: orderData.key || process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        amount: orderData.amount,
+        currency: orderData.currency,
+        name: "Jaasiel Foundation",
+        description: `Donation ${data.causeId ? "for cause" : ""}`,
+        order_id: orderData.orderId,
+        handler: async function (response: any) {
+          try {
+            // Verify payment on server
+            const verifyResponse = await fetch("/api/payment/verify", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+              }),
+            });
+
+            const verifyData = await verifyResponse.json();
+
+            if (verifyResponse.ok && verifyData.success) {
+              toast.success("Thank you for your donation! Payment successful.");
+              reset();
+            } else {
+              toast.error("Payment verification failed. Please contact support.");
+            }
+          } catch (error) {
+            console.error("Payment verification error:", error);
+            toast.error("Payment verification failed. Please contact support.");
+          } finally {
+            setIsProcessingPayment(false);
+          }
+        },
+        prefill: {
+          name: data.name,
+          email: data.email,
+          contact: data.phone,
+        },
+        notes: {
+          causeId: data.causeId || "",
+          anonymous: data.anonymous ? "true" : "false",
+        },
+        theme: {
+          color: "#DC2626", // Primary brand color
+        },
+        modal: {
+          ondismiss: function() {
+            setIsProcessingPayment(false);
+            toast.error("Payment cancelled");
+          },
+        },
+      };
+
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
     } catch (error) {
-      toast.error("Something went wrong. Please try again.");
+      console.error("Donation error:", error);
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again."
+      );
+      setIsProcessingPayment(false);
     }
   };
 
@@ -177,14 +300,45 @@ export default function DonationForm({ causeId, defaultAmount = 0 }: DonationFor
           <label className="text-sm text-gray-600">Donate anonymously</label>
         </div>
 
+        <FormField
+          label="Dedication (Optional)"
+          error={errors.dedication?.message}
+          hint="Add a personal message or dedication"
+          id="donation-dedication"
+        >
+          <textarea
+            id="donation-dedication"
+            {...register("dedication")}
+            rows={3}
+            className={cn(
+              "w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 transition-colors resize-none",
+              errors.dedication
+                ? "border-red-300 focus:ring-red-500 focus:border-red-500"
+                : "border-gray-300 focus:ring-primary focus:border-primary"
+            )}
+            placeholder="In memory of, In honor of, etc."
+            aria-invalid={!!errors.dedication}
+            aria-describedby={errors.dedication ? "donation-dedication-error" : undefined}
+          />
+        </FormField>
+
         <Button
           type="submit"
           variant="primary"
           size="lg"
-          disabled={isSubmitting}
+          disabled={isSubmitting || isProcessingPayment || !razorpayLoaded}
           className="w-full"
         >
-          {isSubmitting ? "Processing..." : "Donate Now"}
+          {isSubmitting || isProcessingPayment ? (
+            <>
+              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+              Processing...
+            </>
+          ) : !razorpayLoaded ? (
+            "Loading payment gateway..."
+          ) : (
+            "Donate Now"
+          )}
         </Button>
       </form>
     </div>

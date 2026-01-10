@@ -85,13 +85,13 @@ export default function RootLayout({
           </>
         )}
       </head>
-      <body className={`${inter.variable} font-sans antialiased`} style={{ backgroundColor: '#000' }}>
+      <body className={`${inter.variable} font-sans antialiased bg-white`}>
         <LoadingScreenWrapper />
         <Providers>
           <ErrorBoundaryWrapper>
             <SkipToContent />
             <Header />
-            <main id="main-content" className="min-h-screen">{children}</main>
+            <main id="main-content" className="min-h-screen bg-white">{children}</main>
             <Footer />
           </ErrorBoundaryWrapper>
         </Providers>

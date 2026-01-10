@@ -1,17 +1,7 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-
-// This is a mock implementation. In production, you should use a real database.
-// For now, we'll use a simple in-memory store for demonstration.
-const users = [
-  {
-    id: "1",
-    email: "admin@jaasielfoundation.com",
-    phone: "9876543210",
-    password: "password123", // In production, this should be hashed
-    name: "Admin User",
-  },
-];
+import { prisma } from "@/lib/prisma";
+import { verifyPassword } from "@/lib/password";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -26,22 +16,46 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        // Find user by email or phone
-        const user = users.find(
-          (u) =>
-            u.email === credentials.emailOrPhone ||
-            u.phone === credentials.emailOrPhone
-        );
+        try {
+          // Find user by email or phone in database
+          const user = await prisma.user.findFirst({
+            where: {
+              OR: [
+                { email: credentials.emailOrPhone },
+                { phone: credentials.emailOrPhone },
+              ],
+            },
+          });
 
-        if (user && user.password === credentials.password) {
+          if (!user) {
+            return null;
+          }
+
+          // Verify password against hash
+          const isValidPassword = await verifyPassword(
+            credentials.password,
+            user.password
+          );
+
+          if (!isValidPassword) {
+            return null;
+          }
+
+          // Update last login time
+          await prisma.user.update({
+            where: { id: user.id },
+            data: { lastLoginAt: new Date() },
+          });
+
           return {
             id: user.id,
             email: user.email,
             name: user.name,
           };
+        } catch (error) {
+          console.error("Auth error:", error);
+          return null;
         }
-
-        return null;
       },
     }),
   ],
@@ -52,6 +66,7 @@ export const authOptions: NextAuthOptions = {
   },
   session: {
     strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   callbacks: {
     async jwt({ token, user }) {

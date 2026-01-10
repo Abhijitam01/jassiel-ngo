@@ -54,44 +54,44 @@ export default function Footer() {
   return (
     <>
       {/* Pre-Footer CTA Section */}
-      <section className="bg-gradient-to-r from-[#DC2626] to-[#B91C1C] text-white py-16 w-full">
+      <section className="bg-white py-16 w-full">
         <div className="px-4 mx-auto max-w-[95rem]">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div className="flex flex-col items-center">
-              <div className="bg-white/20 backdrop-blur-sm rounded-full p-4 mb-4">
-                <Heart className="text-white" size={32} />
+              <div className="bg-[#DC2626]/10 rounded-full p-4 mb-4">
+                <Heart className="text-[#DC2626]" size={32} />
               </div>
-              <h3 className="text-xl font-bold mb-2">Make a Difference</h3>
-              <p className="text-white/90 mb-4">Your donation can change lives</p>
+              <h3 className="text-xl font-bold mb-2 text-secondary">Make a Difference</h3>
+              <p className="text-black mb-4">Your donation can change lives</p>
               <Link 
                 href="/donate" 
-                className="bg-white text-[#DC2626] px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+                className="bg-white text-[#DC2626] border-2 border-[#DC2626] px-6 py-2 rounded-lg font-semibold hover:bg-[#DC2626] hover:text-white transition-colors"
               >
                 Donate Now
               </Link>
             </div>
             <div className="flex flex-col items-center">
-              <div className="bg-white/20 backdrop-blur-sm rounded-full p-4 mb-4">
-                <Users className="text-white" size={32} />
+              <div className="bg-[#DC2626]/10 rounded-full p-4 mb-4">
+                <Users className="text-[#DC2626]" size={32} />
               </div>
-              <h3 className="text-xl font-bold mb-2">Join Our Mission</h3>
-              <p className="text-white/90 mb-4">Become a volunteer today</p>
+              <h3 className="text-xl font-bold mb-2 text-secondary">Join Our Mission</h3>
+              <p className="text-black mb-4">Become a volunteer today</p>
               <Link 
                 href="/volunteer" 
-                className="bg-white text-[#DC2626] px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+                className="bg-white text-[#DC2626] border-2 border-[#DC2626] px-6 py-2 rounded-lg font-semibold hover:bg-[#DC2626] hover:text-white transition-colors"
               >
                 Volunteer
               </Link>
             </div>
             <div className="flex flex-col items-center">
-              <div className="bg-white/20 backdrop-blur-sm rounded-full p-4 mb-4">
-                <Mail className="text-white" size={32} />
+              <div className="bg-[#DC2626]/10 rounded-full p-4 mb-4">
+                <Mail className="text-[#DC2626]" size={32} />
               </div>
-              <h3 className="text-xl font-bold mb-2">Stay Connected</h3>
-              <p className="text-white/90 mb-4">Get updates on our work</p>
+              <h3 className="text-xl font-bold mb-2 text-secondary">Stay Connected</h3>
+              <p className="text-black mb-4">Get updates on our work</p>
               <Link 
                 href="#newsletter" 
-                className="bg-white text-[#DC2626] px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+                className="bg-white text-[#DC2626] border-2 border-[#DC2626] px-6 py-2 rounded-lg font-semibold hover:bg-[#DC2626] hover:text-white transition-colors"
               >
                 Subscribe
               </Link>
@@ -301,26 +301,26 @@ export default function Footer() {
 
               {/* Recent News */}
               <div>
-                <h4 className="text-white font-semibold mb-4 text-sm">Recent News</h4>
-                <div className="space-y-3">
+                <h4 className="text-white font-semibold mb-5 text-base">Recent News</h4>
+                <div className="space-y-4">
                   {recentPosts.map((post) => (
                     <Link 
                       key={post.id} 
                       href={`/blog/${post.slug}`} 
-                      className="flex gap-3 group"
+                      className="flex gap-4 group"
                     >
                       <Image
                         src={post.image}
                         alt={post.title}
-                        width={60}
-                        height={60}
+                        width={72}
+                        height={72}
                         className="rounded object-cover flex-shrink-0"
                       />
                       <div className="flex-1 min-w-0">
-                        <h5 className="text-gray-400 group-hover:text-white transition-colors text-sm font-medium line-clamp-2 mb-1">
+                        <h5 className="text-gray-400 group-hover:text-white transition-colors text-base font-medium line-clamp-2 mb-1.5">
                           {post.title}
                         </h5>
-                        <p className="text-gray-500 text-xs">{formatDate(post.date)}</p>
+                        <p className="text-gray-500 text-sm">{formatDate(post.date)}</p>
                       </div>
                     </Link>
                   ))}
@@ -334,7 +334,10 @@ export default function Footer() {
             <div className="max-w-2xl mx-auto">
               <div className="text-center mb-6">
                 <h3 className="text-xl md:text-2xl font-bold text-white mb-2">Stay Updated</h3>
-                <p className="text-gray-400">Subscribe to our newsletter and get the latest updates on our programs and impact</p>
+                <p className="text-gray-400 mb-4">Subscribe to our newsletter and get the latest updates on our programs and impact</p>
+                <p className="text-sm text-gray-500">
+                  <span className="text-white font-semibold">Text CARE to 227387</span> to stay connected
+                </p>
               </div>
               <NewsletterForm variant="compact" />
             </div>

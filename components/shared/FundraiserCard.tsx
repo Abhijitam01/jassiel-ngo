@@ -49,19 +49,19 @@ export default function FundraiserCard({
   if (loading) {
     return (
       <Card className={cn("overflow-hidden", className)}>
-        <Skeleton variant="rectangular" height={200} className="w-full" />
-        <div className="p-6 space-y-4">
-          <Skeleton variant="text" width="80%" height={24} />
-          <Skeleton variant="text" width="100%" height={16} />
-          <Skeleton variant="text" width="60%" height={16} />
+        <Skeleton variant="rectangular" height={320} className="w-full" />
+        <div className="p-6 sm:p-8 lg:p-10 space-y-4">
+          <Skeleton variant="text" width="80%" height={32} />
+          <Skeleton variant="text" width="100%" height={20} />
+          <Skeleton variant="text" width="60%" height={20} />
           <div className="space-y-2">
-            <Skeleton variant="rectangular" height={8} className="w-full rounded-full" />
-            <div className="flex justify-between text-sm">
-              <Skeleton variant="text" width={100} height={16} />
-              <Skeleton variant="text" width={100} height={16} />
+            <Skeleton variant="rectangular" height={12} className="w-full rounded-full" />
+            <div className="flex justify-between text-base">
+              <Skeleton variant="text" width={120} height={20} />
+              <Skeleton variant="text" width={120} height={20} />
             </div>
           </div>
-          <Skeleton variant="rectangular" height={44} className="w-full rounded-lg" />
+          <Skeleton variant="rectangular" height={52} className="w-full rounded-lg" />
         </div>
       </Card>
     );
@@ -75,7 +75,7 @@ export default function FundraiserCard({
       progress={progress}
       className={cn("overflow-hidden border border-gray-100", className)}
     >
-      <div className="relative h-48 md:h-64 overflow-hidden group">
+      <div className="relative h-64 md:h-80 lg:h-96 overflow-hidden group">
         <Image
           src={image}
           alt={title}
@@ -84,18 +84,18 @@ export default function FundraiserCard({
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
         
-        {/* Tax Benefits Badge */}
-        <div className="absolute top-4 left-4">
-          <div className="bg-[#f97316] text-white px-3 py-1.5 rounded-md shadow-lg">
-            <span className="text-xs font-bold uppercase tracking-wide">Tax Benefits Available</span>
+        {/* Tax Benefits Badge - Top Left */}
+        <div className="absolute top-3 left-3 sm:top-4 sm:left-4 max-w-[45%] sm:max-w-none z-10">
+          <div className="bg-[#f97316]/85 backdrop-blur-sm text-white px-2 sm:px-2.5 md:px-3 py-1 sm:py-1.5 md:py-2 rounded-md shadow-sm">
+            <span className="text-[9px] sm:text-[10px] md:text-xs font-medium uppercase tracking-wide leading-tight">Tax Benefits Available</span>
           </div>
         </div>
-        
-        {/* Days Left Badge */}
-        <div className="absolute top-4 right-4">
-          <div className="flex items-center gap-1 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-lg">
-            <Clock size={14} className="text-primary" />
-            <span className="text-sm font-semibold text-secondary">
+
+        {/* Days Left Badge - Top Right */}
+        <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10">
+          <div className="bg-[#f97316]/85 backdrop-blur-sm text-white px-2 sm:px-2.5 md:px-3 py-1 sm:py-1.5 md:py-2 rounded-md shadow-sm flex items-center gap-1 whitespace-nowrap">
+            <Clock size={10} className="sm:w-[11px] sm:h-[11px] md:w-[12px] md:h-[12px] text-white flex-shrink-0" />
+            <span className="text-[9px] sm:text-[10px] md:text-xs font-medium leading-tight">
               {daysLeft} {daysLeft === 1 ? "Day" : "Days"} Left
             </span>
           </div>
@@ -103,31 +103,31 @@ export default function FundraiserCard({
 
         {/* Organization Badge */}
         {organization && (
-          <div className="absolute bottom-4 left-4">
-            <div className="bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-lg">
-              <span className="text-sm font-medium text-secondary">{organization}</span>
+          <div className="absolute bottom-5 left-5 z-10">
+            <div className="bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
+              <span className="text-sm sm:text-base font-medium text-secondary">{organization}</span>
             </div>
           </div>
         )}
       </div>
 
-      <div className="p-6">
-        <h3 className="text-xl font-bold text-secondary mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+      <div className="p-6 sm:p-8 lg:p-10">
+        <h3 className="text-2xl sm:text-3xl font-bold text-secondary mb-3 sm:mb-4 line-clamp-2 group-hover:text-primary transition-colors">
           {title}
         </h3>
-        <p className="text-gray-600 text-sm mb-4 line-clamp-2">{description}</p>
+        <p className="text-black text-base sm:text-lg mb-5 sm:mb-6 line-clamp-3 leading-relaxed">{description}</p>
 
         {/* Progress Info */}
-        <div className="mb-4">
-          <div className="flex items-center justify-between text-sm mb-2">
-            <span className="font-semibold text-secondary">
+        <div className="mb-5 sm:mb-6">
+          <div className="flex items-center justify-between text-base sm:text-lg mb-3">
+            <span className="font-semibold text-black">
               {formatAmount(raised)} raised
             </span>
-            <span className="text-gray-500">
+            <span className="text-black">
               of {formatAmount(goal)} goal
             </span>
           </div>
-          <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+          <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
             <div
               className="h-full bg-[#f97316] transition-all duration-500 ease-out rounded-full"
               style={{ width: `${progress}%` }}
@@ -136,8 +136,8 @@ export default function FundraiserCard({
         </div>
 
         {/* Donations Count */}
-        <div className="flex items-center gap-2 text-sm text-gray-600 mb-4">
-          <Users size={16} />
+        <div className="flex items-center gap-2 text-base sm:text-lg text-black mb-5 sm:mb-6">
+          <Users size={20} />
           <span>
             <span className="font-semibold">{donations}</span> {donations === 1 ? "Donation" : "Donations"}
           </span>
@@ -146,12 +146,12 @@ export default function FundraiserCard({
         {/* CTA Button */}
         <Button
           variant="primary"
-          size="md"
+          size="lg"
           href={`/causes/${slug}`}
-          className="w-full bg-[#DC2626] hover:bg-[#B91C1C] text-white border-0 font-bold"
+          className="w-full bg-[#DC2626] hover:bg-[#B91C1C] text-white border-0 font-bold text-base sm:text-lg py-3 sm:py-4"
         >
           Donate Now
-          <ArrowRight className="ml-2 h-4 w-4" />
+          <ArrowRight className="ml-2 h-5 w-5" />
         </Button>
       </div>
     </Card>
