@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { isDatabaseConnectionError, getDatabaseErrorMessage } from "@/lib/db-error-handler";
 
 /**
  * GET /api/events
@@ -111,7 +112,32 @@ export async function GET(request: NextRequest) {
 
     return response;
   } catch (error) {
-    console.error("Error fetching events:", error);
+    // Handle database connection errors gracefully
+    if (isDatabaseConnectionError(error)) {
+      if (process.env.NODE_ENV === "development") {
+        console.error("Database connection error:", getDatabaseErrorMessage(error));
+      }
+      
+      // Return empty results instead of error for GET requests
+      return NextResponse.json(
+        {
+          events: [],
+          pagination: {
+            total: 0,
+            limit: parseInt(request.nextUrl.searchParams.get("limit") || "10"),
+            offset: parseInt(request.nextUrl.searchParams.get("offset") || "0"),
+            hasMore: false,
+          },
+        },
+        { status: 200 }
+      );
+    }
+
+    // Log other errors only in development
+    if (process.env.NODE_ENV === "development") {
+      console.error("Error fetching events:", error);
+    }
+    
     return NextResponse.json(
       { error: "Failed to fetch events" },
       { status: 500 }

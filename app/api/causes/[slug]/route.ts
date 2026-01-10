@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { isDatabaseConnectionError, getDatabaseErrorMessage } from "@/lib/db-error-handler";
 
 /**
  * GET /api/causes/[slug]
@@ -68,7 +69,23 @@ export async function GET(
 
     return NextResponse.json({ cause: formattedCause });
   } catch (error) {
-    console.error("Error fetching cause:", error);
+    // Handle database connection errors gracefully
+    if (isDatabaseConnectionError(error)) {
+      if (process.env.NODE_ENV === "development") {
+        console.error("Database connection error:", getDatabaseErrorMessage(error));
+      }
+      
+      return NextResponse.json(
+        { error: "Cause not found" },
+        { status: 404 }
+      );
+    }
+
+    // Log other errors only in development
+    if (process.env.NODE_ENV === "development") {
+      console.error("Error fetching cause:", error);
+    }
+    
     return NextResponse.json(
       { error: "Failed to fetch cause" },
       { status: 500 }

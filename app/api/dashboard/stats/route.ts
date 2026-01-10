@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { isDatabaseConnectionError, getDatabaseErrorMessage } from "@/lib/db-error-handler";
 
 /**
  * GET /api/dashboard/stats
@@ -146,7 +147,32 @@ export async function GET(request: NextRequest) {
       })),
     });
   } catch (error) {
-    console.error("Error fetching dashboard stats:", error);
+    // Handle database connection errors gracefully
+    if (isDatabaseConnectionError(error)) {
+      if (process.env.NODE_ENV === "development") {
+        console.error("Database connection error:", getDatabaseErrorMessage(error));
+      }
+      
+      // Return empty stats when database is unavailable
+      return NextResponse.json({
+        stats: {
+          totalDonated: 0,
+          totalDonations: 0,
+          totalHours: 0,
+          totalActivities: 0,
+          upcomingEventsCount: 0,
+        },
+        recentDonations: [],
+        recentActivities: [],
+        upcomingEvents: [],
+      });
+    }
+
+    // Log other errors only in development
+    if (process.env.NODE_ENV === "development") {
+      console.error("Error fetching dashboard stats:", error);
+    }
+    
     return NextResponse.json(
       { error: "Failed to fetch dashboard statistics" },
       { status: 500 }

@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "prisma generate",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "postinstall": "prisma generate",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:seed": "tsx prisma/seed.ts",
@@ -18,6 +20,7 @@
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
     "@prisma/adapter-pg": "^7.2.0",
+    "@prisma/client": "^7.2.0",
     "@types/bcryptjs": "^3.0.0",
     "@types/dompurify": "^3.2.0",
     "@vercel/analytics": "^1.6.1",
@@ -31,6 +34,7 @@
     "next": "^14.2.0",
     "next-auth": "^4.24.5",
     "pg": "^8.16.3",
+    "prisma": "^7.2.0",
     "razorpay": "^2.9.6",
     "react": "^18.3.0",
     "react-dom": "^18.3.0",
@@ -41,7 +45,6 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@prisma/client": "^7.2.0",
     "@types/node": "^20.19.28",
     "@types/pg": "^8.16.0",
     "@types/react": "^18.2.0",
@@ -50,7 +53,6 @@
     "eslint": "^8.57.0",
     "eslint-config-next": "^14.2.0",
     "postcss": "^8.4.33",
-    "prisma": "^7.2.0",
     "tailwindcss": "^3.4.1",
     "ts-node": "^10.9.2",
     "tsx": "^4.21.0",

@@ -27,8 +27,11 @@ function createPrismaClient(): PrismaClient {
     adapter,
     log:
       process.env.NODE_ENV === "development"
-        ? ["query", "error", "warn"]
+        ? process.env.DATABASE_LOGGING === "true"
+          ? ["query", "error", "warn"]
+          : ["error"]
         : ["error"],
+    errorFormat: "pretty",
   });
 }
 
