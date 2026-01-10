@@ -7,6 +7,8 @@ import { prisma } from "@/lib/prisma";
  * GET /api/dashboard/donations
  * Fetch user's donation history
  */
+export const dynamic = "force-dynamic";
+
 export async function GET(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
@@ -48,7 +50,8 @@ export async function GET(request: NextRequest) {
       prisma.donation.count({ where }),
     ]);
 
-    const formattedDonations = donations.map((donation) => ({
+    type DonationWithCause = (typeof donations)[0];
+    const formattedDonations = donations.map((donation: DonationWithCause) => ({
       id: donation.id,
       amount: Number(donation.amount),
       currency: donation.currency,
@@ -72,8 +75,8 @@ export async function GET(request: NextRequest) {
 
     // Calculate totals
     const totalDonated = donations
-      .filter((d) => d.paymentStatus === "SUCCESSFUL")
-      .reduce((sum, d) => sum + Number(d.amount), 0);
+      .filter((d: DonationWithCause) => d.paymentStatus === "SUCCESSFUL")
+      .reduce((sum: number, d: DonationWithCause) => sum + Number(d.amount), 0);
 
     return NextResponse.json({
       donations: formattedDonations,
@@ -81,7 +84,7 @@ export async function GET(request: NextRequest) {
         totalDonated,
         totalDonations: total,
         successfulDonations: donations.filter(
-          (d) => d.paymentStatus === "SUCCESSFUL"
+          (d: DonationWithCause) => d.paymentStatus === "SUCCESSFUL"
         ).length,
       },
       pagination: {

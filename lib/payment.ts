@@ -59,19 +59,27 @@ export async function createOrder(
   try {
     const razorpay = getRazorpayInstance();
 
-    const order = await razorpay.orders.create({
-      amount: options.amount * 100, // Convert to paise
+    // Build order data according to Razorpay API
+    const orderData: {
+      amount: number;
+      currency: string;
+      receipt: string;
+      notes: Record<string, string>;
+    } = {
+      amount: options.amount, // Already in paise if passed correctly, or convert: options.amount * 100
       currency: options.currency || "INR",
       receipt: options.receipt || `receipt_${Date.now()}`,
-      notes: options.notes || {},
-      ...(options.customer && {
-        customer_details: {
-          name: options.customer.name,
-          email: options.customer.email,
-          contact: options.customer.contact,
-        },
-      }),
-    });
+      notes: {
+        ...(options.notes || {}),
+        ...(options.customer && {
+          customer_name: options.customer.name,
+          customer_email: options.customer.email,
+          customer_contact: options.customer.contact,
+        }),
+      },
+    };
+
+    const order = await razorpay.orders.create(orderData as any);
 
     return order as OrderResponse;
   } catch (error) {

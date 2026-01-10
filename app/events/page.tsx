@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import SearchBar from "@/components/shared/SearchBar";
 import FilterBar, { FilterOption } from "@/components/shared/FilterBar";
@@ -12,6 +12,8 @@ import { Calendar, MapPin, Clock } from "lucide-react";
 import Link from "next/link";
 import { formatDate } from "@/lib/utils";
 import Image from "next/image";
+
+export const dynamic = "force-dynamic";
 
 interface Event {
   id: string;
@@ -26,7 +28,7 @@ interface Event {
   status: string;
 }
 
-export default function EventsPage() {
+function EventsPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [events, setEvents] = useState<Event[]>([]);
@@ -250,5 +252,19 @@ export default function EventsPage() {
         </div>
       )}
     </Section>
+  );
+}
+
+export default function EventsPage() {
+  return (
+    <Suspense fallback={
+      <Section variant="default" padding="lg">
+        <div className="flex items-center justify-center py-12">
+          <LoadingSpinner size="lg" />
+        </div>
+      </Section>
+    }>
+      <EventsPageContent />
+    </Suspense>
   );
 }

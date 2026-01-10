@@ -6,6 +6,8 @@ import { prisma } from "@/lib/prisma";
  * Fetch causes with optional filtering
  * Includes caching headers for better performance
  */
+export const dynamic = "force-dynamic";
+
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
@@ -53,7 +55,8 @@ export async function GET(request: NextRequest) {
     ]);
 
     // Format response
-    const formattedCauses = causes.map((cause) => ({
+    type CauseWithCount = (typeof causes)[0];
+    const formattedCauses = causes.map((cause: CauseWithCount) => ({
       id: cause.id,
       slug: cause.slug,
       title: cause.title,

@@ -5,6 +5,8 @@ import { prisma } from "@/lib/prisma";
  * GET /api/blog
  * Fetch blog posts with optional filtering
  */
+export const dynamic = "force-dynamic";
+
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
@@ -68,7 +70,8 @@ export async function GET(request: NextRequest) {
       prisma.blogPost.count({ where }),
     ]);
 
-    const formattedPosts = posts.map((post) => ({
+    type PostWithAuthor = (typeof posts)[0];
+    const formattedPosts = posts.map((post: PostWithAuthor) => ({
       id: post.id,
       slug: post.slug,
       title: post.title,

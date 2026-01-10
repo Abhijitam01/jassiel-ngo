@@ -10,7 +10,7 @@ import { sectionSpacing } from "@/lib/design-tokens";
 interface SectionProps {
   children: ReactNode;
   className?: string;
-  variant?: "default" | "secondary" | "accent";
+  variant?: "default" | "secondary" | "accent" | "primary";
   padding?: "none" | "sm" | "md" | "lg" | "xl";
   maxWidth?: "sm" | "md" | "lg" | "xl" | "2xl" | "full";
   id?: string;
@@ -20,6 +20,7 @@ const variantClasses = {
   default: "bg-white",
   secondary: "bg-gray-50",
   accent: "bg-primary/5",
+  primary: "bg-primary text-white",
 };
 
 const paddingClasses = {

@@ -4,6 +4,8 @@ import { rateLimit, getClientIdentifier } from "@/lib/rateLimit";
 import { sanitizeEmail } from "@/lib/sanitize";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(request: NextRequest) {
   try {
     // Rate limiting (stricter for newsletter to prevent spam)

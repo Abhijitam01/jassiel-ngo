@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import FundraiserCard from "@/components/shared/FundraiserCard";
 import SearchBar from "@/components/shared/SearchBar";
@@ -10,6 +10,8 @@ import { ErrorState } from "@/components/ui/error-boundary";
 import Section, { SectionHeader } from "@/components/ui/section";
 import { fetchCauses } from "@/lib/api-client";
 import { Ribbon } from "lucide-react";
+
+export const dynamic = "force-dynamic";
 
 interface Cause {
   id: string;
@@ -25,7 +27,7 @@ interface Cause {
   status: string;
 }
 
-export default function CausesPage() {
+function CausesPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [causes, setCauses] = useState<Cause[]>([]);
@@ -195,5 +197,19 @@ export default function CausesPage() {
         </>
       )}
     </Section>
+  );
+}
+
+export default function CausesPage() {
+  return (
+    <Suspense fallback={
+      <Section variant="default" padding="lg">
+        <div className="flex items-center justify-center py-12">
+          <LoadingSpinner size="lg" />
+        </div>
+      </Section>
+    }>
+      <CausesPageContent />
+    </Suspense>
   );
 }

@@ -5,6 +5,8 @@ import { prisma } from "@/lib/prisma";
  * GET /api/causes/[slug]
  * Fetch a single cause by slug
  */
+export const dynamic = "force-dynamic";
+
 export async function GET(
   request: NextRequest,
   { params }: { params: { slug: string } }
@@ -34,6 +36,7 @@ export async function GET(
       );
     }
 
+    type CauseUpdate = (typeof cause.updates)[0];
     const formattedCause = {
       id: cause.id,
       slug: cause.slug,
@@ -52,7 +55,7 @@ export async function GET(
       endDate: cause.endDate?.toISOString() || null,
       targetBeneficiaries: cause.targetBeneficiaries,
       organizationDetails: cause.organizationDetails,
-      updates: cause.updates.map((update) => ({
+      updates: cause.updates.map((update: CauseUpdate) => ({
         id: update.id,
         title: update.title,
         content: update.content,

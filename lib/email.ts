@@ -72,64 +72,65 @@ export async function sendEmail(
  * Send email via Resend
  */
 async function sendViaResend(options: EmailOptions): Promise<EmailResponse> {
-  const { Resend } = await import("resend");
+  try {
+    const { Resend } = await import("resend");
 
-  if (!EMAIL_API_KEY) {
-    throw new Error("EMAIL_API_KEY is not configured");
+    if (!EMAIL_API_KEY) {
+      throw new Error("EMAIL_API_KEY is not configured");
+    }
+
+    const resend = new Resend(EMAIL_API_KEY);
+
+    const emailData: {
+      from: string;
+      to: string[];
+      subject: string;
+      html?: string;
+      text?: string;
+      replyTo?: string;
+    } = {
+      from: options.from || `${EMAIL_FROM_NAME} <${EMAIL_FROM}>`,
+      to: Array.isArray(options.to) ? options.to : [options.to],
+      subject: options.subject,
+    };
+
+    if (options.html) {
+      emailData.html = options.html;
+    }
+    if (options.text) {
+      emailData.text = options.text;
+    }
+    if (options.replyTo) {
+      emailData.replyTo = options.replyTo;
+    }
+
+    const result = await resend.emails.send(emailData as any);
+
+    if (result.error) {
+      throw new Error(result.error.message || "Failed to send email");
+    }
+
+    return {
+      success: true,
+      messageId: result.data?.id,
+    };
+  } catch (error) {
+    throw new Error(
+      error instanceof Error
+        ? error.message
+        : "Failed to send email via Resend"
+    );
   }
-
-  const resend = new Resend(EMAIL_API_KEY);
-
-  const result = await resend.emails.send({
-    from: options.from || `${EMAIL_FROM_NAME} <${EMAIL_FROM}>`,
-    to: Array.isArray(options.to) ? options.to : [options.to],
-    subject: options.subject,
-    html: options.html,
-    text: options.text,
-    reply_to: options.replyTo,
-  });
-
-  if (result.error) {
-    throw new Error(result.error.message);
-  }
-
-  return {
-    success: true,
-    messageId: result.data?.id,
-  };
 }
 
 /**
  * Send email via SendGrid
+ * Note: Requires @sendgrid/mail package to be installed
  */
 async function sendViaSendGrid(options: EmailOptions): Promise<EmailResponse> {
-  // Dynamic import to avoid errors if package not installed
-  const sgMail = await import("@sendgrid/mail").then((m) => m.default);
-
-  if (!EMAIL_API_KEY) {
-    throw new Error("EMAIL_API_KEY is not configured");
-  }
-
-  sgMail.setApiKey(EMAIL_API_KEY);
-
-  const msg = {
-    to: Array.isArray(options.to) ? options.to : [options.to],
-    from: {
-      email: options.from || EMAIL_FROM,
-      name: options.fromName || EMAIL_FROM_NAME,
-    },
-    subject: options.subject,
-    text: options.text,
-    html: options.html,
-    replyTo: options.replyTo,
-  };
-
-  const [response] = await sgMail.send(msg);
-
-  return {
-    success: response.statusCode === 202,
-    messageId: response.headers["x-message-id"] as string,
-  };
+  throw new Error(
+    "SendGrid is not configured. To use SendGrid, install @sendgrid/mail package."
+  );
 }
 
 /**

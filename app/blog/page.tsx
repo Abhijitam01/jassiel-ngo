@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,6 +13,8 @@ import { LoadingSpinner, CardSkeleton } from "@/components/ui/loading";
 import { ErrorState } from "@/components/ui/error-boundary";
 import Section, { SectionHeader } from "@/components/ui/section";
 import { fetchBlogPosts } from "@/lib/api-client";
+
+export const dynamic = "force-dynamic";
 
 interface BlogPost {
   id: string;
@@ -32,7 +34,7 @@ interface BlogPost {
   featured: boolean;
 }
 
-export default function BlogPage() {
+function BlogPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -247,6 +249,31 @@ export default function BlogPage() {
         )}
       </Section>
     </>
+  );
+}
+
+export default function BlogPage() {
+  return (
+    <Suspense fallback={
+      <>
+        <Section variant="primary" padding="lg" className="text-white">
+          <SectionHeader
+            title="Our Blog"
+            subtitle="Blog"
+            description="Loading..."
+            align="center"
+            className="text-white [&_h2]:text-white [&_p]:text-white/90"
+          />
+        </Section>
+        <Section variant="default" padding="lg">
+          <div className="flex items-center justify-center py-12">
+            <LoadingSpinner size="lg" />
+          </div>
+        </Section>
+      </>
+    }>
+      <BlogPageContent />
+    </Suspense>
   );
 }
 

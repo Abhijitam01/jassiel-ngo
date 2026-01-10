@@ -7,6 +7,8 @@ import { prisma } from "@/lib/prisma";
  * GET /api/dashboard/volunteer
  * Fetch user's volunteer activities
  */
+export const dynamic = "force-dynamic";
+
 export async function GET(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
@@ -49,7 +51,8 @@ export async function GET(request: NextRequest) {
       prisma.volunteerRegistration.count({ where }),
     ]);
 
-    const formattedActivities = activities.map((activity) => ({
+    type ActivityWithEvent = (typeof activities)[0];
+    const formattedActivities = activities.map((activity: ActivityWithEvent) => ({
       id: activity.id,
       event: activity.event
         ? {
@@ -71,9 +74,10 @@ export async function GET(request: NextRequest) {
     }));
 
     // Calculate totals
-    const totalHours = activities.reduce((sum, a) => sum + a.hoursLogged, 0);
+    type ActivityType = (typeof activities)[0];
+    const totalHours = activities.reduce((sum: number, a: ActivityType) => sum + a.hoursLogged, 0);
     const approvedActivities = activities.filter(
-      (a) => a.status === "APPROVED" || a.status === "COMPLETED"
+      (a: ActivityType) => a.status === "APPROVED" || a.status === "COMPLETED"
     ).length;
 
     return NextResponse.json({
@@ -83,7 +87,7 @@ export async function GET(request: NextRequest) {
         totalActivities: total,
         approvedActivities,
         pendingActivities: activities.filter(
-          (a) => a.status === "PENDING"
+          (a: ActivityType) => a.status === "PENDING"
         ).length,
       },
       pagination: {

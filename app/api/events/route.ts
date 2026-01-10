@@ -5,6 +5,8 @@ import { prisma } from "@/lib/prisma";
  * GET /api/events
  * Fetch events with optional filtering
  */
+export const dynamic = "force-dynamic";
+
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
@@ -62,7 +64,8 @@ export async function GET(request: NextRequest) {
       prisma.event.count({ where }),
     ]);
 
-    const formattedEvents = events.map((event) => ({
+    type EventWithOrganizer = (typeof events)[0];
+    const formattedEvents = events.map((event: EventWithOrganizer) => ({
       id: event.id,
       slug: event.slug,
       title: event.title,

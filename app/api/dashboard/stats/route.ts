@@ -7,6 +7,8 @@ import { prisma } from "@/lib/prisma";
  * GET /api/dashboard/stats
  * Fetch user dashboard statistics
  */
+export const dynamic = "force-dynamic";
+
 export async function GET(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
@@ -91,6 +93,11 @@ export async function GET(request: NextRequest) {
       }),
     ]);
 
+    // Define types for map functions
+    type DonationType = (typeof donations)[0];
+    type ActivityType = (typeof volunteerActivities)[0];
+    type EventType = (typeof upcomingEvents)[0];
+
     return NextResponse.json({
       stats: {
         totalDonated: Number(totalDonated._sum.amount || 0),
@@ -99,7 +106,7 @@ export async function GET(request: NextRequest) {
         totalActivities: totalHours._count.id,
         upcomingEventsCount: upcomingEvents.length,
       },
-      recentDonations: donations.map((d) => ({
+      recentDonations: donations.map((d: DonationType) => ({
         id: d.id,
         amount: Number(d.amount),
         currency: d.currency,
@@ -114,7 +121,7 @@ export async function GET(request: NextRequest) {
         receiptNumber: d.receiptNumber,
         createdAt: d.createdAt.toISOString(),
       })),
-      recentActivities: volunteerActivities.map((a) => ({
+      recentActivities: volunteerActivities.map((a: ActivityType) => ({
         id: a.id,
         event: a.event
           ? {
@@ -129,7 +136,7 @@ export async function GET(request: NextRequest) {
         hoursLogged: a.hoursLogged,
         createdAt: a.createdAt.toISOString(),
       })),
-      upcomingEvents: upcomingEvents.map((e) => ({
+      upcomingEvents: upcomingEvents.map((e: EventType) => ({
         id: e.id,
         title: e.title,
         slug: e.slug,

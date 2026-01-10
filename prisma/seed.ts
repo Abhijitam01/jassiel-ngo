@@ -158,12 +158,16 @@ async function main() {
         role: member.role,
         image: member.image,
         bio: member.bio || null,
-        socialLinks: member.social ? {
-          facebook: member.social.facebook || null,
-          twitter: member.social.twitter || null,
-          linkedin: member.social.linkedin || null,
-          instagram: member.social.instagram || null,
-        } : null,
+        socialLinks: member.social
+          ? Object.fromEntries(
+              Object.entries({
+                facebook: member.social.facebook,
+                twitter: member.social.twitter,
+                linkedin: member.social.linkedin,
+                instagram: member.social.instagram,
+              }).filter(([_, value]) => value != null)
+            )
+          : undefined,
       },
       create: {
         id: `team-${member.id}`,
@@ -171,12 +175,16 @@ async function main() {
         role: member.role,
         image: member.image,
         bio: member.bio || null,
-        socialLinks: member.social ? {
-          facebook: member.social.facebook || null,
-          twitter: member.social.twitter || null,
-          linkedin: member.social.linkedin || null,
-          instagram: member.social.instagram || null,
-        } : null,
+        socialLinks: member.social
+          ? Object.fromEntries(
+              Object.entries({
+                facebook: member.social.facebook,
+                twitter: member.social.twitter,
+                linkedin: member.social.linkedin,
+                instagram: member.social.instagram,
+              }).filter(([_, value]) => value != null)
+            )
+          : undefined,
       },
     });
   }
