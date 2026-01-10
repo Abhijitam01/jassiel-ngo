@@ -4,6 +4,8 @@ const nextConfig = {
     domains: [],
     unoptimized: false,
     formats: ['image/avif', 'image/webp'],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
   // Enable compression
   compress: true,
@@ -11,11 +13,9 @@ const nextConfig = {
   swcMinify: true,
   // Production source maps (disable in production for smaller bundles)
   productionBrowserSourceMaps: false,
-  // Optimize images
-  images: {
-    formats: ['image/avif', 'image/webp'],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+  // Experimental features for better performance
+  experimental: {
+    optimizeCss: true,
   },
   // Security headers
   async headers() {
@@ -47,11 +47,45 @@ const nextConfig = {
             key: 'Referrer-Policy',
             value: 'origin-when-cross-origin'
           },
+          {
+            key: 'Permissions-Policy',
+            value: 'camera=(), microphone=(), geolocation=()'
+          },
         ],
       },
     ];
   },
+  // Redirects for SEO
+  async redirects() {
+    return [];
+  },
+  // Webpack configuration for optimization
+  webpack: (config, { isServer }) => {
+    // Optimize bundle size
+    if (!isServer) {
+      config.optimization = {
+        ...config.optimization,
+        moduleIds: 'deterministic',
+        runtimeChunk: 'single',
+        splitChunks: {
+          chunks: 'all',
+          cacheGroups: {
+            vendor: {
+              test: /[\\/]node_modules[\\/]/,
+              name: 'vendors',
+              priority: 10,
+            },
+            common: {
+              minChunks: 2,
+              priority: 5,
+              reuseExistingChunk: true,
+            },
+          },
+        },
+      };
+    }
+    return config;
+  },
 }
 
 module.exports = nextConfig
-

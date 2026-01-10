@@ -84,19 +84,19 @@ export default function GiveMonthlySection() {
       children: (
         <div className="grid grid-cols-2 gap-2 sm:gap-3 md:gap-4 w-full mt-3 sm:mt-4">
             <div className="text-center">
-              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-[#DC2626] mb-1">1.6M+</div>
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-1">1.6M+</div>
               <div className="text-[10px] sm:text-xs text-gray-600">Lives Impacted</div>
             </div>
             <div className="text-center">
-              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-[#DC2626] mb-1">10+</div>
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-1">10+</div>
               <div className="text-[10px] sm:text-xs text-gray-600">Years Service</div>
             </div>
             <div className="text-center">
-              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-[#DC2626] mb-1">4K+</div>
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-1">4K+</div>
               <div className="text-[10px] sm:text-xs text-gray-600">Verified NGOs</div>
             </div>
             <div className="text-center">
-              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-[#DC2626] mb-1">50K+</div>
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-1">50K+</div>
               <div className="text-[10px] sm:text-xs text-gray-600">Donors</div>
             </div>
         </div>
@@ -123,9 +123,9 @@ export default function GiveMonthlySection() {
       <div className="container mx-auto px-4 max-w-[95rem]">
         {/* Header */}
         <div className="text-center mb-16 md:mb-20">
-          <div className="inline-flex items-center gap-2 mb-6 px-5 py-2.5 bg-[#f97316]/10 rounded-full">
-            <Calendar className="text-[#f97316]" size={24} />
-            <span className="text-[#f97316] font-semibold text-base uppercase tracking-wide">
+          <div className="inline-flex items-center gap-2 mb-6 px-5 py-2.5 bg-accent/10 rounded-full">
+            <Calendar className="text-accent" size={24} />
+            <span className="text-accent font-semibold text-base uppercase tracking-wide">
               Give Monthly
             </span>
           </div>
@@ -135,7 +135,7 @@ export default function GiveMonthlySection() {
           <p className="text-gray-700 max-w-3xl mx-auto text-base md:text-lg lg:text-xl leading-relaxed font-semibold mb-4">
             <span className="underline-important">Your monthly gift = a whole year of impact.</span>
           </p>
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#DC2626] to-[#B91C1C] text-white rounded-full shadow-lg mb-4">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary to-primary-dark text-white rounded-full shadow-lg mb-4">
             <span className="text-sm md:text-base font-bold">✨ Limited Time: First 3 months 2X matched!</span>
           </div>
           <p className="text-gray-600 max-w-3xl mx-auto text-sm md:text-base leading-relaxed">

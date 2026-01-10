@@ -148,7 +148,7 @@ export default function DonationForm({ causeId, defaultAmount = 0 }: DonationFor
           anonymous: data.anonymous ? "true" : "false",
         },
         theme: {
-          color: "#DC2626", // Primary brand color
+          color: "var(--color-primary)", // Primary brand color from design tokens
         },
         modal: {
           ondismiss: function() {

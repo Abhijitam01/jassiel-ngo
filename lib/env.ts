@@ -1,69 +1,107 @@
 /**
- * Environment variable validation utility
- * Validates required environment variables on startup
+ * Environment variable validation
+ * Ensures all required environment variables are set
  */
 
-interface EnvConfig {
-  NEXTAUTH_URL?: string;
-  NEXTAUTH_SECRET?: string;
-  NEXT_PUBLIC_SITE_URL?: string;
-  NEXT_PUBLIC_FACEBOOK_URL?: string;
-  NEXT_PUBLIC_TWITTER_URL?: string;
-  NEXT_PUBLIC_INSTAGRAM_URL?: string;
-  NEXT_PUBLIC_LINKEDIN_URL?: string;
-}
+import { z } from "zod";
 
-const requiredEnvVars = {
-  production: ["NEXTAUTH_URL", "NEXTAUTH_SECRET", "NEXT_PUBLIC_SITE_URL"],
-  development: ["NEXTAUTH_SECRET"],
-};
+const envSchema = z.object({
+  // Database
+  DATABASE_URL: z.string().min(1, "DATABASE_URL is required"),
 
-export function validateEnvVars() {
-  const env = process.env.NODE_ENV || "development";
-  const required = requiredEnvVars[env as keyof typeof requiredEnvVars] || requiredEnvVars.development;
-  const missing: string[] = [];
+  // NextAuth
+  NEXTAUTH_URL: z.string().url().optional().or(z.literal("")),
+  NEXTAUTH_SECRET: z.string().min(32, "NEXTAUTH_SECRET must be at least 32 characters"),
 
-  required.forEach((varName) => {
-    if (!process.env[varName]) {
-      missing.push(varName);
-    }
-  });
+  // CSRF
+  CSRF_SECRET: z.string().optional(),
+  ENABLE_CSRF: z.string().optional(),
 
-  if (missing.length > 0) {
-    const errorMessage = `
-Missing required environment variables:
-${missing.map((v) => `  - ${v}`).join("\n")}
+  // Email (optional in development)
+  EMAIL_SERVICE: z.enum(["resend", "sendgrid", "mock"]).optional().default("mock"),
+  EMAIL_API_KEY: z.string().optional(),
+  EMAIL_FROM: z.string().email().optional(),
+  EMAIL_FROM_NAME: z.string().optional(),
+  ADMIN_EMAIL: z.string().email().optional(),
 
-Please add these to your .env.local file.
-    `.trim();
+  // Payment (optional in development)
+  RAZORPAY_KEY_ID: z.string().optional(),
+  RAZORPAY_KEY_SECRET: z.string().optional(),
+  NEXT_PUBLIC_RAZORPAY_KEY_ID: z.string().optional(),
 
-    if (env === "production") {
-      throw new Error(errorMessage);
-    } else {
-      console.warn(`⚠️  ${errorMessage}`);
-    }
-  }
+  // Environment
+  NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
 
-  return true;
-}
+  // Analytics (optional)
+  NEXT_PUBLIC_GA_MEASUREMENT_ID: z.string().optional(),
 
-export function getEnvVar(name: string, defaultValue?: string): string {
-  const value = process.env[name];
-  if (!value && !defaultValue) {
-    throw new Error(`Environment variable ${name} is not set and no default value provided`);
-  }
-  return value || defaultValue || "";
-}
+  // API URL (optional)
+  NEXT_PUBLIC_API_URL: z.string().url().optional().or(z.literal("")),
+});
 
-// Validate on module load (only in Node.js environment)
-if (typeof window === "undefined") {
+type EnvSchema = z.infer<typeof envSchema>;
+
+/**
+ * Validated environment variables
+ * Throws error if required variables are missing
+ */
+export function validateEnv(): EnvSchema {
   try {
-    validateEnvVars();
+    return envSchema.parse({
+      DATABASE_URL: process.env.DATABASE_URL,
+      NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+      NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
+      CSRF_SECRET: process.env.CSRF_SECRET,
+      ENABLE_CSRF: process.env.ENABLE_CSRF,
+      EMAIL_SERVICE: process.env.EMAIL_SERVICE,
+      EMAIL_API_KEY: process.env.EMAIL_API_KEY,
+      EMAIL_FROM: process.env.EMAIL_FROM,
+      EMAIL_FROM_NAME: process.env.EMAIL_FROM_NAME,
+      ADMIN_EMAIL: process.env.ADMIN_EMAIL,
+      RAZORPAY_KEY_ID: process.env.RAZORPAY_KEY_ID,
+      RAZORPAY_KEY_SECRET: process.env.RAZORPAY_KEY_SECRET,
+      NEXT_PUBLIC_RAZORPAY_KEY_ID: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+      NODE_ENV: process.env.NODE_ENV,
+      NEXT_PUBLIC_GA_MEASUREMENT_ID: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID,
+      NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+    });
   } catch (error) {
-    // In development, just warn; in production, this will throw
-    if (process.env.NODE_ENV === "production") {
-      throw error;
+    if (error instanceof z.ZodError) {
+      const missing = error.errors.map((e) => `${e.path.join(".")}: ${e.message}`);
+      throw new Error(
+        `Missing or invalid environment variables:\n${missing.join("\n")}`
+      );
     }
+    throw error;
   }
 }
 
+/**
+ * Get validated environment variables
+ * Only validates in production or when explicitly requested
+ */
+export function getEnv(force: boolean = false): Partial<EnvSchema> {
+  if (process.env.NODE_ENV === "production" || force) {
+    return validateEnv();
+  }
+
+  // In development, return partial env with defaults
+  return {
+    DATABASE_URL: process.env.DATABASE_URL || "",
+    NEXTAUTH_URL: process.env.NEXTAUTH_URL || "http://localhost:3000",
+    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET || "dev-secret-change-in-production",
+    CSRF_SECRET: process.env.CSRF_SECRET,
+    ENABLE_CSRF: process.env.ENABLE_CSRF || "false",
+    EMAIL_SERVICE: (process.env.EMAIL_SERVICE as any) || "mock",
+    EMAIL_API_KEY: process.env.EMAIL_API_KEY,
+    EMAIL_FROM: process.env.EMAIL_FROM,
+    EMAIL_FROM_NAME: process.env.EMAIL_FROM_NAME,
+    ADMIN_EMAIL: process.env.ADMIN_EMAIL,
+    RAZORPAY_KEY_ID: process.env.RAZORPAY_KEY_ID,
+    RAZORPAY_KEY_SECRET: process.env.RAZORPAY_KEY_SECRET,
+    NEXT_PUBLIC_RAZORPAY_KEY_ID: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+    NODE_ENV: (process.env.NODE_ENV as any) || "development",
+    NEXT_PUBLIC_GA_MEASUREMENT_ID: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID,
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+  };
+}

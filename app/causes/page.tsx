@@ -1,82 +1,199 @@
-import Image from "next/image";
-import Link from "next/link";
-import { causes } from "@/data/causes";
-import Card from "@/components/shared/Card";
-import Button from "@/components/shared/Button";
-import { Ribbon } from "lucide-react";
-import { formatCurrency } from "@/lib/utils";
+"use client";
 
-export const metadata = {
-  title: "Our Causes - Jaasiel Foundation",
-  description: "Explore the causes we support including education, women empowerment, old age assistance, vocational studies, and healthcare.",
-};
+import { useEffect, useState, useCallback } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
+import FundraiserCard from "@/components/shared/FundraiserCard";
+import SearchBar from "@/components/shared/SearchBar";
+import FilterBar, { FilterOption } from "@/components/shared/FilterBar";
+import { LoadingSpinner, CardSkeleton } from "@/components/ui/loading";
+import { ErrorState } from "@/components/ui/error-boundary";
+import Section, { SectionHeader } from "@/components/ui/section";
+import { fetchCauses } from "@/lib/api-client";
+import { Ribbon } from "lucide-react";
+
+interface Cause {
+  id: string;
+  slug: string;
+  title: string;
+  description: string;
+  image: string;
+  goal: number | null;
+  raised: number;
+  donorsCount: number;
+  donationsCount: number;
+  category: string;
+  status: string;
+}
 
 export default function CausesPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [causes, setCauses] = useState<Cause[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
+  const [selectedFilters, setSelectedFilters] = useState<Record<string, string[]>>({
+    category: searchParams.get("category")?.split(",") || [],
+    status: searchParams.get("status")?.split(",") || [],
+  });
+
+  const categories: FilterOption[] = [
+    { value: "Education", label: "Education" },
+    { value: "Health", label: "Health" },
+    { value: "Empowerment", label: "Empowerment" },
+    { value: "Care", label: "Care" },
+    { value: "Training", label: "Training" },
+  ];
+
+  const statuses: FilterOption[] = [
+    { value: "ACTIVE", label: "Active" },
+    { value: "COMPLETED", label: "Completed" },
+    { value: "ARCHIVED", label: "Archived" },
+  ];
+
+  const loadCauses = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const response = await fetchCauses({
+        status: selectedFilters.status[0] || "ACTIVE",
+        category: selectedFilters.category[0] || undefined,
+        search: searchQuery || undefined,
+        limit: 20,
+      });
+
+      if (response.error) {
+        setError(response.error);
+      } else if (response.data) {
+        setCauses(response.data.causes);
+      }
+
+      // Update URL with current filters
+      const params = new URLSearchParams();
+      if (searchQuery) params.set("q", searchQuery);
+      if (selectedFilters.category.length > 0)
+        params.set("category", selectedFilters.category.join(","));
+      if (selectedFilters.status.length > 0)
+        params.set("status", selectedFilters.status.join(","));
+      
+      const newUrl = params.toString()
+        ? `${window.location.pathname}?${params.toString()}`
+        : window.location.pathname;
+      router.replace(newUrl, { scroll: false });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to load causes");
+    } finally {
+      setLoading(false);
+    }
+  }, [searchQuery, selectedFilters, router]);
+
+  useEffect(() => {
+    loadCauses();
+  }, [loadCauses]);
+
+  const handleFilterChange = useCallback((key: string, values: string[]) => {
+    setSelectedFilters((prev) => ({
+      ...prev,
+      [key]: values,
+    }));
+  }, []);
+
+  const handleClearAll = useCallback(() => {
+    setSelectedFilters({ category: [], status: [] });
+    setSearchQuery("");
+  }, []);
+
   return (
-    <div className="py-16 md:py-24">
-      {/* Hero Section */}
-      <div className="bg-primary text-white py-16">
-        <div className="container mx-auto px-4 text-center">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <Ribbon className="text-white" size={32} />
-            <span className="text-lg font-semibold">Our Causes</span>
-          </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">The causes we care about</h1>
-          <p className="text-xl max-w-2xl mx-auto">
-            We believe that everything in this world is inter-dependent, and if we wish to live in a better world then it is important to care for it and protect it on every ground.
-          </p>
+    <Section variant="default" padding="lg" id="causes">
+      <SectionHeader
+        title="Support a Cause"
+        subtitle="Causes"
+        description="Choose a cause that resonates with you and make a difference in the lives of those in need."
+        align="center"
+      />
+
+      {/* Search and Filters */}
+      <div className="mb-8 space-y-4">
+        <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
+          <SearchBar
+            placeholder="Search causes..."
+            onSearch={setSearchQuery}
+            className="w-full sm:max-w-md"
+          />
+          <FilterBar
+            filters={[
+              {
+                label: "Category",
+                key: "category",
+                options: categories,
+              },
+              {
+                label: "Status",
+                key: "status",
+                options: statuses,
+              },
+            ]}
+            selectedFilters={selectedFilters}
+            onFilterChange={handleFilterChange}
+            onClearAll={handleClearAll}
+          />
         </div>
       </div>
 
-      {/* Causes Grid */}
-      <section className="py-16 md:py-24">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {error && (
+        <ErrorState
+          message={error}
+          onReset={() => loadCauses()}
+          className="my-8"
+        />
+      )}
+
+      {loading ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[1, 2, 3, 4, 5, 6].map((i) => (
+            <CardSkeleton key={i} />
+          ))}
+        </div>
+      ) : causes.length === 0 ? (
+        <div className="text-center py-12">
+          <Ribbon className="mx-auto text-gray-400 mb-4" size={48} />
+          <h3 className="text-xl font-semibold text-gray-900 mb-2">
+            No causes found
+          </h3>
+          <p className="text-gray-600 mb-6">
+            Try adjusting your search or filter criteria.
+          </p>
+          <button
+            onClick={handleClearAll}
+            className="text-primary hover:text-primary-dark font-medium"
+          >
+            Clear all filters
+          </button>
+        </div>
+      ) : (
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8">
             {causes.map((cause) => (
-              <Card key={cause.id} hover className="overflow-hidden">
-                <div className="relative h-64">
-                  <Image
-                    src={cause.image}
-                    alt={cause.title}
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute top-4 left-4">
-                    <span className="bg-primary text-white px-4 py-2 rounded-md font-semibold">
-                      #{cause.category.toLowerCase()}
-                    </span>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold mb-3">{cause.title}</h3>
-                  <p className="text-gray-600 mb-4 line-clamp-3">{cause.description}</p>
-                  {cause.goal && cause.raised && (
-                    <div className="mb-4">
-                      <div className="flex justify-between text-sm mb-2">
-                        <span className="text-gray-600">Raised</span>
-                        <span className="font-semibold">{formatCurrency(cause.raised)}</span>
-                      </div>
-                      <div className="w-full bg-gray-200 rounded-full h-2">
-                        <div
-                          className="bg-primary h-2 rounded-full"
-                          style={{ width: `${(cause.raised / cause.goal) * 100}%` }}
-                        />
-                      </div>
-                      <div className="text-xs text-gray-500 mt-1">
-                        Goal: {formatCurrency(cause.goal)}
-                      </div>
-                    </div>
-                  )}
-                  <Button variant="outline" size="sm" href={`/causes/${cause.slug}`}>
-                    Know More
-                  </Button>
-                </div>
-              </Card>
+              <FundraiserCard
+                key={cause.id}
+                id={cause.id}
+                title={cause.title}
+                description={cause.description}
+                image={cause.image}
+                goal={cause.goal ?? 0}
+                raised={cause.raised}
+                donations={cause.donationsCount || 0}
+                daysLeft={30}
+                slug={cause.slug}
+                organization="Jaasiel Foundation"
+              />
             ))}
           </div>
-        </div>
-      </section>
-    </div>
+
+          {/* Pagination would go here */}
+        </>
+      )}
+    </Section>
   );
 }
-

@@ -86,14 +86,14 @@ export default function FundraiserCard({
         
         {/* Tax Benefits Badge - Top Left */}
         <div className="absolute top-3 left-3 sm:top-4 sm:left-4 max-w-[45%] sm:max-w-none z-10">
-          <div className="bg-[#f97316]/85 backdrop-blur-sm text-white px-2 sm:px-2.5 md:px-3 py-1 sm:py-1.5 md:py-2 rounded-md shadow-sm">
+          <div className="bg-accent/85 backdrop-blur-sm text-white px-2 sm:px-2.5 md:px-3 py-1 sm:py-1.5 md:py-2 rounded-md shadow-sm">
             <span className="text-[9px] sm:text-[10px] md:text-xs font-medium uppercase tracking-wide leading-tight">Tax Benefits Available</span>
           </div>
         </div>
 
         {/* Days Left Badge - Top Right */}
         <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10">
-          <div className="bg-[#f97316]/85 backdrop-blur-sm text-white px-2 sm:px-2.5 md:px-3 py-1 sm:py-1.5 md:py-2 rounded-md shadow-sm flex items-center gap-1 whitespace-nowrap">
+          <div className="bg-accent/85 backdrop-blur-sm text-white px-2 sm:px-2.5 md:px-3 py-1 sm:py-1.5 md:py-2 rounded-md shadow-sm flex items-center gap-1 whitespace-nowrap">
             <Clock size={10} className="sm:w-[11px] sm:h-[11px] md:w-[12px] md:h-[12px] text-white flex-shrink-0" />
             <span className="text-[9px] sm:text-[10px] md:text-xs font-medium leading-tight">
               {daysLeft} {daysLeft === 1 ? "Day" : "Days"} Left
@@ -129,7 +129,7 @@ export default function FundraiserCard({
           </div>
           <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
             <div
-              className="h-full bg-[#f97316] transition-all duration-500 ease-out rounded-full"
+              className="h-full bg-accent transition-all duration-500 ease-out rounded-full"
               style={{ width: `${progress}%` }}
             />
           </div>
@@ -148,7 +148,7 @@ export default function FundraiserCard({
           variant="primary"
           size="lg"
           href={`/causes/${slug}`}
-          className="w-full bg-[#DC2626] hover:bg-[#B91C1C] text-white border-0 font-bold text-base sm:text-lg py-3 sm:py-4"
+          className="w-full bg-primary hover:bg-primary-dark text-white border-0 font-bold text-base sm:text-lg py-3 sm:py-4"
         >
           Donate Now
           <ArrowRight className="ml-2 h-5 w-5" />

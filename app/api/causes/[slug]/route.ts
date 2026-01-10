@@ -1,0 +1,75 @@
+import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+
+/**
+ * GET /api/causes/[slug]
+ * Fetch a single cause by slug
+ */
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { slug: string } }
+) {
+  try {
+    const cause = await prisma.cause.findUnique({
+      where: { slug: params.slug },
+      include: {
+        _count: {
+          select: {
+            donations: true,
+            updates: true,
+          },
+        },
+        updates: {
+          where: { published: true },
+          orderBy: { createdAt: "desc" },
+          take: 5,
+        },
+      },
+    });
+
+    if (!cause) {
+      return NextResponse.json(
+        { error: "Cause not found" },
+        { status: 404 }
+      );
+    }
+
+    const formattedCause = {
+      id: cause.id,
+      slug: cause.slug,
+      title: cause.title,
+      description: cause.description,
+      fullDescription: cause.fullDescription,
+      image: cause.image,
+      category: cause.category,
+      status: cause.status,
+      goal: cause.goal ? Number(cause.goal) : null,
+      raised: Number(cause.raised),
+      donorsCount: cause.donorsCount,
+      donationsCount: cause._count.donations,
+      updatesCount: cause._count.updates,
+      startDate: cause.startDate?.toISOString() || null,
+      endDate: cause.endDate?.toISOString() || null,
+      targetBeneficiaries: cause.targetBeneficiaries,
+      organizationDetails: cause.organizationDetails,
+      updates: cause.updates.map((update) => ({
+        id: update.id,
+        title: update.title,
+        content: update.content,
+        image: update.image,
+        createdAt: update.createdAt.toISOString(),
+      })),
+      createdAt: cause.createdAt.toISOString(),
+      updatedAt: cause.updatedAt.toISOString(),
+    };
+
+    return NextResponse.json({ cause: formattedCause });
+  } catch (error) {
+    console.error("Error fetching cause:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch cause" },
+      { status: 500 }
+    );
+  }
+}
+

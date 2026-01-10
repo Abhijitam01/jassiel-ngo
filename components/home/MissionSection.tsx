@@ -141,7 +141,7 @@ export default function MissionSection() {
             ))}
           </div>
 
-          <Button variant="primary" size="lg" href="/about" className="bg-[#DC2626] hover:bg-[#B91C1C] text-white border-0 shadow-lg hover:shadow-xl transition-shadow w-full sm:w-fit font-bold text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4">
+          <Button variant="primary" size="lg" href="/about" className="bg-primary hover:bg-primary-dark text-white border-0 shadow-lg hover:shadow-xl transition-shadow w-full sm:w-fit font-bold text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4">
             Know More
           </Button>
         </div>

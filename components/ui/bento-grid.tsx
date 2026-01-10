@@ -75,8 +75,8 @@ export function BentoCard({
       )}>
           {!hasImage && Icon && (
           <div className="mb-3 sm:mb-4">
-            <div className="inline-flex items-center justify-center rounded-md md:rounded-lg bg-[#DC2626]/10 p-2 sm:p-2.5 md:p-3 group-hover:bg-[#DC2626]/20 transition-colors">
-              <Icon className="text-[#DC2626]" size={18} />
+            <div className="inline-flex items-center justify-center rounded-md md:rounded-lg bg-primary/10 p-2 sm:p-2.5 md:p-3 group-hover:bg-primary/20 transition-colors">
+              <Icon className="text-primary" size={18} />
             </div>
           </div>
         )}
@@ -89,7 +89,7 @@ export function BentoCard({
             "font-bold mb-2 sm:mb-3 transition-colors",
             hasImage 
               ? "text-lg sm:text-xl md:text-2xl lg:text-3xl text-white" 
-              : "text-lg sm:text-xl text-[#DC2626]"
+              : "text-lg sm:text-xl text-primary"
           )}>
             {displayTitle}
           </h3>
@@ -122,7 +122,7 @@ export function BentoCard({
               "inline-flex items-center gap-1.5 sm:gap-2 text-sm sm:text-base font-semibold transition-all rounded-lg px-3 py-1.5 sm:px-4 sm:py-2",
               hasImage
                 ? "text-white hover:text-gray-200 hover:bg-white/10"
-                : "text-[#DC2626] group-hover:bg-[#DC2626] group-hover:text-white group-hover:gap-2 sm:group-hover:gap-3"
+                : "text-primary group-hover:bg-primary group-hover:text-white group-hover:gap-2 sm:group-hover:gap-3"
             )}>
               {cta}
               <ArrowRight size={14} />

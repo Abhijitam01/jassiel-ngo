@@ -12,7 +12,7 @@ const features = [
     buttonText: "Join now",
     image: "/assets/img/icon/1.png",
     size: "wide", // spans 2 columns on top
-    gradient: "from-red-500 to-red-700",
+    gradient: "from-primary to-primary-dark",
   },
   {
     id: 2,
@@ -23,7 +23,7 @@ const features = [
     buttonText: "Give now",
     image: "/assets/img/icon/2.png",
     size: "wide", // spans 2 columns on top
-    gradient: "from-red-600 to-red-800",
+    gradient: "from-primary to-primary-700",
   },
   {
     id: 3,
@@ -34,7 +34,7 @@ const features = [
     buttonText: "Be Member",
     image: "/assets/img/icon/4.png",
     size: "tall", // spans 2 rows on left
-    gradient: "from-red-500 to-red-700",
+    gradient: "from-primary to-primary-dark",
   },
   {
     id: 4,
@@ -45,13 +45,13 @@ const features = [
     buttonText: "Donate now",
     image: "/assets/img/icon/3.png",
     size: "tall", // spans 2 rows on right
-    gradient: "from-red-600 to-red-800",
+    gradient: "from-primary to-primary-700",
   },
 ];
 
 export default function FeaturesSection() {
   return (
-    <section className="relative py-20 md:py-32 bg-gradient-to-br from-[#DC2626] via-[#B91C1C] to-[#991b1b] overflow-hidden">
+    <section className="relative py-20 md:py-32 bg-gradient-to-br from-primary via-primary-dark to-primary-700 overflow-hidden">
       {/* Decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl" />
@@ -146,7 +146,7 @@ export default function FeaturesSection() {
                   {/* Title */}
                   <h3 className={`
                     font-extrabold text-gray-900 mb-2 sm:mb-3 md:mb-4
-                    group-hover:text-[#DC2626] transition-colors duration-300
+                    group-hover:text-primary transition-colors duration-300
                     ${isWide ? "text-xl sm:text-2xl md:text-3xl" : isTall ? "text-lg sm:text-xl md:text-2xl lg:text-3xl" : "text-lg sm:text-xl md:text-2xl"}
                   `}>
                     {feature.title}
@@ -162,7 +162,7 @@ export default function FeaturesSection() {
                   
                   {/* Action Button */}
                   <div className="mt-auto">
-                    <div className="inline-flex items-center gap-1.5 sm:gap-2 text-[#DC2626] font-bold group-hover:gap-2 sm:group-hover:gap-3 transition-all duration-300">
+                    <div className="inline-flex items-center gap-1.5 sm:gap-2 text-primary font-bold group-hover:gap-2 sm:group-hover:gap-3 transition-all duration-300">
                       <span className={`text-sm sm:text-base ${isTall ? "md:text-lg lg:text-xl" : "md:text-lg"}`}>
                         {feature.buttonText}
                       </span>
@@ -174,7 +174,7 @@ export default function FeaturesSection() {
                   </div>
 
                   {/* Decorative corner element */}
-                  <div className="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-tl from-[#DC2626]/10 to-transparent rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-tl from-primary/10 to-transparent rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
 
                 {/* Shine effect on hover */}

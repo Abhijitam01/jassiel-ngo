@@ -58,40 +58,43 @@ export default function Footer() {
         <div className="px-4 mx-auto max-w-[95rem]">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div className="flex flex-col items-center">
-              <div className="bg-[#DC2626]/10 rounded-full p-4 mb-4">
-                <Heart className="text-[#DC2626]" size={32} />
+              <div className="bg-primary/10 rounded-full p-4 mb-4">
+                <Heart className="text-primary" size={32} />
               </div>
               <h3 className="text-xl font-bold mb-2 text-secondary">Make a Difference</h3>
               <p className="text-black mb-4">Your donation can change lives</p>
               <Link 
                 href="/donate" 
-                className="bg-white text-[#DC2626] border-2 border-[#DC2626] px-6 py-2 rounded-lg font-semibold hover:bg-[#DC2626] hover:text-white transition-colors"
+                className="bg-white text-primary border-2 border-primary px-6 py-2 rounded-lg font-semibold hover:bg-primary hover:text-white transition-colors"
+                aria-label="Donate now"
               >
                 Donate Now
               </Link>
             </div>
             <div className="flex flex-col items-center">
-              <div className="bg-[#DC2626]/10 rounded-full p-4 mb-4">
-                <Users className="text-[#DC2626]" size={32} />
+              <div className="bg-primary/10 rounded-full p-4 mb-4">
+                <Users className="text-primary" size={32} />
               </div>
               <h3 className="text-xl font-bold mb-2 text-secondary">Join Our Mission</h3>
               <p className="text-black mb-4">Become a volunteer today</p>
               <Link 
                 href="/volunteer" 
-                className="bg-white text-[#DC2626] border-2 border-[#DC2626] px-6 py-2 rounded-lg font-semibold hover:bg-[#DC2626] hover:text-white transition-colors"
+                className="bg-white text-primary border-2 border-primary px-6 py-2 rounded-lg font-semibold hover:bg-primary hover:text-white transition-colors"
+                aria-label="Become a volunteer"
               >
                 Volunteer
               </Link>
             </div>
             <div className="flex flex-col items-center">
-              <div className="bg-[#DC2626]/10 rounded-full p-4 mb-4">
-                <Mail className="text-[#DC2626]" size={32} />
+              <div className="bg-primary/10 rounded-full p-4 mb-4">
+                <Mail className="text-primary" size={32} />
               </div>
               <h3 className="text-xl font-bold mb-2 text-secondary">Stay Connected</h3>
               <p className="text-black mb-4">Get updates on our work</p>
               <Link 
                 href="#newsletter" 
-                className="bg-white text-[#DC2626] border-2 border-[#DC2626] px-6 py-2 rounded-lg font-semibold hover:bg-[#DC2626] hover:text-white transition-colors"
+                className="bg-white text-primary border-2 border-primary px-6 py-2 rounded-lg font-semibold hover:bg-primary hover:text-white transition-colors"
+                aria-label="Subscribe to newsletter"
               >
                 Subscribe
               </Link>
@@ -127,7 +130,7 @@ export default function Footer() {
                         href={socialLinks.facebook}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="bg-gray-800 hover:bg-[#DC2626] text-gray-300 hover:text-white rounded-lg p-2.5 transition-all duration-300"
+                        className="bg-gray-800 hover:bg-primary text-gray-300 hover:text-white rounded-lg p-2.5 transition-all duration-300"
                         aria-label="Follow us on Facebook"
                       >
                         <Facebook size={20} />
@@ -138,7 +141,7 @@ export default function Footer() {
                         href={socialLinks.twitter}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="bg-gray-800 hover:bg-[#DC2626] text-gray-300 hover:text-white rounded-lg p-2.5 transition-all duration-300"
+                        className="bg-gray-800 hover:bg-primary text-gray-300 hover:text-white rounded-lg p-2.5 transition-all duration-300"
                         aria-label="Follow us on Twitter"
                       >
                         <Twitter size={20} />
@@ -149,7 +152,7 @@ export default function Footer() {
                         href={socialLinks.instagram}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="bg-gray-800 hover:bg-[#DC2626] text-gray-300 hover:text-white rounded-lg p-2.5 transition-all duration-300"
+                        className="bg-gray-800 hover:bg-primary text-gray-300 hover:text-white rounded-lg p-2.5 transition-all duration-300"
                         aria-label="Follow us on Instagram"
                       >
                         <Instagram size={20} />
@@ -160,7 +163,7 @@ export default function Footer() {
                         href={socialLinks.linkedin}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="bg-gray-800 hover:bg-[#DC2626] text-gray-300 hover:text-white rounded-lg p-2.5 transition-all duration-300"
+                        className="bg-gray-800 hover:bg-primary text-gray-300 hover:text-white rounded-lg p-2.5 transition-all duration-300"
                         aria-label="Follow us on LinkedIn"
                       >
                         <Linkedin size={20} />
@@ -173,49 +176,49 @@ export default function Footer() {
 
             {/* Quick Links */}
             <div>
-              <h3 className="text-white font-bold text-lg mb-6 relative pb-3 after:absolute after:bottom-0 after:left-0 after:w-12 after:h-0.5 after:bg-[#DC2626]">
+              <h3 className="text-white font-bold text-lg mb-6 relative pb-3 after:absolute after:bottom-0 after:left-0 after:w-12 after:h-0.5 after:bg-primary">
                 Quick Links
               </h3>
               <ul className="space-y-3">
                 <li>
                   <Link href="/about" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2 group">
-                    <span className="w-1.5 h-1.5 bg-gray-600 rounded-full group-hover:bg-[#DC2626] transition-colors"></span>
+                    <span className="w-1.5 h-1.5 bg-gray-600 rounded-full group-hover:bg-primary transition-colors"></span>
                     About Us
                   </Link>
                 </li>
                 <li>
                   <Link href="/causes" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2 group">
-                    <span className="w-1.5 h-1.5 bg-gray-600 rounded-full group-hover:bg-[#DC2626] transition-colors"></span>
+                    <span className="w-1.5 h-1.5 bg-gray-600 rounded-full group-hover:bg-primary transition-colors"></span>
                     Our Causes
                   </Link>
                 </li>
                 <li>
                   <Link href="/events" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2 group">
-                    <span className="w-1.5 h-1.5 bg-gray-600 rounded-full group-hover:bg-[#DC2626] transition-colors"></span>
+                    <span className="w-1.5 h-1.5 bg-gray-600 rounded-full group-hover:bg-primary transition-colors"></span>
                     Events
                   </Link>
                 </li>
                 <li>
                   <Link href="/blog" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2 group">
-                    <span className="w-1.5 h-1.5 bg-gray-600 rounded-full group-hover:bg-[#DC2626] transition-colors"></span>
+                    <span className="w-1.5 h-1.5 bg-gray-600 rounded-full group-hover:bg-primary transition-colors"></span>
                     Blog & News
                   </Link>
                 </li>
                 <li>
                   <Link href="/team" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2 group">
-                    <span className="w-1.5 h-1.5 bg-gray-600 rounded-full group-hover:bg-[#DC2626] transition-colors"></span>
+                    <span className="w-1.5 h-1.5 bg-gray-600 rounded-full group-hover:bg-primary transition-colors"></span>
                     Our Team
                   </Link>
                 </li>
                 <li>
                   <Link href="/impact-stories" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2 group">
-                    <span className="w-1.5 h-1.5 bg-gray-600 rounded-full group-hover:bg-[#DC2626] transition-colors"></span>
+                    <span className="w-1.5 h-1.5 bg-gray-600 rounded-full group-hover:bg-primary transition-colors"></span>
                     Impact Stories
                   </Link>
                 </li>
                 <li>
                   <Link href="/faq" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2 group">
-                    <span className="w-1.5 h-1.5 bg-gray-600 rounded-full group-hover:bg-[#DC2626] transition-colors"></span>
+                    <span className="w-1.5 h-1.5 bg-gray-600 rounded-full group-hover:bg-primary transition-colors"></span>
                     FAQ
                   </Link>
                 </li>
@@ -224,43 +227,43 @@ export default function Footer() {
 
             {/* Get Involved */}
             <div>
-              <h3 className="text-white font-bold text-lg mb-6 relative pb-3 after:absolute after:bottom-0 after:left-0 after:w-12 after:h-0.5 after:bg-[#DC2626]">
+              <h3 className="text-white font-bold text-lg mb-6 relative pb-3 after:absolute after:bottom-0 after:left-0 after:w-12 after:h-0.5 after:bg-primary">
                 Get Involved
               </h3>
               <ul className="space-y-3">
                 <li>
                   <Link href="/donate" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2 group">
-                    <span className="w-1.5 h-1.5 bg-gray-600 rounded-full group-hover:bg-[#DC2626] transition-colors"></span>
+                    <span className="w-1.5 h-1.5 bg-gray-600 rounded-full group-hover:bg-primary transition-colors"></span>
                     Donate Now
                   </Link>
                 </li>
                 <li>
                   <Link href="/volunteer" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2 group">
-                    <span className="w-1.5 h-1.5 bg-gray-600 rounded-full group-hover:bg-[#DC2626] transition-colors"></span>
+                    <span className="w-1.5 h-1.5 bg-gray-600 rounded-full group-hover:bg-primary transition-colors"></span>
                     Become a Volunteer
                   </Link>
                 </li>
                 <li>
                   <Link href="/causes" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2 group">
-                    <span className="w-1.5 h-1.5 bg-gray-600 rounded-full group-hover:bg-[#DC2626] transition-colors"></span>
+                    <span className="w-1.5 h-1.5 bg-gray-600 rounded-full group-hover:bg-primary transition-colors"></span>
                     Support a Cause
                   </Link>
                 </li>
                 <li>
                   <Link href="/contact" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2 group">
-                    <span className="w-1.5 h-1.5 bg-gray-600 rounded-full group-hover:bg-[#DC2626] transition-colors"></span>
+                    <span className="w-1.5 h-1.5 bg-gray-600 rounded-full group-hover:bg-primary transition-colors"></span>
                     Partner With Us
                   </Link>
                 </li>
                 <li>
                   <Link href="/reports" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2 group">
-                    <span className="w-1.5 h-1.5 bg-gray-600 rounded-full group-hover:bg-[#DC2626] transition-colors"></span>
+                    <span className="w-1.5 h-1.5 bg-gray-600 rounded-full group-hover:bg-primary transition-colors"></span>
                     Annual Reports
                   </Link>
                 </li>
                 <li>
                   <Link href="/contact" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2 group">
-                    <span className="w-1.5 h-1.5 bg-gray-600 rounded-full group-hover:bg-[#DC2626] transition-colors"></span>
+                    <span className="w-1.5 h-1.5 bg-gray-600 rounded-full group-hover:bg-primary transition-colors"></span>
                     Contact Us
                   </Link>
                 </li>
@@ -269,12 +272,12 @@ export default function Footer() {
 
             {/* Contact & Recent News */}
             <div>
-              <h3 className="text-white font-bold text-lg mb-6 relative pb-3 after:absolute after:bottom-0 after:left-0 after:w-12 after:h-0.5 after:bg-[#DC2626]">
+              <h3 className="text-white font-bold text-lg mb-6 relative pb-3 after:absolute after:bottom-0 after:left-0 after:w-12 after:h-0.5 after:bg-primary">
                 Contact Info
               </h3>
               <div className="space-y-4 mb-8">
                 <div className="flex items-start gap-3">
-                  <MapPin className="mt-1 flex-shrink-0 text-[#DC2626]" size={18} />
+                  <MapPin className="mt-1 flex-shrink-0 text-primary" size={18} />
                   <div>
                     <p className="text-gray-400 text-sm leading-relaxed">
                       B-19, Dwarka, New Delhi,<br />India - 110045
@@ -282,7 +285,7 @@ export default function Footer() {
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <Phone className="mt-1 flex-shrink-0 text-[#DC2626]" size={18} />
+                  <Phone className="mt-1 flex-shrink-0 text-primary" size={18} />
                   <div>
                     <a href="tel:+987-0986-0987" className="text-gray-400 hover:text-white transition-colors text-sm">
                       +91 987-0986-0987
@@ -290,7 +293,7 @@ export default function Footer() {
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <Mail className="mt-1 flex-shrink-0 text-[#DC2626]" size={18} />
+                  <Mail className="mt-1 flex-shrink-0 text-primary" size={18} />
                   <div>
                     <a href="mailto:info@jaasielfoundation.com" className="text-gray-400 hover:text-white transition-colors text-sm break-all">
                       info@jaasielfoundation.com
@@ -347,19 +350,19 @@ export default function Footer() {
           <div className="border-t border-gray-800 pt-8 mb-8">
             <div className="flex flex-wrap items-center justify-center gap-8 text-gray-500">
               <div className="flex items-center gap-2">
-                <Shield className="text-[#DC2626]" size={20} />
+                <Shield className="text-primary" size={20} />
                 <span className="text-sm">80G Tax Benefits</span>
               </div>
               <div className="flex items-center gap-2">
-                <Award className="text-[#DC2626]" size={20} />
+                <Award className="text-primary" size={20} />
                 <span className="text-sm">Registered NGO</span>
               </div>
               <div className="flex items-center gap-2">
-                <Heart className="text-[#DC2626]" size={20} />
+                <Heart className="text-primary" size={20} />
                 <span className="text-sm">10+ Years of Service</span>
               </div>
               <div className="flex items-center gap-2">
-                <Users className="text-[#DC2626]" size={20} />
+                <Users className="text-primary" size={20} />
                 <span className="text-sm">1.6M+ Lives Impacted</span>
               </div>
             </div>
@@ -396,7 +399,7 @@ export default function Footer() {
         {showBackToTop && (
           <button
             onClick={scrollToTop}
-            className="fixed bottom-8 right-8 bg-[#DC2626] hover:bg-[#B91C1C] text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 z-50 group"
+            className="fixed bottom-8 right-8 bg-primary hover:bg-primary-dark text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 z-50 group"
             aria-label="Back to top"
           >
             <ArrowUp size={20} className="group-hover:-translate-y-1 transition-transform" />

@@ -25,11 +25,11 @@ export default function Button({
   const baseStyles = "inline-flex items-center justify-center font-semibold transition-all duration-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:hover:scale-100";
   
   const variants = {
-    primary: "bg-[#DC2626] text-white hover:bg-[#B91C1C] shadow-md hover:shadow-lg hover:scale-105 active:scale-95 focus:ring-[#DC2626]",
-    secondary: "bg-[#DC2626] text-white hover:bg-[#B91C1C] shadow-md hover:shadow-lg hover:scale-105 active:scale-95 focus:ring-[#DC2626]",
-    accent: "bg-[#f97316] text-white hover:bg-[#ea580c] shadow-md hover:shadow-lg hover:scale-105 active:scale-95 focus:ring-[#f97316]",
-    outline: "border-2 border-[#DC2626] text-[#DC2626] bg-white hover:bg-[#DC2626] hover:text-white hover:scale-105 active:scale-95 focus:ring-[#DC2626]",
-    success: "bg-[#10b981] text-white hover:bg-[#059669] shadow-md hover:shadow-lg hover:scale-105 active:scale-95 focus:ring-[#10b981]",
+    primary: "bg-primary text-white hover:bg-primary-dark shadow-md hover:shadow-lg hover:scale-105 active:scale-95 focus:ring-primary",
+    secondary: "bg-primary text-white hover:bg-primary-dark shadow-md hover:shadow-lg hover:scale-105 active:scale-95 focus:ring-primary",
+    accent: "bg-accent text-white hover:bg-accent-dark shadow-md hover:shadow-lg hover:scale-105 active:scale-95 focus:ring-accent",
+    outline: "border-2 border-primary text-primary bg-white hover:bg-primary hover:text-white hover:scale-105 active:scale-95 focus:ring-primary",
+    success: "bg-success text-white hover:bg-success-dark shadow-md hover:shadow-lg hover:scale-105 active:scale-95 focus:ring-success",
   };
 
   const sizes = {

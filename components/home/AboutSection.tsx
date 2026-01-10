@@ -56,7 +56,7 @@ export default function AboutSection() {
               <p className="text-gray-700 mb-6 sm:mb-8 md:mb-10 leading-relaxed text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl px-4 lg:px-0">
             <strong className="text-secondary underline-important">Jaasiel Foundation</strong> is a registered voluntary organisation working with the most vulnerable groups of children, especially street and working children <span className="underline-important font-semibold">since 2014</span>. With a rights based, non-institutional approach the organisation endeavours to educate and impart life skills to vulnerable children so that they become self reliant. Over the years jaasiel has initiated a number of innovative interventions in the field and partnered with various government and non-government agencies to garner support for children.
           </p>
-              <Button variant="primary" size="lg" href="/about" className="bg-[#DC2626] hover:bg-[#B91C1C] text-white border-0 shadow-lg hover:shadow-xl transition-shadow font-bold text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 w-full sm:w-auto">
+              <Button variant="primary" size="lg" href="/about" className="bg-primary hover:bg-primary-dark text-white border-0 shadow-lg hover:shadow-xl transition-shadow font-bold text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 w-full sm:w-auto">
             More about us
           </Button>
             </div>

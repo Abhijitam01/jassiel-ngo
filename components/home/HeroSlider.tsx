@@ -65,23 +65,35 @@ export default function HeroSlider() {
                 <div className="max-w-full mx-auto px-2">
                   <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold mb-4 sm:mb-5 md:mb-6 animate-fade-in leading-tight text-white drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
                     {slide.title}
-                    <span className="text-[#DC2626]">.</span>
+                    <span className="text-primary">.</span>
                   </h1>
                   <p className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl mb-6 sm:mb-8 md:mb-10 max-w-3xl mx-auto animate-fade-in-delay text-white/95 leading-relaxed font-medium px-2">
                     {slide.description}
                   </p>
                   {index === 2 && (
                     <div className="mb-4 sm:mb-5 md:mb-6 animate-fade-in-delay-2">
-                      <div className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-[#DC2626] to-[#B91C1C] text-white rounded-full shadow-lg backdrop-blur-sm border border-white/20">
+                      <div className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-primary to-primary-dark text-white rounded-full shadow-lg backdrop-blur-sm border border-white/20">
                         <span className="text-sm sm:text-base font-bold">✨ First 3 months 2X matched!</span>
                       </div>
                     </div>
                   )}
                   <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center animate-fade-in-delay-2 px-4">
-                    <Button variant="primary" size="lg" href="/donate" className="bg-[#DC2626] hover:bg-[#B91C1C] text-white border-0 shadow-2xl hover:shadow-3xl transition-all px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-bold w-full sm:w-auto">
+                    <Button 
+                      variant="primary" 
+                      size="lg" 
+                      href="/donate" 
+                      className="bg-primary hover:bg-primary-dark text-white border-0 shadow-2xl hover:shadow-3xl transition-all px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-bold w-full sm:w-auto"
+                      aria-label={slide.buttonText}
+                    >
                       {slide.buttonText} →
                     </Button>
-                    <Button variant="outline" size="lg" href={slide.secondaryButtonText === "Learn More" ? "/about" : slide.secondaryButtonText === "Become Volunteer" ? "/volunteer" : "/signup"} className="bg-white/10 backdrop-blur-md border-2 border-white text-white hover:bg-white hover:text-[#DC2626] shadow-xl hover:shadow-2xl transition-all px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-bold w-full sm:w-auto">
+                    <Button 
+                      variant="outline" 
+                      size="lg" 
+                      href={slide.secondaryButtonText === "Learn More" ? "/about" : slide.secondaryButtonText === "Become Volunteer" ? "/volunteer" : "/signup"} 
+                      className="bg-white/10 backdrop-blur-md border-2 border-white text-white hover:bg-white hover:text-primary shadow-xl hover:shadow-2xl transition-all px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-bold w-full sm:w-auto"
+                      aria-label={slide.secondaryButtonText}
+                    >
                       {slide.secondaryButtonText} →
                     </Button>
                   </div>
